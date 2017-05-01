@@ -1,0 +1,87 @@
+<?php
+$services = $this->getHelperPluginManager()->getServiceLocator();
+$event    = $services->get('application')->getMvcEvent();
+$response = $event->getResponse();
+$code     = $response->getStatusCode();
+
+switch ($code) {
+    case 401:
+        $title = "Not Logged In";
+        break;
+    case 403:
+        $title = "Not Allowed";
+        break;
+    case 404:
+        $title = "Page Not Found";
+        break;
+    default:
+        $title = $response->getReasonPhrase();
+}
+
+$this->headTitle()->set($title);
+$this->bodyClass()->append('error');
+$this->bodyClass()->append('login-reload');
+
+// only show exception if it is valid and display_exceptions = true
+if (!isset($display_exceptions)
+    || !$display_exceptions
+    || !isset($exception)
+    || !$exception instanceof \Exception
+) {
+    $exception = false;
+}
+?>
+
+<div class="error-layout">
+    <div class="error-scene">
+        <div class="error-text">
+            <span class="error-code"><?php echo $this->escapeHtml($code); ?></span><br>
+            <span class="error-title"><?php echo $this->te($title) ?></span><br>
+            <?php if ($exception) { ?>
+                <a href="#exception" class="exception-link">
+                    Error Details<i class="icon-chevron-down"></i>
+                </a>
+            <?php } ?>
+        </div>
+        <div class="error-bees"></div>
+        <div class="error-bee"></div>
+        <div class="error-left-hill"></div>
+        <div class="error-right-hill"></div>
+    </div>
+    <?php
+    if ($exception) {
+        echo '<div class="error-exceptions"><a name="exception"></a>';
+        while ($exception) {
+            echo '<h2>' . $this->escapeHtml(get_class($exception)) . '</h2>'
+               . '<strong>File:</strong>'
+               . '<pre>'
+               .   $this->escapeHtml($exception->getFile()) . ':'
+               .   $this->escapeHtml($exception->getLine())
+               . '</pre>';
+
+            if ($exception->getMessage()) {
+                echo '<strong>Message:</strong>'
+                   . '<pre>' . $this->escapeHtml($exception->getMessage()) . '</pre>';
+            }
+
+            // strip base-path from stack trace (shortens lines)
+            $trace = $this->shortenStackTrace($exception->getTraceAsString());
+            echo '<strong>Stack:</strong>'
+               . '<pre>' . $this->escapeHtml($trace) . '</pre>';
+
+            $exception = $exception->getPrevious();
+        }
+        echo '</div>';
+    }
+    ?>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        var scaleText = function(){
+            $('body.error .error-text').css('font-size', Math.round($(window).width() * 0.05) + 'px');
+        }
+        scaleText();
+        $(window).on('resize', scaleText);
+    });
+</script>

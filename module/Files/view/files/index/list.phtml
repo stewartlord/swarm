@@ -1,0 +1,193 @@
+<?php
+$this->headTitle()->set($this->path ?: '//')->setTranslatorEnabled(false);
+if ($partial) {
+    echo $this->headTitle();
+}
+
+echo $project ? $this->projectToolbar($project) : '';
+?>
+
+<h1 class="browse-title">
+    <?php echo $this->path ? $this->decodeFilespec(basename($this->path)) : '//' ?>
+</h1>
+
+<?php echo $this->breadcrumbs(
+    $this->path,
+    $project ? 'project-browse' : 'file',
+    $project ? array('project' => $project->getId(), 'mode' => 'files') : null
+) ?>
+
+<div class="browse-files-carousel carousel-inner">
+    <div class="item active">
+        <div class="browse-content">
+            <ul class="nav nav-tabs browse-tabs">
+                <li <?php echo !$history ? 'class="active"' : '' ?>>
+                    <a href="#browse" data-toggle="tab">
+                        <i class="icon-folder-open"></i> <?php echo $this->te('Browse')?>
+                    </a>
+                </li>
+                <li <?php echo $history ? 'class="active"' : '' ?>>
+                    <a href="#commits" data-toggle="tab">
+                        <i class="icon-time"></i> <?php echo $this->te('Commits')?>
+                    </a>
+                </li>
+                <li class="pull-right form-inline">
+                    <div class="btn-group pad1 padw0">
+                        <button type="button" class="btn btn-small btn-short-link"
+                                title="<?php echo $this->te('Shorten URL')?>"
+                                onclick="swarm.browse.getShortLink(this);">
+                            <i class="icon-bookmark"></i>
+                        </button>
+                    </div>
+                    <?php
+                    if ($canArchive):
+                        $archiveUrl = $project
+                            ? $this->url('project-archive', array('path' => $path, 'project' => $project->getId()))
+                            : $this->url('archive', array('path' => $path));
+                    ?>
+                    <div class="btn-group btn-group-archive pad1 padw0">
+                        <a href="<?php echo $archiveUrl ?>"
+                                class="btn btn-small"
+                                onclick="swarm.browse.getArchive(this); return false;">
+                            <i class="icon-briefcase"></i> <?php echo $this->te('Download .zip')?>
+                        </a>
+                    </div>
+                    <?php endif; ?>
+                    <div class="range-filter btn-group hide">
+                        <input type="text" name="range" class="input-medium" placeholder="<?php echo $this->te('Range')?>" value="<?php echo $range; ?>"
+                            data-html="true"
+                            data-placement="bottom"
+                            data-content="<table class='table table-condensed range-help'>
+                                    <thead><tr><td colspan='2'><?php echo $this->te('Examples')?></td></tr></thead>
+                                    <tbody>
+                                        <tr><td>@0,@now</td><td><?php echo $this->te('All Time (Default)')?></td></tr>
+                                        <tr><td>@80,@90</td><td><?php echo $this->te('Between changes 80 and 90')?></td></tr>
+                                        <tr><td>@80</td><td><?php echo $this->te('Up to change 80')?></td></tr>
+                                        <tr><td>@=80</td><td><?php echo $this->te('Just change 80')?></td></tr>
+                                        <tr><td>@&gt;80</td><td><?php echo $this->te('Newer than change 80')?></td></tr>
+                                        <tr><td>@80,@now</td><td><?php echo $this->te('Change 80 to Now')?></td></tr>
+                                        <tr><td>@label-name</td><td><?php echo $this->te("Part of label 'label-name'")?></td></tr>
+                                        <tr><td>@2014/11/30</td><td><?php echo $this->te('Up to Nov 30, 2014')?></td></tr>
+                                        <tr><td>@2014/11/30,@now</td><td><?php echo $this->te('Nov 30, 2014 to Now')?></td></tr>
+                                    </tbody>
+                                </table>"
+                        >
+                    </div>
+                    <div class="user-filter btn-group input-prepend hide">
+                        <span class="add-on"><i class="icon-user"></i></span>
+                        <input type="text" name="user" class="input-medium" placeholder="<?php echo $this->te('User')?>">
+                    </div>
+                    <div class="deleted-filter btn-group pad1 padw0">
+                        <button type="button" class="btn btn-small"
+                                onclick="swarm.browse.toggleDeletedFiles(this);">
+                            <i class="icon-trash"></i> <?php echo $this->te('Show Deleted Files')?>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade <?php echo !$history ? 'in active' : '' ?>" id="browse">
+                    <table class="table table-compact browse-files">
+                    <thead>
+                        <tr>
+                        <th class="file-name"><?php echo $this->te('Name')?></th>
+                        <th class="file-time"><?php echo $this->te('Modified')?></th>
+                        <th class="file-size"><?php echo $this->te('Size')?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if ($this->path):
+                            $parent = dirname($this->path);
+                            $url    = $project
+                                ? $this->url('project-browse', array('path' => $parent, 'project' => $project->getId(), 'mode' => 'files'))
+                                : $this->url('file',           array('path' => $parent));
+                        ?>
+                        <tr class="dir">
+                            <td>
+                            <a href="<?php echo $url ?>">
+                                <i class="icon-arrow-up"></i>..</td>
+                            </a>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <?php endif ?>
+
+                        <?php
+                        // prepare icon for the folders:
+                        // - typically the classic open folder,
+                        // - a branch icon for the root of a project
+                        // - a hard-disk icon for depots at the root of the server
+                        $icon = 'icon-folder-open';
+                        if (!$this->path) {
+                            $icon = $project ? 'icon-branch swarm-icon' : 'icon-hdd';
+                        }
+                        foreach($dirs as $key => $dir):
+                            $name = basename($dir['dir']);
+                            $path = trim($this->path . '/' . $name, '/');
+                            $main = $project && !$this->path && in_array(strtolower($name), $mainlines);
+                            $url  = $project
+                                ? $this->url('project-browse', array('path' => $path, 'project' => $project->getId(), 'mode' => 'files'))
+                                : $this->url('file',           array('path' => $path));
+                        ?>
+                        <tr class="dir <?php echo $dir['isDeleted'] ? 'deleted' : '' ?>">
+                            <td>
+                                <?php
+                                echo '<a href="' . $url . '">'
+                                   . ($main ? '<strong>' : '')
+                                   . '<i class="' . $icon . '"></i>'
+                                   . $this->decodeFilespec($name)
+                                   . ($main ? '<strong>' : '')
+                                   . '</a>'
+                                ?>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <?php endforeach ?>
+
+                        <?php
+                        $seen = array();
+                        foreach($files as $key => $file):
+                            $name    = basename($client ? $file['clientFile'] : $file['depotFile']);
+                            $path    = trim($this->path . '/' . $name, '/');
+                            $time    = date('c', $file['headTime']);
+                            $size    = $this->fileSize($file['fileSize']);
+                            $deleted = preg_match('/delete/', $file['headAction']) || $file['headAction'] == 'purge';
+                            $url     = $project
+                                ? $this->url('project-browse', array('path' => $path, 'project' => $project->getId(), 'mode' => 'files'))
+                                : $this->url('file',           array('path' => $path));
+
+                            // skip duplicate files - can happen if using client syntax and overlay mappings.
+                            if (isset($seen[$name])) {
+                                continue;
+                            }
+                            $seen[$name] = true;
+                        ?>
+                        <tr class="file <?php echo $deleted ? 'deleted' : '' ?>">
+                            <td>
+                            <a href="<?php echo $url ?>">
+                                <i class="icon-file"></i><?php echo $this->decodeFilespec($name) ?></td>
+                            </a>
+                            <td><span class=timeago title="<?php echo $this->escapeHtmlAttr($time) ?>"></span></td>
+                            <td><?php echo !$deleted ? $this->escapeHtml($size) : '' ?></td>
+                        </tr>
+                        <?php endforeach ?>
+                    </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade <?php echo $history ? 'in active' : '' ?>" id="commits"
+                    data-project-id="<?php echo $project ? $this->escapeHtmlAttr($project->getId()) : '' ?>">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<?php if(!$partial): ?>
+<script type="text/javascript">
+    $(function() {
+        swarm.browse.init();
+    });
+</script>
+<?php endif; ?>

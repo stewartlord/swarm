@@ -1,0 +1,78 @@
+<?php
+$services   = $this->getHelperPluginManager()->getServiceLocator();
+$route      = $services->get('application')->getMvcEvent()->getRouteMatch()->getMatchedRouteName();
+$translator = $services->get('translator');
+$config     = $services->get('config');
+
+// check for the existence of docs in the current locale
+$helpUrl = $this->basePath() . '/docs/';
+if (file_exists(BASE_PATH . '/public/docs/' . $translator->getLocale() . '/index.html')) {
+    $helpUrl .= $translator->getLocale() . '/';
+} else if (file_exists(BASE_PATH . '/public/docs/' . $translator->getFallbackLocale() . '/index.html')) {
+    $helpUrl .= $translator->getFallbackLocale() . '/';
+}
+
+?>
+<div class="navbar navbar-fixed-top navbar-inverse navbar-site offset-fixed">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="<?php echo $this->url('home') ?>"></a>
+            <ul class="nav pull-right user">
+                <li class="search">
+                    <i class="icon-search icon-white"></i><input
+                        type=text autocomplete="off" required
+                        data-has-p4-search="<?php echo isset($config['search']['p4_search_host']) ?>">
+                </li>
+            <?php
+            $userId = $this->user()->getId();
+            if ($userId):
+            ?>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
+                        <i class="icon-user icon-white"></i>
+                        <?php echo $this->escapeHtml($userId) ?> <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-label="<?php echo $this->te("User Menu")?>">
+                        <li role="menuitem"><a href="<?php echo $this->url('user', array('user' => $userId)) ?>"><?php echo $this->te("Profile")?></a></li>
+                        <li role="menuitem"><a href="<?php echo $this->url('about') ?>" onclick="swarm.about.show(); return false;"><?php echo $this->te("About Swarm")?></a></li>
+                        <li role="presentation" class="divider"></li>
+                        <li role="menuitem"><a href="<?php echo $this->url('logout') ?>"><?php echo $this->te("Log out")?></a></li>
+                    </ul>
+                </li>
+            <?php else: ?>
+                <li><a href="<?php echo $this->url('login') ?>" onclick="swarm.user.login(); return false;"><?php echo $this->te("Log in")?></a></li>
+            <?php endif ?>
+            </ul>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                  <li class="<?php echo $route === 'home' ? 'active' : '' ?>">
+                      <a href="<?php echo $this->url('home') ?>"><?php echo $this->te("Home")?></a>
+                  </li>
+                  <li class="<?php echo $route === 'reviews' ? 'active' : '' ?>">
+                      <a href="<?php echo $this->url('reviews') ?>"><?php echo $this->te("Reviews")?></a>
+                  </li>
+                  <li class="<?php echo $route === 'file' ? 'active' : '' ?>">
+                      <a href="<?php echo $this->url('file') ?>"><?php echo $this->te("Files")?></a>
+                  </li>
+                  <li class="<?php echo $route === 'changes' ? 'active' : '' ?>">
+                      <a href="<?php echo $this->url('changes') ?>"><?php echo $this->te("Commits")?></a>
+                  </li>
+                  <li class="<?php echo $route === 'jobs' ? 'active' : '' ?>">
+                      <a href="<?php echo $this->url('jobs') ?>"><?php echo $this->te("Jobs")?></a>
+                  </li>
+                  <li class="<?php echo $route === 'groups' ? 'active' : '' ?>">
+                      <a href="<?php echo $this->url('groups') ?>"><?php echo $this->te("Groups")?></a>
+                  </li>
+                  <li>
+                      <a href="<?php echo $this->escapeFullUrl($helpUrl) ?>"><?php echo $this->te("Help")?></a>
+                  </li>
+              </ul>
+            </div>
+        </div>
+    </div>
+</div>

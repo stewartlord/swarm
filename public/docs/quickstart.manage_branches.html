@@ -1,0 +1,363 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>How do I manage project branches? // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.quickstart.html" title="Quickstart" />
+      <link rel="prev" href="quickstart.review_deployment.html" title="How can I automatically deploy code within a review?" />
+      <link rel="next" href="quickstart.logging_level.html" title="How do I change the logging level?" />
+      <meta name="Section-title" content="How do I manage project branches?" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="quickstart.manage_branches">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">How do I manage project branches?</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      <span class="bold"><strong>Initial steps:</strong></span>
+                    
+               </p>
+               <div class="orderedlist">
+                  <ol class="orderedlist" type="1">
+                     <li class="listitem">
+                        <p>
+                                   Visit your project page.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-edit.png" alt="Project Edit button" /></span></span>
+                           
+                                   Click <span class="guibutton">Edit</span>.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/dropdown-branches.png" alt="Branches drop-down buttons" /></span></span>
+                           
+                                   Next to the <span class="bold"><strong>Branches</strong></span> label,
+                                   a drop-down button for each branch is displayed, plus an
+                                   <span class="guibutton">Add Branch</span> button.
+                                 
+                        </p>
+                     </li>
+                  </ol>
+               </div>
+               <div class="section" id="quickstart.manage_branches.adding-a-branch">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Adding a branch</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Follow the <a class="link" href="quickstart.manage_branches.html" title="How do I manage project branches?">initial
+                                           steps</a>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p class="thumb">
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/link-add_branch.png" alt="The Add Branch link" /></span></span>
+                                      
+                           </p>
+                           <p>
+                                        Click the <span class="guibutton">Add Branch</span> link to display the branch
+                                        drop-down dialog:
+                                      
+                           </p>
+                           <p>
+                                        <span class="inlinemediaobject"><img src="images/dropdown-branch.png" alt="The branch drop-down dialog" /></span>
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Type in a short <span class="guilabel">Name</span> for your branch.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Type in one or more branch <span class="bold"><strong>Paths</strong></span>, one
+                                        per line.
+                                      
+                           </p>
+                           <div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                             Each branch path should be expressed in depot syntax. Wildcards
+                                             should not be used; the only exception is the branch path can end
+                                             with the Perforce wildcard <code class="literal">...</code>
+                                           
+                              </p>
+                              <p>
+                                             For example: <code class="filename">//depot/main/swarm/...</code>
+                                           
+                              </p>
+                              <p>
+                                             For more information, see
+                                             <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/cmdref/o.fspecs.html#d0e68386" target="_top">Command
+                                                Reference: File Specifications</a>.
+                                           
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Optionally check the <span class="guibutton">Only Moderators can approve or reject
+                                           reviews</span> checkbox. When checked, a field is displayed
+                                        allowing you to add a new moderator. The field auto-suggests users
+                                        within the Helix Versioning Engine as you type.
+                                      
+                           </p>
+                           <p>
+                                        <span class="inlinemediaobject"><img src="images/thumb-add_moderator.png" alt="The Add Moderator field" /></span>
+                                      
+                           </p>
+                           <p>
+                                        Once the branch specification is complete and the project has been
+                                        saved, changing the state of any review associated with
+                                        this moderated branch is restricted as follows:
+                                      
+                           </p>
+                           <div class="itemizedlist">
+                              <ul class="itemizedlist" style="list-style-type: disc; ">
+                                 <li class="listitem">
+                                    <p>
+                                             Only moderators can approve or reject the review. Moderators can also
+                                             transition a review to any other state.
+                                           
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                             The review's author, when she is not a moderator, can change the review's
+                                             state to <span class="guilabel">Needs Review</span>, <span class="guilabel">Needs
+                                                Revision</span>, <span class="guilabel">Archived</span>, and can attach
+                                             committed changelists.
+                                           
+                                    </p>
+                                    <p>
+                                             Normally, the review's author cannot change the review's state to
+                                             <span class="guilabel">Approved</span> or <span class="guilabel">Rejected</span> on
+                                             moderated branches. However, authors that are also moderators have
+                                             moderator privileges, and may approve or reject their own review.
+                                           
+                                    </p>
+                                    <p>
+                                             When <a class="link" href="admin.reviews.html#admin.reviews.disable_self_approve" title="Disable self-approval of reviews by authors"><code class="literal">disable_self_approve</code></a>
+                                             is enabled, authors who are moderators (or even users with
+                                             <span class="emphasis"><em>admin</em></span> privileges) cannot approve their own reviews.
+                                           
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                             Project members can change the review's state to <span class="guilabel">Needs
+                                                Review</span> or <span class="guilabel">Needs Revision</span>, and can attach
+                                             committed changelists. Project members cannot change the review's state to
+                                             <span class="guilabel">Approved</span>, <span class="guilabel">Rejected</span>, or
+                                             <span class="guilabel">Archived</span>.
+                                           
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                             Users that are not project members, moderators, or the review's author
+                                             cannot transition the review's state.
+                                           
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                             For the review's author and project members, if a review is not in one of
+                                             their permitted states, for example if the review's state is
+                                             <span class="guilabel">Rejected</span>, they cannot transition the review to
+                                             another state.
+                                           
+                                    </p>
+                                    <p>
+                                             These restrictions have no effect on who can start a review.
+                                           
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-done.png" alt="The Done button" /></span></span>
+                              
+                                        Click the <span class="guibutton">Done</span> button to accept your branch
+                                        specification.
+                                      
+                           </p>
+                           <p>
+                                        Once the branch definition has completed, if any moderators were
+                                        specified, the number of moderators for that branch is displayed in the
+                                        list of branches:
+                                      
+                           </p>
+                           <p>
+                                        <span class="inlinemediaobject"><img src="images/thumb-branch_moderators.png" alt="Branch moderators count." /></span>
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-save.png" alt="Project Save button" /></span></span>
+                              
+                                        Click <span class="guibutton">Save</span> to save the branch changes to your
+                                        project.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                The project name does not need to be included in the branch name; Swarm
+                                displays the project name with the branch name when appropriate.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="quickstart.manage_branches.editing_a_branch">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Editing a branch</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Follow the <a class="link" href="quickstart.manage_branches.html" title="How do I manage project branches?">initial
+                                           steps</a>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Click the branch drop-down button you want to edit.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Revise the <span class="guilabel">Name</span>, <span class="guilabel">Paths</span>, or
+                                        moderators as required.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-save.png" alt="Project Save button" /></span></span>
+                              
+                                        Click <span class="guibutton">Save</span>.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="section" id="quickstart.manage_branches.removing_a_branch">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Removing a branch</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Follow the <a class="link" href="quickstart.manage_branches.html" title="How do I manage project branches?">initial
+                                           steps</a>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Click the branch drop-down button you want to remove.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p class="thumb">
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-remove.png" alt="Branch Remove button" /></span></span>
+                              
+                                        Click <span class="guibutton">Remove</span>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p class="thumb">
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-save.png" alt="Project Save button" /></span></span>
+                                      
+                           </p>
+                           <p>
+                                        Click <span class="guibutton">Save</span>.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="quickstart.review_deployment.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">How can I automatically deploy code within a review?</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="quickstart.logging_level.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">How do I change the logging level?</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

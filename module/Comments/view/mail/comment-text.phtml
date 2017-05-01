@@ -1,0 +1,32 @@
+<?php
+// if we are emailing about a new comment like to the comment author, tweak the action to be more personal
+$comment   = $event->getParam('comment');
+$mail      = $event->getParam('mail');
+$toUsers   = $mail && isset($mail['toUsers']) ? (array) $mail['toUsers'] : array();
+$isAddLike = $event->getParam('commentAction') === $comment::ACTION_LIKE;
+$action    = $isAddLike && array_values($toUsers) === array($comment->get('user'))
+    ? 'liked your comment on'
+    : $activity->get('action');
+
+echo trim($activity->get('user') . ' ' . $this->t($action) . ' ' . $activity->get('target'));
+
+// if the comment has file context lines or attachments, show them.
+$context     = $comment ? $comment->getFileContext() : array('content' => null);
+$attachments = $event->getParam('attachments');
+
+if (is_array($context['content'])) {
+    echo "\n\n> " . $this->wordWrap(implode("\n> ", $context['content']), 900);
+}
+
+echo "\n\n" . trim($this->wordWrap($activity->get('description'), 900));
+
+echo "\n\n" . $activity->getUrl($this->plugin('qualifiedUrl'));
+
+if ($attachments && count($attachments) > 0) {
+    echo "\n\n{$this->te('Attachments')}:\n";
+    foreach($attachments as $attachment) {
+        echo "\t" . $attachment->get('name') . " (" . $this->fileSize($attachment->get('size')) . ") "
+            . $this->qualifiedUrl('attachments', array('attachment'=>$attachment->getId()));
+    }
+}
+?>

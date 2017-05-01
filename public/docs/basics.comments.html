@@ -1,0 +1,796 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Comments // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.basics.html" title="Basics" />
+      <link rel="prev" href="basics.diffs.html" title="Diffs" />
+      <link rel="next" href="basics.users.html" title="Users" />
+      <meta name="Section-title" content="Comments" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="basics.comments">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Comments</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Comments are the primary feedback mechanism provided by Swarm. Comments can
+                      be made on files in a review, on any lines of any text file in a review, and
+                      on jobs.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="thumb"><img src="images/tab-comments.png" alt="Drop-down menu for flagging a comment as a task." /></span></span>
+                  
+                      Access the comments for a review, or job, by clicking on the
+                      <span class="guilabel">Comments</span> tab. The number of open (non-archived
+                      comments) is displayed in the tab.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="thumb"><img src="images/tab-comments-tooltip.png" alt="Drop-down menu for flagging a comment as a task." /></span></span>
+                  
+                      If you hover your mouse over the comment count, a tooltip is displayed
+                      showing how many comments are archived. See
+                      <a class="xref" href="basics.comments.html#basics.comments.archiving" title="Archiving comments">Archiving comments</a> for details.
+                    
+               </p>
+               <div class="section" id="basics.comments.tasks">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Tasks</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Flagging comments as <span class="emphasis"><em>tasks</em></span> is a lightweight workflow
+                           within a review that helps authors and reviewers prioritize review
+                           feedback. Any comment on a code review can be flagged as a task,
+                           indicating to a code review's author that the described issue needs to be
+                           addressed, and that the review is unlikely to be approved without a fix.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/dropdown-task-not_a_task.png" alt="Drop-down menu for flagging a comment as a task." /></span></span>
+                     
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/checkbox-flag_as_task.png" alt="The Flag as Task checkbox." /></span></span>
+                     
+                           To flag a comment as a task, check the <span class="guilabel">Flag as
+                              Task</span> checkbox when posting a comment, or click the flag icon in
+                           the upper right of an existing comment and select <span class="guilabel">Flag as
+                              Task</span> in the drop-down menu.
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                If you do not have permission to archive comments, you do not have
+                                permission to flag comments as tasks. Anonymous users never have
+                                permission to archive comments, and can only view current task states.
+                              
+                     </p>
+                  </div>
+                  <p class="clear">
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/dropdown-task-open.png" alt="Drop-down menu for open tasks." /></span></span>
+                     
+                           Once a comment is flagged as a task, it is considered to be an <span class="emphasis"><em>open
+                                 task</em></span>. Clicking the red flag icon displays a drop-down menu with
+                           the following options:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <span class="guilabel">Task Addressed</span>: usually used by the review's
+                                        author to indicate that the noted issue has been fixed.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="guilabel">Not a Task</span>: used to correct comments that have
+                                        inappropriately been flagged as tasks.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p class="clear">
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/dropdown-task-addressed.png" alt="Drop-down menu for addressed tasks." /></span></span>
+                     
+                           A comment with a green check indicates that the task has been addressed.
+                           Clicking the green check displays a drop-down menu with the following
+                           options:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <span class="guilabel">Verify</span>: usually used by the comment author,
+                                        or other reviewer, after checking that the issue is indeed fixed.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="guilabel">Verify and Archive</span>: used to both indicate that the
+                                        issue has been fixed, and to archive the comment so it is hidden from
+                                        view. Archived tasks, whether they are open, addressed, or verified,
+                                        are not included in the task counts for the code review.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="guilabel">Reopen task</span>: used when an update to the review does
+                                        not resolve the noted issue, or to correct an inadvertent task
+                                        verification.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p class="clear">
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/dropdown-task-verified.png" alt="Drop-down menu for verified tasks." /></span></span>
+                     
+                           A comment with a blue double-check indicates that the task has been
+                           verified. Clicking the blue double-check displays a drop-down menu with
+                           the following option:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <span class="guilabel">Reopen Task</span>: used if the issue needs further work
+                                        post-verification, or if verification was made inadvertently.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/panel-task_counts.png" alt="Task counts/status summary." /></span></span>
+                     
+                           A summary of comments flagged as tasks and their various states appears
+                           below the code review's description, beside the reviewers area. Archived
+                           comments that are flagged as tasks are not included in the summary.
+                         
+                  </p>
+                  <p>
+                           Like many of Swarm's features, tasks are merely advisory. Flagging a
+                           comment as a task provides visual indication that there is an identified
+                           issue, but Swarm does not restrict any operations for tasks in any state.
+                           A warning is displayed should you attempt to approve or commit a review
+                           via the Swarm UI that has any open tasks (that are not archived):
+                         
+                  </p>
+                  <div class="mediaobject"><img src="images/dialog-update_review_with_tasks.png" alt="A warning about open tasks when approving a review." /></div>
+               </div>
+               <div class="section" id="basics.comments.features">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Comment features</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="section" id="basics.comments.features.emoji">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Emoji</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                <span class="inlinemediaobject"><span class="thumb"><img src="images/icon-emoji-smile-tooltip.png" alt="Emoji smile tooltip" /></span></span>
+                                
+                                Swarm comments support <a class="glossterm" href="glossary.html#Emoji"><em class="glossterm">Emoji</em></a>
+                                short-hand; when you save a comment, emoticon text like
+                                <code class="literal">:smile:</code> is displayed as:
+                                
+                                <span class="inlinemediaobject"><img src="images/icon-emoji-smile.png" alt="Emoji smile" /></span>.
+                                
+                                Hover your mouse over an Emoji emoticon to see a tooltip displaying the
+                                text short-hand for the emoticon.
+                              
+                     </p>
+                     <div class="tip admonition">
+                        <h3 class="title">Tip</h3>
+                        <p>
+                                     For more information on Emoji, see
+                                     <a class="link" href="http://en.wikipedia.org/wiki/Emoji" target="_top">Emoji</a> at
+                                     Wikipedia. Emoji emoticons are listed in the
+                                     <a class="link" href="http://www.emoji-cheat-sheet.com/" target="_top">Emoji Cheat
+                                        Sheet</a>.
+                                   
+                        </p>
+                     </div>
+                  </div>
+                  <div class="section" id="basics.comments.features.links">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Links in comments</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                <span class="inlinemediaobject"><span class="popup"><img src="images/comments_with_links.png" alt="Links appearing in comments" /></span></span>
+                                
+                                Whenever you include a URL in a comment, it is automatically made into a
+                                link. If the link points to an image, or a YouTube video, that resource
+                                is displayed at the end of the comment.
+                              
+                     </p>
+                  </div>
+                  <div class="section" id="basics.comments.features.like">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Liking comments</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-comment-not_yet_liked.png" alt="A comment that you have not yet liked" /></span></span>
+                        
+                                As an authenticated user, you can <span class="emphasis"><em>like</em></span> a comment by
+                                clicking the muted heart icon beneath a comment.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-comment-liked.png" alt="A comment that you have liked" /></span></span>
+                        
+                                When you like a comment, a
+                                <a class="link" href="basics.notifications.html" title="Notifications">notification</a> is sent to the
+                                comment's author, and the heart icon becomes red to indicate that you
+                                have liked the comment.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-comment-like_count.png" alt="A comment that has been liked by two people" /></span></span>
+                        
+                                If a comment has one or more likes, a count of the likes appears
+                                before the heart icon. A tooltip appears when you hover the mouse over
+                                the like count displaying the usernames of everyone that has liked the
+                                comment.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-comment-unlike.png" alt="A comment about to be unliked" /></span></span>
+                        
+                                Click the heart icon again to unlike a comment.
+                              
+                     </p>
+                     <div class="note admonition">
+                        <h3 class="title">Note</h3>
+                        <p>
+                                     You cannot like/unlike a comment that has been archived.
+                                   
+                        </p>
+                     </div>
+                  </div>
+                  <div class="section" id="basics.comments.features.attachments">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Comment attachments</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                Arbitrary files can be attached to comments. This is useful for sharing
+                                documents that are helpful in code review, such as screenshots of error
+                                conditions, reference code, etc.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="thumb"><img src="images/review-comment_area.png" alt="The Comment area when attachments are enabled." /></span></span>
+                        
+                                Swarm must be <a class="link" href="admin.comment_attachments.html" title="Comment attachments">configured to
+                                   enable comment attachments</a>. Once the configuration is complete,
+                                the comment area adds a note <span class="guilabel">Drop files here to attach
+                                   them</span>.
+                              
+                     </p>
+                     <p>
+                                To attach a file, simply drag it from your desktop or file browser and
+                                drop the file onto the comment area. Multiple files can be attached to a
+                                comment, either one at a time, or by dragging a group of files in one
+                                go. However, uploading a folder of files is not supported.
+                              
+                     </p>
+                     <p>
+                                When you let go of the file (or files), the upload to Swarm starts
+                                immediately, and a progress bar for each file is displayed below the
+                                comment area with green bars indicating completed uploads and blue bars
+                                indicating uploads in progress:
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><img src="images/review-comment_area_attachments.png" alt="The Comment area with attachments progress bars." /></span>
+                              
+                     </p>
+                     <p>
+                                Before you post your comment, if any files already attached should be
+                                removed, click the <span class="guibutton">X</span> to the right of the attached
+                                file you wish to remove.
+                              
+                     </p>
+                     <p>
+                                After you post your comment, a list of attached files appears below the
+                                comment text. The list includes the filename and file sizes for each
+                                attached file. When you view your comment on the Comments tab, Swarm
+                                displays an image preview for any attached images.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><img src="images/review-comment_with_attachments.jpg" alt="A comment with its attached files." /></span>
+                              
+                     </p>
+                  </div>
+                  <div class="section" id="basics.comments.features.context">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Comment context</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                When comments are added to files in a review, on lines that have been
+                                changed, Swarm records several lines of context before the line
+                                receiving the comment. This helps makes sense of the comments should
+                                later changes remove those lines.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><img src="images/thumb-comments_with_context.png" alt="Commentary on a change, showing its context." /></span>
+                              
+                     </p>
+                     <p>
+                                Each comment associated with that line has a record of the context, but only
+                                the first comment displays that context.
+                              
+                     </p>
+                  </div>
+                  <div class="section" id="basics.comments.features.delayed_notifications">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Delayed notifications</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                Delayed notifications allow reviewers to add or edit comments as they
+                                progress through a review, but prevent notifications from being sent
+                                until their review effort is complete. Any delayed notifications are
+                                rolled up into a single email notification when the reviewer turns off
+                                delayed notifications.
+                              
+                     </p>
+                     <p>
+                                Whenever <span class="guilabel">Delay Notification</span> is checked,
+                                <span class="emphasis"><em>batch</em></span> mode is enabled and the notification for any
+                                new or edited comment is delayed; no email is sent. Swarm remembers that
+                                you have clicked <span class="guilabel">Delay Notification</span>; you do not
+                                need to click it for each comment you post.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="thumb"><img src="images/review-delay_notification-count.png" alt="The count of delayed notifications." /></span></span>
+                        
+                                When there are delayed notifications, Swarm displays their count.
+                              
+                     </p>
+                     <p>
+                                Batch mode ends when a new or edited comment is saved with
+                                <span class="guilabel">Delay Notification</span> unchecked. Swarm then sends a
+                                single email notification containing all previously delayed comment
+                                notifications plus the most recent new or edited comment.
+                              
+                     </p>
+                     <div class="note admonition">
+                        <h3 class="title">Note</h3>
+                        <p>
+                                     There is no <span class="emphasis"><em>expiry</em></span> mechanism; delayed
+                                     notifications are delayed indefinitely until <span class="guilabel">Delay
+                                        Notification</span> is unchecked.
+                                   
+                        </p>
+                     </div>
+                     <p>
+                                <span class="inlinemediaobject"><span class="popup"><img src="images/review-delay_notification-checked.png" alt="The Delay Notification checkbox checked." /></span></span>
+                        
+                                <span class="inlinemediaobject"><span class="popup"><img src="images/review-delay_notification-unchecked.png" alt="The Delay Notification checkbox unchecked." /></span></span>
+                        
+                                Hover your mouse over <span class="guilabel">Delay Notification</span> to see a
+                                tooltip that indicates the current state.
+                              
+                     </p>
+                     <div class="note admonition">
+                        <h3 class="title">Note</h3>
+                        <p>
+                                     Delayed notifications are available only for comments on reviews;
+                                     comments on commits or jobs produce notifications immediately.
+                                   
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <div class="section" id="basics.comments.changelist">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Commenting on a changelist or review</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Visit the changelist's or review's page.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/tabs-review_files_comments_history-comments.png" alt="Comments tab on Reviews page" /></span></span>
+                              
+                                        Click <span class="guibutton">Comments</span> to view the comments tab.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/review-comment_area.png" alt="Comment area for a review" /></span></span>
+                              
+                                        Add your comment in the provided text area.
+                                      
+                           </p>
+                           <p>
+                                        Also see <a class="xref" href="basics.comments.html#basics.comments.features.attachments" title="Comment attachments">Comment attachments</a> above.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-post.png" alt="Post button" /></span></span>
+                              
+                                        Click <span class="guibutton">Post</span>.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="section" id="basics.comments.line">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Commenting on a specific line in a file</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Visit the changelist's or review's page.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/tabs-review_files_comments_history-files.png" alt="Files tab" /></span></span>
+                              
+                                        Click <span class="guibutton">Files</span> to view the file tab.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Click a line you want to comment on. The comment text area appears.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="popup"><img src="images/diff-comment_area.png" alt="Comment area in a diff" /></span></span>
+                              
+                                        Add your comment in the provided text area.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-post.png" alt="Post button for Comments" /></span></span>
+                              
+                                        Click <span class="guibutton">Post</span>.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="section" id="basics.comments.file">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Commenting on a file in a changelist or code review</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Visit the changelist's or review's page.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/tabs-review_files_comments_history-files.png" alt="Files tab" /></span></span>
+                              
+                                        Click <span class="guibutton">Files</span> to view the file tab.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        If there are multiple files, click the file you want to comment on to
+                                        expand its view.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/link-add_comment.png" alt="The link to add a comment to a file." /></span></span>
+                              
+                                        Click the <span class="guibutton">Add a Comment</span> link in the footer of
+                                        the file's display.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="popup"><img src="images/diff-comment_area.png" alt="Comment area in a diff" /></span></span>
+                              
+                                        Add your comment in the provided text area.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-post.png" alt="Post button for Comments" /></span></span>
+                              
+                                        Click <span class="guibutton">Post</span>.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                You can use <a class="xref" href="basics.notable.html#basics.notable.mentions" title="@mentions">@mentions</a> in comments. An
+                                @mention includes the specified user in the review, and they will
+                                receive a notification whenever there is an update to the review.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="basics.comments.editing">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Editing comments</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           For any comment that you have created, you can edit its contents:
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/review-comment_edit_link.png" alt="Edit link for Comments" /></span></span>
+                              
+                                        Click the <span class="guilabel">Edit</span> link.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Adjust the comment content, including adding new attachments or
+                                        removing existing attachments.
+                                      
+                           </p>
+                           <div class="mediaobject"><span class="thumb"><img src="images/review-comment-edit.png" alt="Editing a comment" /></span></div>
+                           <p>
+                                        When you attempt to remove an attachment, it is not immediately
+                                        removed but marked for removal; the attachment's presentation becomes
+                                        muted and the removal <span class="guilabel">X</span> icon is replaced with a
+                                        <span class="guilabel">Restore</span> icon.
+                                      
+                           </p>
+                           <div class="mediaobject"><span class="thumb"><img src="images/review-comment-attachment_removed.png" alt="A comment attachment marked for removal" /></span></div>
+                           <p>
+                                        Before completing your edits to the comment, if you do not wish to
+                                        remove attachments that are marked for removal, click the
+                                        <span class="guilabel">Restore</span> icon; the <span class="guilabel">Restore</span>
+                                        icon is replaced with the removal <span class="guilabel">X</span> icon, and
+                                        the attachment's presentation is no longer muted.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-save.png" alt="Save button for Comments" /></span></span>
+                              
+                                        Click <span class="guibutton">Save</span>. The edits to the comment text are
+                                        saved, any new attachments are saved, and any attachments marked for
+                                        removal are removed. Swarm also adds <code class="literal">(edited)</code> to
+                                        the comment's timestamp.
+                                      
+                           </p>
+                           <div class="mediaobject"><img src="images/review-comment-edited.png" alt="The &#34;(edited)&#34; indicator for a comment" /></div>
+                           <p>
+                                        At any time, you can click the <span class="guilabel">Cancel</span> to cancel
+                                        editing of the comment. The original comment text is reinstated and
+                                        any existing attachments are retained. Any text edits or uploaded
+                                        attachments are lost.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+                  <p>
+                           Whenever a comment is edited, Swarm sends a notification to everyone
+                           involved in the review, including the author and reviewers, but not to the
+                           editor of the comment.
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                Swarm does not provide a mechanism to see older versions of edited
+                                comments.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="basics.comments.archiving">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Archiving comments</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           As a code review progresses, comments made on earlier versions of a file
+                           may no longer be pertinent. If left unattended, comments may accumulate
+                           until it is difficult to determine which comments are still relevant and
+                           which comments have been addressed.
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-comment-archive.png" alt="The Comment Archive button" /></span></span>
+                              
+                                        Click the <span class="emphasis"><em>file drawer</em></span> icon at the top
+                                        right of a posted comment to archive it.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+                  <p>
+                           Archived comments are normally hidden from view. When archived comments
+                           exist, a box appears showing the number of archived comments. Click the
+                           box to toggle the presentation of all archived comments.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><img src="images/panel-archived_comments.png" alt="The Archived Comments box" /></span>
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.comments.restore">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Restore comments</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           A closed comment may be <span class="emphasis"><em>restored</em></span>.
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Click the <span class="emphasis"><em>archived comments</em></span> box to display all
+                                        archived comments.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Locate the comment you want to restore
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-comment-restore.png" alt="The Comment Restore button" /></span></span>
+                              
+                                        Click the <span class="emphasis"><em>arrow</em></span> icon in the top right of the
+                                        comment to restore it.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="basics.diffs.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Diffs</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="basics.users.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Users</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

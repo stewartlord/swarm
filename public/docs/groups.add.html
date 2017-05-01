@@ -1,0 +1,191 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Add a group // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.groups.html" title="Groups" />
+      <link rel="prev" href="chapter.groups.html" title="Groups" />
+      <link rel="next" href="groups.edit.html" title="Edit a group" />
+      <meta name="Section-title" content="Add a group" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="groups.add">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Add a group</h2>
+                     </div>
+                  </div>
+               </div>
+               <div class="important admonition">
+                  <h3 class="title">Important</h3>
+                  <p>
+                           You must have <span class="emphasis"><em>super</em></span> privileges in the Helix
+                           Versioning Engine (<span class="command"><strong>p4d</strong></span>), or have <span class="emphasis"><em>admin</em></span>
+                           privileges in <span class="command"><strong>p4d</strong></span> version 2012.1 or newer, to create a
+                           group. If you do not have sufficient permissions, Swarm does not display
+                           the <span class="guibutton">Add Group</span> button.
+                         
+                  </p>
+               </div>
+               <div class="orderedlist">
+                  <ol class="orderedlist" type="1">
+                     <li class="listitem">
+                        <p>
+                                   Click the <span class="guilabel">Groups</span> link in the main toolbar to
+                                   display the groups listing page.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-add_group.png" alt="The Add Group button" /></span></span>
+                           
+                                   Click the <span class="guibutton">Add Group</span> button.
+                                 
+                        </p>
+                        <p>
+                                   The <span class="guilabel">Add Group</span> page appears:
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/page-add_group.png" alt="The Add Group page" /></span>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Provide a name for the group.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Optionally provide a description.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Optionally specify an owner. This field auto-suggests users within the
+                                   Helix Versioning Engine as you type.
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/thumb-add_group_owner.png" alt="The Add Owner field" /></span>
+                                 
+                        </p>
+                        <p>
+                                   Once specified, modifying the group's definition is restricted to
+                                   group owners and users with <span class="emphasis"><em>super</em></span> privileges in
+                                   the Helix Versioning Engine.
+                                 
+                        </p>
+                        <p>
+                                   If you do not specify an owner, you must specify at least one member
+                                   (below).
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Optionally specify at group members. This field auto-suggests projects,
+                                   groups, and users within the Helix Versioning Engine as you type (up to
+                                   a combined limit of 20 entries).
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/dropdown-group_member-complete.png" alt="Auto-suggesting group members" /></span>
+                                 
+                        </p>
+                        <p>
+                                   If you specify a project, the project's members become members of the
+                                   group. If you specify a group, that group becomes a sub-group of your
+                                   new group, and all of its members (and members of any of its sub-groups)
+                                   become members of your new group.
+                                 
+                        </p>
+                        <p>
+                                   If you do not specify any members, you must specify at least one owner
+                                   (above).
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Optional enable notification whenever a group member starts a review, or
+                                   when a group member commits a change.
+                                 
+                        </p>
+                        <div class="note admonition">
+                           <h3 class="title">Note</h3>
+                           <p>
+                                        Members of your group may receive notification emails even if group
+                                        notifications are disabled as they may be members of a project, or
+                                        follow a project or user, or Swarm's review daemon functionality may
+                                        be enabled. See the <a class="link" href="basics.notifications.html" title="Notifications">notifications
+                                           overview</a> for details.
+                                      
+                           </p>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-save.png" alt="Save button for Group configuration" /></span></span>
+                           
+                                   Click <span class="guibutton">Save</span>.
+                                 
+                        </p>
+                        <div class="note admonition">
+                           <h3 class="title">Note</h3>
+                           <p>
+                                        The <span class="guibutton">Save</span> button is disabled if any required
+                                        fields are empty.
+                                      
+                           </p>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="chapter.groups.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Groups</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="groups.edit.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Edit a group</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

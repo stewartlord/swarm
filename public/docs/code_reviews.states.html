@@ -1,0 +1,395 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>States // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.code_reviews.html" title="Code reviews" />
+      <link rel="prev" href="code_reviews.workflow.html" title="Review workflow" />
+      <link rel="next" href="chapter.integrations.html" title="Integrations" />
+      <meta name="Section-title" content="States" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="code_reviews.states">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">States</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Reviews can be in one of several states. The biggest differentiator is
+                      whether the review's files have any outstanding, uncommitted changes or not.
+                    
+               </p>
+               <p>
+                      Whenever a review's state changes, an email notification is sent to all
+                      review participants, including the author, anyone who comments on the review
+                      or its files, anyone who has changed the review's state previously, and
+                      anyone who is <a class="link" href="basics.notable.html#basics.notable.mentions" title="@mentions">@mentioned</a> in
+                      the review's description or comments.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="thumb"><img src="images/dropdown-review_states-shelved.png" alt="The review state drop-down menu for shelved files" /></span></span>
+                  
+                      Code reviews can be in one of the following states:
+                    
+               </p>
+               <div class="variablelist">
+                  <dl class="variablelist">
+                     <dt><span class="term">
+                                   Needs review
+                                 </span></dt>
+                     <dd>
+                        <p>
+                                     The review has started and the changes need to be reviewed.
+                                   
+                        </p>
+                     </dd>
+                     <dt><span class="term">
+                                   Needs revisions
+                                 </span></dt>
+                     <dd>
+                        <p>
+                                     The changes have been reviewed and the reviewer has indicated that
+                                     further revisions are required.
+                                   
+                        </p>
+                     </dd>
+                     <dt><span class="term">
+                                   Approved
+                                 </span></dt>
+                     <dd>
+                        <p>
+                                     The review has completed. The changes need to be committed. See the
+                                     <a class="link" href="code_reviews.states.html#code_reviews.states.unapprove_modified" title="Note">note about
+                                        modified reviews</a>.
+                                   
+                        </p>
+                     </dd>
+                     <dt><span class="term">
+                                   Rejected
+                                 </span></dt>
+                     <dd>
+                        <p>
+                                     The review has completed. The changes are undesirable and should not
+                                     be committed.
+                                   
+                        </p>
+                     </dd>
+                     <dt><span class="term">
+                                   Archived
+                                 </span></dt>
+                     <dd>
+                        <p>
+                                     The review has completed for now. However, it is neither rejected nor
+                                     approved; it is simply put aside in case it is needed in the future.
+                                   
+                        </p>
+                     </dd>
+                  </dl>
+               </div>
+               <div class="note admonition" id="code_reviews.states.unapprove_modified">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           By default, when an <span class="guilabel">Approved</span> review is committed or
+                           updated, Swarm changes the state to <span class="guilabel">Needs Review</span> if
+                           the files have been modified since the review was approved. Files are
+                           considered modified if the list of involved files changes, or if the file
+                           content or file-type changes.
+                         
+                  </p>
+                  <p>
+                           If one or more files in a review has the filetype <code class="literal">+k</code>
+                           (<code class="literal">ktext</code>), this behavior is undesirable because the files
+                           will appear to be modified when the Helix Versioning Engine replaces RCS
+                           keywords with their current values. See
+                           <a class="xref" href="admin.unapprove_modified.html" title="Unapprove modified reviews">Unapprove modified reviews</a> to see how to disable this
+                           behavior.
+                         
+                  </p>
+               </div>
+               <div class="section" id="code_reviews.states.self_approve">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Self-approval by review authors</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           By default, review authors can approve their own reviews. This behavior is
+                           based on Swarm's <a class="link" href="chapter.code_reviews.html#code_reviews.index.advisory" title="Advisory nature">advisory
+                              nature</a>.
+                         
+                  </p>
+                  <p>
+                           Self-approval by authors can be prohibited on a project-by-project basis
+                           by specifying moderators for project branches (see the
+                           <a class="link" href="code_reviews.states.html#code_reviews.states.moderation" title="State change restrictions with moderation">next section</a>).
+                           However, authors who are moderators can self-approve their own reviews.
+                         
+                  </p>
+                  <p>
+                           Administrators can configure Swarm to prevent all self-approval by review
+                           authors. See <a class="xref" href="admin.reviews.html#admin.reviews.disable_self_approve" title="Disable self-approval of reviews by authors">Disable self-approval of reviews by authors</a> for
+                           details.
+                         
+                  </p>
+               </div>
+               <div class="section" id="code_reviews.states.moderation">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">State change restrictions with moderation</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Typically, any authenticated user can change the state of a review
+                           (remember that the review state is merely advisory in most cases). When
+                           the <span class="guilabel">Only Moderators can approve or reject reviews</span>
+                           restriction is enabled for a project branch, and one or more
+                           <a class="link" href="projects.add.html#projects.add.moderators">moderators</a> have been
+                           assigned to that branch (see <a class="xref" href="projects.add.html" title="Add a project">Add a project</a> for details),
+                           that branch is <span class="emphasis"><em>moderated</em></span>. Changing the state of any
+                           review associated with a moderated branch is restricted as follows:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                    Only moderators can approve or reject the review. Moderators can also
+                                    transition a review to any other state.
+                                  
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                    The review's author, when she is not a moderator, can change the review's
+                                    state to <span class="guilabel">Needs Review</span>, <span class="guilabel">Needs
+                                       Revision</span>, <span class="guilabel">Archived</span>, and can attach
+                                    committed changelists.
+                                  
+                           </p>
+                           <p>
+                                    Normally, the review's author cannot change the review's state to
+                                    <span class="guilabel">Approved</span> or <span class="guilabel">Rejected</span> on
+                                    moderated branches. However, authors that are also moderators have
+                                    moderator privileges, and may approve or reject their own review.
+                                  
+                           </p>
+                           <p>
+                                    When <a class="link" href="admin.reviews.html#admin.reviews.disable_self_approve" title="Disable self-approval of reviews by authors"><code class="literal">disable_self_approve</code></a>
+                                    is enabled, authors who are moderators (or even users with
+                                    <span class="emphasis"><em>admin</em></span> privileges) cannot approve their own reviews.
+                                  
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                    Project members can change the review's state to <span class="guilabel">Needs
+                                       Review</span> or <span class="guilabel">Needs Revision</span>, and can attach
+                                    committed changelists. Project members cannot change the review's state to
+                                    <span class="guilabel">Approved</span>, <span class="guilabel">Rejected</span>, or
+                                    <span class="guilabel">Archived</span>.
+                                  
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                    Users that are not project members, moderators, or the review's author
+                                    cannot transition the review's state.
+                                  
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                    For the review's author and project members, if a review is not in one of
+                                    their permitted states, for example if the review's state is
+                                    <span class="guilabel">Rejected</span>, they cannot transition the review to
+                                    another state.
+                                  
+                           </p>
+                           <p>
+                                    These restrictions have no effect on who can start a review.
+                                  
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="section" id="code_reviews.states.required_reviewers">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Required reviewers</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Reviews can optionally have required reviewers. When a review has required
+                           reviewers, the review cannot be <span class="guilabel">Approved</span> until all
+                           required reviewers have up-voted the review. If the review is associated
+                           with a project that has assigned moderators, even the moderators cannot
+                           approve the review without up-votes from all required reviewers (but they
+                           can reject the review).
+                         
+                  </p>
+                  <p>
+                           Required reviewers are expected to take greater care while performing a
+                           review than non-required reviewers, as their votes affect whether a review
+                           can be approved or not.
+                         
+                  </p>
+                  <p>
+                           To edit the reviewers for a review, and to change whether a reviewer is
+                           required or not, see
+                           <a class="xref" href="code_reviews.activities.html#code_reviews.activities.edit_reviewers" title="Edit reviewers">Edit reviewers</a>.
+                         
+                  </p>
+               </div>
+               <div class="section" id="code_reviews.states.state_actions">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">State actions</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/dropdown-review_states-shelved.png" alt="The review state drop-down menu for shelved files" /></span></span>
+                     
+                           The drop-down menu provides two special actions included with the state
+                           change for uncommitted reviews:
+                  </p>
+                  <div class="literallayout">
+                     <p><br />
+                        
+                     </p>
+                  </div>
+                  <p>
+                         
+                  </p>
+                  <div class="variablelist">
+                     <dl class="variablelist">
+                        <dt><span class="term">
+                                        Approve and Commit
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          When selected, a dialog appears allowing you to update the
+                                          description, select which jobs should be associated, and specify the
+                                          job status upon commit. When you click the <span class="guibutton">Approve and
+                                             Commit</span> button, the review becomes approved and its
+                                          associated files are committed. By default, Swarm's activity stream
+                                          entries and email notifications note that you committed the review
+                                          on behalf of the review's author. This can be configured to credit
+                                          only the committer, see <a class="xref" href="admin.commit_credit.html" title="Commit credit">Commit credit</a> for
+                                          details.
+                                        
+                           </p>
+                           <p>
+                                          <span class="inlinemediaobject"><img src="images/dialog-commit_review.png" alt="The Commit Review dialog" /></span>
+                                        
+                           </p>
+                           <div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                               This option can be removed by an administrator. See
+                                               <a class="xref" href="admin.security.html#admin.security.disable_commit" title="Disable commit">Disable commit</a> for details.
+                                             
+                              </p>
+                              <p>
+                                               By default, if the committer is not the review's author, Swarm
+                                               credits both users. If you prefer to credit only the committer,
+                                               see <a class="xref" href="admin.commit_credit.html" title="Commit credit">Commit credit</a> for details.
+                                             
+                              </p>
+                           </div>
+                        </dd>
+                        <dt><span class="term">
+                                        Already Committed...
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Sometimes, a changelist that a review is based upon gets committed
+                                          without the review being updated. In such a situation, selecting
+                                          <span class="guimenuitem">Already Committed...</span> displays a dialog
+                                          presenting a list of candidate changelists:
+                                        
+                           </p>
+                           <p>
+                                          <span class="inlinemediaobject"><img src="images/dialog-select_change.png" alt="The Select Change dialog" /></span>
+                                        
+                           </p>
+                           <p>
+                                          Specify the changelist, if you know it, or browse the recent changes
+                                          to locate the submitted change. The first field under
+                                          <span class="guilabel">History</span> allows you to filter changes by depot
+                                          path. The second field allows you to filter changes by userid. Click
+                                          a changelist to select it, and then click
+                                          <span class="guibutton">Select</span> to associate the changelist with the
+                                          review and complete the review.  Or, just double-click a changelist
+                                          to do the same.
+                                        
+                           </p>
+                        </dd>
+                     </dl>
+                  </div>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/dropdown-review_states-committed.png" alt="The review state drop-down menu for committed changes" /></span></span>
+                     
+                           When a review has been committed, sometimes a follow-up change needs to be
+                           associated with the review. For committed reviews, the drop-down menu
+                           provides the <span class="guimenuitem">Add a commit...</span> entry in place of
+                           <span class="guimenuitem">Already Committed...</span>. Select <span class="guimenuitem">Add a
+                              commit...</span> to use the <span class="guilabel">Select Change</span>
+                           dialog as described above.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="code_reviews.workflow.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Review workflow</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="chapter.integrations.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Integrations</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

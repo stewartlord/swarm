@@ -1,0 +1,265 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Swarm configuration // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.setup.html" title="Setting up" />
+      <link rel="prev" href="setup.php.html" title="PHP configuration" />
+      <link rel="next" href="setup.trigger_token.html" title="Establish trigger token" />
+      <meta name="Section-title" content="Swarm configuration" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="setup.swarm">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Swarm configuration</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      Now that Swarm is ready for use, you need to configure it to work in your
+                      environment.
+                    
+               </p>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                         A <span class="emphasis"><em>Helix Versioning Engine</em></span> can refer to a Perforce server,
+                         proxy, broker, replica, edge server, commit server, or cluster/node. It
+                         does not refer to a <span class="emphasis"><em>service user</em></span>; service users are
+                         used to coordinate replication in a Helix Versioning Engine.
+                       
+                  </p>
+               </div>
+               <div class="section" id="setup.swarm.config_file">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Swarm configuration file</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Create a file named config.php under the data directory with the following
+                           contents:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    return array(
+        'p4' =&gt; array(
+            'port'      =&gt; '<em class="replaceable"><code>my-helix-versioning-engine:1666</code></em>',
+            'user'      =&gt; '<em class="replaceable"><code>admin_userid</code></em>',
+            'password'  =&gt; '<em class="replaceable"><code>admin user ticket or password</code></em>',
+        ),
+        'log' =&gt; array(
+            'priority'  =&gt; 3, // 7 for max, defaults to 3
+        ),
+        'mail' =&gt; array(
+            'transport' =&gt; array(
+                'host' =&gt; 'my.mx.host',
+            ),
+        ),
+    );
+</pre><div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        For the <code class="literal">port</code> value, replace
+                                        <em class="replaceable"><code>my-helix-versioning-engine:1666</code></em> with the
+                                        <code class="literal">P4PORT</code> value used to connect to your Helix
+                                        Versioning Engine.
+                                      
+                           </p>
+                           <div class="important admonition">
+                              <h3 class="title">Important</h3>
+                              <p>
+                                             If your Helix Versioning Engine is deployed using the commit-edge
+                                             architecture, ensure that Swarm's <code class="literal">port</code> value
+                                             points to the commit server.
+                                           
+                              </p>
+                              <p>
+                                             For more information, see
+                                             "<a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4dist/chapter.distributed.html" target="_top">Commit-edge Architecture</a>" in the
+                                             <em class="citetitle"><a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4dist/index.html" target="_top">Perforce
+                                                   Server Administrator's Guide: Multi-site
+                                                   Deployment</a></em>.
+                                           
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        For the <code class="literal">user</code> value, replace
+                                        <em class="replaceable"><code>admin_userid</code></em> with a normal Perforce userid
+                                        that has <span class="emphasis"><em>admin</em></span>-level access to the Helix
+                                        Versioning Engine.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        For the <code class="literal">password</code> value, while a plain-text password
+                                        works, we recommend that you use a ticket value instead. Obtain the
+                                        ticket value for the <em class="replaceable"><code>admin_userid</code></em> during
+                                        login with this command:
+                                      
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>p4 -p <em class="replaceable"><code>my-helix-versioning-engine:1666</code></em> -u <em class="replaceable"><code>admin_userid</code></em> login -p</strong></span>
+</pre><div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                             For a Helix Versioning Engine with the <code class="literal">security</code>
+                                             configurable set to level 3, or when authentication is configured to
+                                             use LDAP, ticket-based authentication is required.
+                                           
+                              </p>
+                           </div>
+                           <div class="important admonition">
+                              <h3 class="title">Important</h3>
+                              <p>
+                                             When using ticket-based authentication, ensure that the ticket has a
+                                             very long expiration. An expired ticket causes many Swarm operations
+                                             to fail.
+                                           
+                              </p>
+                           </div>
+                           <p>
+                                        You can determine when the <em class="replaceable"><code>admin userid</code></em>'s
+                                        ticket will expire with:
+                                      
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>p4 -p <em class="replaceable"><code>my-helix-versioning-engine:1666</code></em> -u <em class="replaceable"><code>admin_userid</code></em> -P <em class="replaceable"><code>ticket_value</code></em> login -s</strong></span>
+</pre><div class="tip admonition">
+                              <h3 class="title">Tip</h3>
+                              <p>
+                                             For more information about tickets, see:
+                              </p>
+                              <div class="literallayout">
+                                 <p><br />
+                                    
+                                 </p>
+                              </div>
+                              <p><a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4sag/03_superuser.html" target="_top">Perforce
+                                                System Administrator's Guide: Superuser Tasks</a>
+                                           
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        For the <code class="literal">host</code> value, replace
+                                        <em class="replaceable"><code>my.mx.host</code></em> with the hostname of the mail
+                                        exchanger service that Swarm should use to send its email
+                                        notifications.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                Since this configuration file contains the credentials for a Perforce
+                                <span class="emphasis"><em>admin</em></span>-level user, we recommend that this file's
+                                ownership and permissions be adjusted such that only the web server user
+                                can read the file, and that no user can write the file.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="setup.swarm.optional">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Optional additional Swarm configuration</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm provides optional functionality that could be enabled at this time:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <a class="link" href="integrations.jira.html" title="JIRA">JIRA integration</a>
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <a class="link" href="integrations.libreoffice.html" title="LibreOffice">LibreOffice</a>
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="section" id="setup.swarm.optional.hostname">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Swarm hostname</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                Swarm normally auto-detects the hostname it operates under. In some
+                                system configuration, the auto-detection logic might not choose the
+                                correct hostname, such as when there are multiple virtual hosts
+                                configured for a single Swarm instance. When auto-detection chooses the
+                                wrong hostname, email notifications, worker startup, and more could be
+                                affected.
+                              
+                     </p>
+                     <p>
+                                If you need to specify the Swarm hostname, see
+                                <a class="xref" href="admin.environment.html#admin.environment.hostname" title="Hostname">Hostname</a> for details.
+                              
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="setup.php.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">PHP configuration</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="setup.trigger_token.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Establish trigger token</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

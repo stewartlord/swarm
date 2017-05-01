@@ -1,0 +1,58 @@
+<?php
+use P4\File\File;
+
+$limit    = 1000;
+$change   = $event->getParam('change');
+$review   = $event->getParam('review');
+$projects = $this->projectList($activity->get('projects'), null, array('noLink' => true));
+$subject  = array();
+
+$subject[] = $activity->get('user');
+
+// ensure appropriate credit is given
+if ($activity->get('behalfOf')) {
+    $subject[] = "({$this->te('on behalf of')} " . $activity->get('behalfOf') . ')';
+}
+
+$subject[] = $this->t($activity->get('action'));
+$subject[] = $activity->get('target');
+
+if ($review) {
+    $subject[] =  "{$this->te('under review')} " . $review->getId();
+}
+
+if ($activity->get('preposition') && $projects) {
+    $subject[] = $activity->get('preposition');
+    $subject[] = $projects;
+}
+
+echo(implode(' ', array_filter(array_map('trim', $subject))));
+
+if (trim($activity->get('description'))) {
+    echo "\n\n" . trim($this->wordWrap($activity->get('description'), 900));
+}
+
+// append affected jobs
+if (count($change->getJobs())) {
+    echo "\n\n{$this->te('Jobs')}";
+    foreach ($change->getJobObjects() as $job) {
+        // prepare job description:
+        //  - convert line breaks into spaces
+        //  - trim to length of 60 chars
+        $description = str_replace("\n", " ", trim($job->getDescription()));
+        $description = (string) $this->truncate($description, 55);
+
+        echo "\n" . $job->getId() . ' (' . $job->getStatus() . '): ' . $description;
+    }
+}
+
+// append list of files
+echo "\n\n{$this->te('Files')}";
+$files = $change->getFileData(true);
+foreach (array_slice($files, 0, $limit) as $file) {
+    echo "\n" . File::decodeFilespec($file['depotFile']) . '#' . $file['rev'] . ' ' . $file['action'];
+}
+echo count($files) > $limit ? "\n{$this->te('Snip')} (>$limit {$this->te('files')})" : "";
+
+echo "\n\n" . $activity->getUrl($this->plugin('qualifiedUrl'));
+?>

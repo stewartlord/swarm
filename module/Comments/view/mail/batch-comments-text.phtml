@@ -1,0 +1,69 @@
+<?php
+$attachments  = $event->getParam('attachments');
+$comments     = $event->getParam('comments');
+$review       = $event->getParam('review');
+$sendComments = $event->getParam('sendComments');
+$user         = $comments->first()->get('user');
+$reviewLink   = $this->qualifiedUrl('review', array('review' => $review->getId()));
+$escaper      = new \Application\Escaper\Escaper;
+$previousDate = null;
+
+// we don't want to show archive comments
+$comments->filterByCallback(
+    function ($comment) {
+        return !in_array('closed', $comment->getFlags());
+    }
+);
+
+echo trim(
+    $user
+    . ' ' . $this->tp('posted %d comment on', 'posted %d comments on', $comments->count())
+    . ' ' . $this->t('review') . ' ' . $review->getId()
+);
+
+foreach ($comments as $comment) {
+    $context = $comment->getFileContext();
+
+    echo "\n\n";
+
+    // if related to file, show the file details and url
+    if ($context['file']) {
+        $line    = isset($context['line']) ? ", line " .  $context['line'] : '';
+        $target  = \P4\File\File::decodeFilespec($context['name']) . $line;
+        $hash    = $context['md5'] . ',c' . $comment->getId();
+        $hash    = '#' . $escaper->escapeFullUrl($hash);
+        echo "\n" . $target . ' (' . $reviewLink . $hash . ')';
+    }
+
+    // if present, show file context
+    if (is_array($context['content'])) {
+        echo "\n> " . $this->wordWrap(implode("\n> ", $context['content']), 900) . "\n";
+    }
+
+    // comment body
+    $batchTime = isset($sendComments[$comment->getId()]) ? $sendComments[$comment->getId()] : null;
+    $isEdit    = $comment->get('time') !== $batchTime;
+    echo "\n" . ($isEdit ? $this->t('Edited') . ': ' : '') . trim($this->wordWrap($comment->get('body'), 900));
+
+    // show attachments if any
+    if ($comment->getAttachments()) {
+        echo "\n\n" . $this->t('Attachments') . ":\n";
+
+        foreach ($comment->getAttachments() as $attachmentId) {
+            if (!isset($attachments[$attachmentId])) {
+                continue;
+            }
+            $attachment = $attachments[$attachmentId];
+            echo $attachment->get('name') . " (" . $this->fileSize($attachment->get('size')) . ") "
+                . $this->qualifiedUrl('attachments', array('attachment' => $attachment->getId()));
+        }
+    }
+
+    // append comment date and time (show date only if its different from previous comment)
+    $date         = date('M j Y', $batchTime);
+    $time         = date('g:i A', $batchTime);
+    $time         = $date !== $previousDate ? "$date, $time" : $time;
+    $previousDate = $date;
+
+    echo "\n--\n$time";
+}

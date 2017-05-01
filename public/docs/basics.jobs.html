@@ -1,0 +1,432 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Jobs // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.basics.html" title="Basics" />
+      <link rel="prev" href="basics.commits.html" title="Commits" />
+      <link rel="next" href="basics.changelists.html" title="Changelists" />
+      <meta name="Section-title" content="Jobs" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="basics.jobs">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Jobs</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      <a class="glossterm" href="glossary.html#job"><em class="glossterm">Jobs</em></a> are a component of Perforce's
+                  defect tracking system and a record of bugs found or improvement requests.
+                      Jobs can be associated with
+                      <a class="link" href="basics.changelists.html" title="Changelists">changelists</a> to create
+                      <span class="emphasis"><em>fix</em></span> records, indicating the work that solved the
+                      problem or provided the requested feature. Begin browsing jobs by clicking
+                      the <span class="guibutton">Jobs</span> link in the main toolbar.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="frame"><img src="images/page-jobs.png" alt="The Jobs page" /></span></span>
+                    
+               </p>
+               <p>
+                      You can search available jobs by entering a job filter in the search
+                      box. Words, phrases, and
+                      <em class="parameter"><code><em class="replaceable"><code>field</code></em>=<em class="replaceable"><code>value</code></em></code></em>
+                      pairs can be entered. For example, entering <code class="literal">reportedby=slord
+                         swarm</code> displays jobs that the user <span class="emphasis"><em>slord</em></span> has
+                      reported that also contain the word <code class="literal">swarm</code> in its
+                      description.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="frame"><img src="images/page-jobs-search.png" alt="Searching Jobs" /></span></span>
+                    
+               </p>
+               <p>
+                      The fields you can search for depend on the
+                      <a class="glossterm" href="glossary.html#jobspec"><em class="glossterm">jobspec</em></a> defined in your Helix
+                      Versioning Engine.
+                    
+               </p>
+               <div class="section" id="basics.jobs.adjust_columns">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Adjusting Jobs columns</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           You can configure the columns that are displayed:
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-jobs_columns.png" alt="Button to configure Jobs columns" /></span></span>
+                              
+                                        Click the button beside the search field to display a tooltip menu
+                                        showing all of the available
+                                        <a class="glossterm" href="glossary.html#jobspec"><em class="glossterm">jobspec</em></a> fields.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="popup"><img src="images/tooltip-job_columns.png" alt="Selecting jobspec fields to display" /></span></span>
+                                      
+                           </p>
+                           <p>
+                                        While the tooltip menu is displayed, check or uncheck the columns to
+                                        configure which columns to display.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Click the button again, or a blank portion of the page, to hide the
+                                        tooltip.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/page-jobs-extra_columns.png" alt="Additional columns in the Jobs display" /></span></span>
+                         
+                  </p>
+                  <p>
+                           You can also adjust the order of the columns, in one of two ways:
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        With the tooltip menu displayed, click and drag column labels up or
+                                        down to adjust their position.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        When the tooltip menu is not displayed, click a column heading
+                                        and drag it to the left or right to move the column to a new
+                                        position.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+                  <p>
+                           The column display updates as columns are rearranged:
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/page-jobs-reordered.png" alt="Reordered Jobs columns" /></span></span>
+                         
+                  </p>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information on customizing jobspecs, see:
+                                <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4sag/05_jobspec.html" target="_top">Perforce
+                                   System Administrator's Guide: Job Specifications</a>
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="basics.jobs.display">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Job display</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Jobs are typically identified with the word job followed by six
+                           digits, e.g. <code class="literal">job000123</code>.
+                         
+                  </p>
+                  <p>
+                           View a specific job by clicking on a linked job identifier, or by visiting
+                           the URL:
+                         
+                  </p><pre class="programlisting">
+https://<em class="replaceable"><code>myswarm.url</code></em>/<b><em class="replaceable"><code>jobs</code></em></b>/<em class="replaceable"><code>jobid</code></em>
+</pre><p>
+                           When Swarm displays a job, the presentation is similar to:
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/page-job.png" alt="A Job" /></span></span>
+                         
+                  </p>
+                  <p>
+                           The upper portion of the job presentation includes:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        The avatar and userid of the user that created the job
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        The job's <a class="link" href="basics.notable.html#basics.notable.time" title="Time">creation time</a>
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        If changes have been made to the job, the modifying userid and
+                                        <a class="link" href="basics.notable.html#basics.notable.time" title="Time">time</a>
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        A status indicator
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        The job's description
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        If
+                              
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/icon-pending.png" alt="A pending changelist" /></span></span>
+                              
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/icon-committed.png" alt="A committed changelist" /></span></span>
+                              
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/icon-review.png" alt="A changelist in a review" /></span></span>
+                              
+                                        any changelists have been submitted that <span class="emphasis"><em>fix</em></span>
+                                        the job, a list of those changelists and their descriptions. Each
+                                        associated changelist includes an icon to represent their type
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           The lower portion of the job presentation lists all of the keys
+                           configured in your Helix Versioning Engine's
+                           <a class="glossterm" href="glossary.html#jobspec"><em class="glossterm">jobspec</em></a>. Swarm inspects the
+                           jobspec and enhances the presentation of fields it recognizes. For
+                           example, date fields display as <span class="emphasis"><em>time ago</em></span>, and links
+                           are created for userids.
+                         
+                  </p>
+                  <p>
+                           Click 
+                     
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/tab-job-comments-tooltip.png" alt="Drop-down menu for flagging a comment as a task." /></span></span>
+                     
+                           the <a class="link" href="basics.comments.html" title="Comments">Comments</a> tab to view any
+                           comments added to the job, or to add a comment. Adding a comment sends a
+                           <a class="link" href="basics.notifications.html" title="Notifications">notification</a>. The
+                           <span class="guilabel">Comments</span> tab display the number of open comments
+                           associated with the job. If you hover your mouse over the comment count, a
+                           tooltip is displayed showing how many comments are archived.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/panel-job_comments.png" alt="A comment on a job" /></span></span>
+                         
+                  </p>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information on customizing job specifications, see:
+                                <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4sag/05_jobspec.html" target="_top">Perforce
+                                   System Administrator's Guide: Job Specifications</a>
+                              
+                     </p>
+                  </div>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                The default Perforce job specification contains very few fields. Adding
+                                fields to record additional information, such as the modification time
+                                and userid, reporting time and userid, can assist Swarm use appropriate
+                                terminology when describing the current disposition of a job.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="basics.jobs.add">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Adding jobs</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm does not provide the ability to create new jobs in the Helix
+                           Versioning Engine, but jobs can be added to changelists or reviews:
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Navigate to a changelist or review.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-add_job.png" alt="The Add Job link" /></span></span>
+                              
+                                        Click the <code class="literal">Add Job</code> link.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Scroll through the available jobs, or enter job search
+                                        criteria to search available jobs.
+                                      
+                           </p>
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/dialog-job_search.png" alt="The Job Search dialog" /></span></span>
+                                      
+                           </p>
+                           <div class="tip admonition">
+                              <h3 class="title">Tip</h3>
+                              <p>
+                                             For more information on job search criteria, see
+                                             <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4guide/08_jobs.html" target="_top">Perforce
+                                                User's Guide: Jobs</a>.
+                                           
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-select.png" alt="The Job Search Select button" /></span></span>
+                              
+                                        If you find the job you want to add, click its row to highlight it and
+                                        then click <span class="guibutton">Select</span>. Or, double-click the desired
+                                        job to add it.
+                                      
+                           </p>
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-cancel.png" alt="The Job Search Cancel button" /></span></span>
+                              
+                                        If you do not find the appropriate job, click
+                                        <span class="guibutton">Cancel</span>.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                If you attempt to add a job to a review that affects a single project,
+                                Swarm applies the project's job view filter to display only jobs that
+                                affect the project. It is not currently possible to expand the filter to
+                                include jobs outside of the project.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="basics.jobs.unlink">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Unlinking jobs</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm does not provide the ability to delete jobs from the Helix
+                           Versioning Engine, but jobs can be unlinked from changelists or reviews:
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Navigate to a changelist or review that has an associated job.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-unlink_job.png" alt="The Unlink Job button" /></span></span>
+                              
+                                        Click the <span class="guibutton">X</span> button beside the job.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/tooltip-unlink_job.png" alt="The Unlink Job tooltip" /></span></span>
+                              
+                                        A confirmation tooltip appears. Click <span class="guibutton">Unlink</span>
+                                        in the tooltip to unlink the job.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="basics.commits.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Commits</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="basics.changelists.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Changelists</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

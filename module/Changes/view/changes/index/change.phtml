@@ -1,0 +1,203 @@
+<?php
+$this->headTitle()->set($this->t("Change") . ' ' . $change->getId())->setTranslatorEnabled(false);
+?>
+
+<div
+    class="change-wrapper"
+    data-jobs="<?php echo $this->escapeHtmlAttr(json_encode($jobs)) ?>"
+    data-change="<?php
+    echo $this->escapeHtmlAttr(json_encode(array(
+        'id'            => $change->getId(),
+        'time'          => $change->getTime(),
+        'user'          => $change->getUser(),
+        'client'        => $change->getClient(),
+        'status'        => $change->getStatus(),
+        'changeType'    => $change->getType(),
+        'desc'          => $change->getDescription()
+    )));
+?>">
+    <div class="change-header">
+        <h1><?php echo $this->te("Change")?> <?php echo $this->escapeHtml($change->getId()) ?></h1>
+
+        <div class="row-fluid">
+
+            <div class="span author-avatar">
+                <?php echo $this->avatar($change->getUser(), 256) ?>
+            </div>
+
+            <div class="popover right span change-info">
+                <div class="arrow"></div>
+                <div class="popover-title clearfix pad1">
+                    <div class="change-byline pull-left pad1">
+                        <?php echo $this->userLink($change->getUser()) ?>
+                        <?php echo $this->te($change->getStatus() === 'submitted' ? 'committed' : 'modified') ?>
+                        <?php echo $this->te('this change') ?>
+                        <span class=timeago title="<?php echo $this->escapeHtmlAttr(date('c', $change->getTime())) ?>"></span>
+                        <?php
+                        $basePath = $change->getPath(true, true, $max);
+                        if ($basePath) {
+                            echo $this->te('into') . ' '
+                                . '<a href="' . $this->url('file', array('path' => ltrim($basePath, '/'))) . '">'
+                                . $this->decodeFilespec($basePath)
+                                . '</a>';
+                        }
+                        ?>
+                    </div>
+                    <?php if ($review): ?>
+                        <a href="<?php echo $this->url('review', array('review' => $review->getId())) ?>"
+                           class="btn btn-small btn-success pull-right">
+                            <i class="icon-user icon-white"></i>
+                            <span class="text"><?php echo $this->te("View Review")?></span>
+                        </a>
+                    <?php else: ?>
+                        <a href="#" <?php echo !$isRemoteShelf ? 'onclick="return swarm.review.add(this);"' : '' ?>
+                           class="privileged btn btn-small btn-primary pull-right <?php echo $isRemoteShelf ? 'disabled' : '' ?>">
+                            <i class="icon-user icon-white"></i>
+                            <span class="text"><?php echo $this->te("Request Review")?></span>
+                        </a>
+                    <?php endif; ?>
+                </div>
+                <div class="popover-content change-description monospace force-wrap"><?php
+                    if ($change->getDescription()) {
+                        echo $this->preformat($change->getDescription());
+                    } else {
+                        echo "<span class='first-line no-description'>" . $this->te("No description") . "</span>";
+                    }
+                ?></div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs change-tabs">
+        <li class="active">
+            <a href="#files" data-toggle="tab">
+                <i class="icon-file"></i>
+                <?php echo $this->te("Files")?> <span class="badge file-count"><?php
+                    echo number_format(count($files)) . ($cropped ? '+' : '')
+                ?></span>
+            </a></li>
+        <li>
+            <a href="#comments" data-toggle="tab">
+                <i class="icon-comment"></i>
+                <?php echo $this->te("Comments")?> <span class="badge comments-counter">0</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="files">
+            <div class="change-files-toolbar clearfix">
+                <span class="file-metrics">
+                    <span class="edit-count">
+                        <i class="swarm-icon icon-file-edit" title="<?php echo $this->te("Files Edited")?>"></i>
+                        <b><?php echo $counts['edits'] . ($cropped ? '+' : '') ?></b> <?php echo $this->te("edited")?>
+                    </span>
+                    <span class="add-count">
+                        <i class="swarm-icon icon-file-add" title="<?php echo $this->te("Files Added")?>"></i>
+                        <b><?php echo $counts['adds'] . ($cropped ? '+' : '') ?></b> <?php echo $this->te("added")?>
+                    </span>
+                    <span class="delete-count">
+                        <i class="swarm-icon icon-file-delete" title="<?php echo $this->te("Files Deleted")?>"></i>
+                        <b><?php echo $counts['deletes'] . ($cropped ? '+' : '') ?></b> <?php echo $this->te("deleted")?>
+                    </span>
+                </span>
+
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-small active toggle-comments" title="<?php echo $this->t("Show Comments")?>"
+                                onclick="swarm.comments.toggleDiffComments(this);">
+                            <i class="icon-comment"></i>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-small" title="<?php echo $this->te("Show Diffs In-Line")?>" onclick="swarm.diff.inlineAll();">
+                            <i class="swarm-icon icon-diff-inline"></i>
+                        </button>
+                        <button type="button" class="btn btn-small" title="<?php echo $this->te("Show Diffs Side-by-Side")?>" onclick="swarm.diff.sidewaysAll();">
+                            <i class="swarm-icon icon-diff-sideways"></i>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-small" title="<?php echo $this->te("Collapse All")?>" onclick="swarm.diff.collapseAll();">
+                            <i class="swarm-icon icon-collapse"></i>
+                        </button>
+                        <button type="button" class="btn btn-small" title="<?php echo $this->te("Expand All")?>" onclick="swarm.diff.expandAll();">
+                            <i class="swarm-icon icon-expand"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="change-files">
+            <?php
+            foreach ($files as $file):
+                $name = $this->decodeFilespec(substr($file['depotFile'], strlen($basePath) + 1));
+                $md5  = md5($file['depotFile']);
+                $rev  = $change->isPending() ? '@=' . $change->getId() : $file['rev'];
+                $url  = $this->url('file', array('path' => ltrim($file['depotFile'], '/')))
+                      . '?' . http_build_query(array('v' => $rev));
+
+                // determine simple action class of add/edit/delete.
+                $actionClass = $file['isAdd']    ? 'add'    : 'edit';
+                $actionClass = $file['isDelete'] ? 'delete' : $actionClass;
+                $actionTitle = $this->t(ucfirst($file['action'])) . " (" . $this->t($file['type']) . ")";
+            ?>
+                <div class="diff-wrapper clearfix collapsed action-<?php echo $actionClass ?>"
+                    data-file="<?php echo $this->escapeHtmlAttr(json_encode($file)) ?>">
+                    <div class="diff-header" data-toggle="collapse" data-target="#details-<?php echo $md5 ?>">
+                        <div class="diff-header-affix border-box clearfix">
+                            <a name="<?php echo $md5 ?>"></a>
+                            <i class="icon-chevron-down"></i>
+                            <i class="swarm-icon icon-file-<?php echo $actionClass ?>"
+                               title="<?php echo $this->escapeHtmlAttr($actionTitle) ?>"></i>
+                            <span class="filename">
+                                <?php echo $name . $this->escapeHtml($change->isSubmitted() ? "#$rev" : '') ?>
+                            </span>
+                            <div class="pull-right diff-toolbar"><div class="btn-group"><a class="btn btn-mini file-open"
+                                title="<?php echo $this->te("Open File")?>" target="_blank" href="<?php echo $url ?>"><i class="icon-share"></i></a></div></div>
+                        </div>
+                    </div>
+                    <div class="diff-details collapse out monospace clearfix" id="details-<?php echo $md5 ?>">
+                        <div class="diff-body loading muted pad3"><span class="loading animate"><?php echo $this->te("Loading...")?></span></div>
+                    </div>
+                </div>
+            <?php endforeach ?>
+            <?php if ($cropped): ?>
+                <div class="snip"><?php echo $this->te("Snip")?> (&gt; <?php echo number_format($max) ?> <?php echo $this->te("files")?>)</div>
+            <?php endif; ?>
+            <?php if ($isRemoteShelf): ?>
+                <div class="alert alert-error border-box pad3">
+                    <?php echo $this->te('Cannot list files (un-promoted shelf on a remote edge server).') ?>
+                </div>
+            <?php elseif (!count($files)): ?>
+                <div class="alert border-box pad3"><?php echo $this->te('No files.') ?></div>
+            <?php endif; ?>
+            </div>
+            <div class="diff-cycle-hint center muted">
+                <?php echo sprintf(
+                    $this->te("Tip: Use %sn%s and %sp%s to cycle through the changes."),
+                    "<span class='keyboard-shortcut'>",
+                    "</span>",
+                    "<span class='keyboard-shortcut'>",
+                    "</span>"
+                ); ?>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="comments"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.timeago').timeago();
+
+        swarm.diff.init();
+        swarm.comments.init(
+            '<?php echo 'changes/' . $this->escapeUrl($change->getOriginalId()) ?>',
+            <?php echo json_encode(array('change' => $change->getId())); ?>,
+            '#comments',
+            '.comments-counter'
+        );
+        swarm.comments.initDiff('#comments');
+        swarm.jobs.renderFixes('.change-wrapper');
+    });
+</script>

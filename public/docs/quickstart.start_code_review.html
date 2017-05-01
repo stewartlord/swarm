@@ -1,0 +1,260 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>How do I start a code review? // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.quickstart.html" title="Quickstart" />
+      <link rel="prev" href="chapter.quickstart.html" title="Quickstart" />
+      <link rel="next" href="quickstart.code_review_contribute.html" title="How do I contribute comments or code changes to a code review?" />
+      <meta name="Section-title" content="How do I start a code review?" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="quickstart.start_code_review">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">How do I start a code review?</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      There are several ways:
+                    
+               </p>
+               <div class="important admonition">
+                  <h3 class="title">Important</h3>
+                  <p>
+                     If your Helix Versioning Engine is configured as a commit-edge deployment,
+                         and your normal connection is to an edge server, Swarm refuses to start
+                         reviews for shelved changes that have not been promoted to the commit
+                         server.
+                       
+                  </p>
+                  <p>
+                         Within Swarm, this means that the <span class="guilabel">Request Review</span> button
+                         does not appear for unpromoted shelved changes. Outside of Swarm, attempts
+                         to start reviews for unpromoted shelved changelists appear to do nothing.
+                         Ask your Helix Versioning Engine administrator for assistance if you cannot
+                         start a review.
+                       
+                  </p>
+                  <p>
+                         An administrator of the Helix Versioning Engine can automatically promote
+                         shelved changes to the commit server by setting the configurable
+                         <code class="literal">dm.shelve.promote</code> to <code class="literal">1</code>.
+                       
+                  </p>
+               </div>
+               <div class="orderedlist">
+                  <ol class="orderedlist" type="1">
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-request_review.png" /></span></span>
+                           
+                                   When you use Swarm to view a shelved changelist, click the
+                                   <span class="guibutton">Request Review</span> button to request a review of that
+                                   shelved change.
+                                 
+                        </p>
+                        <div class="note admonition">
+                           <h3 class="title">Note</h3>
+                           <p>
+                                        To view a shelved changelist, use a
+                                        <a class="link" href="basics.notable.html#basics.notable.quick_urls" title="Quick URLs">Quick URL</a>. For
+                                        example, if your shelved change is <em class="replaceable"><code>54321</code></em>,
+                                        visit the URL:
+                                        <code class="literal">https://myswarm.url/<em class="replaceable"><code>54321</code></em></code>
+                                      
+                           </p>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-request_review.png" /></span></span>
+                           
+                                   When you use Swarm to view a submitted change, click the
+                                   <span class="guibutton">Request Review</span> button to request a review of that
+                                   change.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   When you are about to shelve or submit files:
+                                 
+                        </p>
+                        <div class="orderedlist">
+                           <ol class="orderedlist" type="a">
+                              <li class="listitem">
+                                 <p>
+                                                Include <code class="literal">#review</code> within your changelist
+                                                description (separated from other text with whitespace, or on a
+                                                separate line).
+                                              
+                                 </p>
+                                 <p>
+                                                Once the review begins, Swarm replaces <code class="literal">#review</code>
+                                                with <code class="literal">#review-12345</code>, where
+                                                <code class="literal">12345</code> is the review's identifier.
+                                              
+                                 </p>
+                                 <div class="note admonition">
+                                    <h3 class="title">Note</h3>
+                                    <p>
+                                                     The <code class="literal">#review</code> keyword is customizable.  For
+                                                     details, see <a class="xref" href="admin.review_keyword.html" title="Review keyword">Review keyword</a>.
+                                                   
+                                    </p>
+                                 </div>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                At this time, you can add reviewers to the code review by using an
+                                                <a class="link" href="basics.notable.html#basics.notable.mentions" title="@mentions">@mention</a> in the changelist
+                                                description for each desired reviewer.
+                                              
+                                 </p>
+                                 <p>
+                                                If your @mention includes an asterisk (<code class="literal">*</code>) before
+                                                the userid, for example
+                                                <code class="literal">@*<em class="replaceable"><code>userid</code></em></code>, that user
+                                                becomes a <span class="emphasis"><em>required</em></span> reviewer. See
+                                                <a class="xref" href="code_reviews.responsibility.html#code_reviews.responsibility.required" title="Required reviewers">Required reviewers</a> for details.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Complete your shelve or submit operation.
+                                              
+                                 </p>
+                              </li>
+                           </ol>
+                        </div>
+                        <div class="warning admonition">
+                           <h3 class="title">Warning</h3>
+                           <p>
+                                        If you shelve a change and subsequently edit the description to
+                                        include <code class="literal">#review</code>, a review is
+                                        <span class="bold"><strong>not started</strong></span>. You must re-shelve the
+                                        files after adding <code class="literal">#review</code>.
+                                      
+                           </p>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   When you are using <a class="glossterm" href="glossary.html#GF"><em class="glossterm">Git Fusion</em></a>, you
+                                   can start a review by pushing your changes to a target branch using the
+                                   following command:
+                           
+                           
+                        </p><pre class="programlisting">
+$ <span class="command"><strong>git push origin <em class="replaceable"><code>task1</code></em>:review/<em class="replaceable"><code>master</code></em>/new</strong></span>
+</pre><p>
+                           
+                                   <em class="replaceable"><code>task1</code></em> is the name of the current Git task
+                                   branch, and <em class="replaceable"><code>master</code></em> is the target branch that
+                                   the proposed changes are intended for.
+                                 
+                        </p>
+                        <div class="important admonition">
+                           <h3 class="title">Important</h3>
+                           <p>
+                                        The target branch must be mapped to a named Perforce branch in the Git
+                                        Fusion repo configuration.
+                                      
+                           </p>
+                           <p>
+                                        See
+                                        <a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/git-fusion/chapter_dyn_ngj_3l.html" target="_top">"Setting
+                                           up Repos"</a> in the
+                                        <a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/git-fusion/" target="_top">Git
+                                           Fusion Guide</a> for details on
+                                        <a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/git-fusion/chapter_dyn_ngj_3l.html#section_kkz_gqv_rl" target="_top">converting
+                                           a lightweight branch into a fully populated Perforce branch</a>.
+                                      
+                           </p>
+                        </div>
+                        <p>
+                                   When the command completes, the output indicates the <span class="emphasis"><em>review
+                                         id</em></span> that has been created:
+                           
+                           
+                        </p><pre class="screen">
+remote: Perforce: Swarm review assigned: review/master/<em class="replaceable"><code>1234</code></em>
+</pre><p>
+                           
+                                   where <em class="replaceable"><code>1234</code></em> is the review id that was just
+                                   created.
+                                 
+                        </p>
+                        <div class="tip admonition">
+                           <h3 class="title">Tip</h3>
+                           <p>
+                                        For more information on Git Fusion, see the
+                                        <a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/git-fusion/" target="_top">Git Fusion Guide</a>
+                                      
+                           </p>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+               <div class="section" id="once-a-review-has-started">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Once a review has started</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Wait for someone else to review your code, or see:
+                           <a class="xref" href="quickstart.code_review_contribute.html" title="How do I contribute comments or code changes to a code review?">How do I contribute comments or code changes to a code review?</a>. More
+                           <a class="link" href="code_reviews.activities.html" title="Activities">review activities</a> are
+                           available.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="chapter.quickstart.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Quickstart</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="quickstart.code_review_contribute.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">How do I contribute comments or code changes to a code review?</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

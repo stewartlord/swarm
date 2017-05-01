@@ -1,0 +1,152 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Environment // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.administration.html" title="Administration" />
+      <link rel="prev" href="admin.emoji.html" title="Emoji" />
+      <link rel="next" href="admin.exclude_users.html" title="Excluding Users from Activity Streams" />
+      <meta name="Section-title" content="Environment" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="admin.environment">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Environment</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      Currently, there are two <span class="emphasis"><em>environment</em></span> configuration
+                      items available for Swarm:
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   <span class="bold"><strong>mode</strong></span>: whether Swarm operates in
+                                   <span class="emphasis"><em>production</em></span> or <span class="emphasis"><em>development</em></span>
+                                   mode.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="bold"><strong>hostname</strong></span>: specifies the canonical
+                                   hostname Swarm should use, such as in links to Swarm in email
+                                   notifications.
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                      Add the following configuration block to the
+                      <code class="filename">data/config.php</code> file:
+                    
+               </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'environment' =&gt; array(
+        'mode'      =&gt; 'development',      // defaults to 'production'
+        'hostname'  =&gt; 'myswarm.hostname', // defaults to requested hostname
+    ),
+</pre><div class="section" id="admin.environment.mode">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Mode</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           By default, Swarm operates in <span class="emphasis"><em>production</em></span> mode. When
+                           <em class="parameter"><code>mode</code></em> is set to <code class="literal">development</code>,
+                           Swarm displays greater error detail in the browser. Also, Swarm switches
+                           from including aggregated and minified JavaScript and CSS to requesting
+                           each JavaScript and CSS resource for all active modules. The default value
+                           is <code class="literal">production</code>. Any value other than
+                           <code class="literal">development</code> is assumed to mean
+                           <code class="literal">production</code>.
+                         
+                  </p>
+                  <p>
+                           <code class="literal">development</code> mode makes it easier to discover problems
+                           and to identify their source, but also incurs additional browser overhead
+                           due to many more JavaScript and CSS requests for larger files. We
+                           recommend that you do not use <code class="literal">development</code> mode in
+                           production environments, unless directed to do so by Perforce technical
+                           support.
+                         
+                  </p>
+               </div>
+               <div class="section" id="admin.environment.hostname">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Hostname</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           The <em class="parameter"><code>hostname</code></em> item allows you to specify Swarm's
+                           hostname. This could be useful if you have multiple virtual hosts deployed
+                           for a single Swarm instance; Swarm uses the hostname you configure when
+                           generating its web pages and email notifications.
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                The value specified for the <em class="parameter"><code>hostname</code></em> item should
+                                be just the hostname. It should not include a scheme (e.g.
+                                "<code class="literal">http://</code>"), nor should it include a port (e.g.
+                                "<code class="literal">:80</code>").
+                              
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="admin.emoji.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Emoji</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="admin.exclude_users.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Excluding Users from Activity Streams</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

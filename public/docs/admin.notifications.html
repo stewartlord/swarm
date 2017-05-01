@@ -1,0 +1,146 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Notifications // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.administration.html" title="Administration" />
+      <link rel="prev" href="admin.mainline.html" title="Mainline branch identification" />
+      <link rel="next" href="admin.ova.html" title="OVA Management" />
+      <meta name="Section-title" content="Notifications" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="admin.notifications">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Notifications</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Swarm can be configured to provide generic notifications of committed
+                      changes in the Helix Versioning Engine, taking the role of a
+                      <a class="glossterm" href="glossary.html#Review_Daemon"><em class="glossterm">review daemon</em></a>.
+                    
+               </p>
+               <p>
+                      Notifications configuration is expressed with a
+                      <code class="literal">notifications</code> block in the
+                      <code class="filename">data/config.php</code> file, similar to the following example:
+                    
+               </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'notifications' =&gt; array(
+        'honor_p4_reviews'      =&gt; false,           // defaults to false
+        'opt_in_review_path'    =&gt; '//depot/swarm', // optional; defaults to ''
+        'disable_change_emails' =&gt; false,           // optional; defaults to false
+    ),
+</pre><div class="variablelist">
+                  <dl class="variablelist">
+                     <dt><span class="term">
+                                   honor_p4_reviews
+                                 </span></dt>
+                     <dd>
+                        <p>
+                                     When set to true, Swarm sends notification emails for every committed
+                                     change to all users where the change matches one of their
+                                     <code class="literal">Reviews:</code> paths.
+                                   
+                        </p>
+                     </dd>
+                     <dt><span class="term">
+                                   opt_in_review_path
+                                 </span></dt>
+                     <dd>
+                        <p>
+                                     Optional item. This item specifies a special depot path, which
+                                     typically would not exist in the Helix Versioning Engine. When a path
+                                     is specified, users must include this path (or a path that contains
+                                     it) in the <code class="literal">Reviews:</code> field of their user spec to
+                                     cause Swarm to send the user a notification for every committed change
+                                     that matches one of their <code class="literal">Reviews:</code> paths.
+                                   
+                        </p>
+                        <p>
+                                     For example, if the <code class="literal">opt_in_review_path</code> is set to
+                                     <code class="literal">//depot/swarmReviews</code>, users can opt-in to Swarm
+                                     review notifications by adding that path, or a path such as
+                                     <code class="literal">//depot/...</code>, to the <code class="literal">Reviews:</code>
+                                     field in their user spec.
+                                   
+                        </p>
+                     </dd>
+                     <dt><span class="term">
+                                   disable_change_emails
+                                 </span></dt>
+                     <dd>
+                        <p>
+                                     Optional item. When set to true, notifications for committed changes,
+                                     based on the <code class="literal">Reviews:</code> field and the users and
+                                     projects you follow, are disabled.
+                                   
+                        </p>
+                     </dd>
+                  </dl>
+               </div>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           If your Helix Versioning Engine already has a review daemon in operation,
+                           users receive two notifications for <code class="literal">Reviews:</code> paths. You
+                           may want to deprecate the review daemon in favor of Swarm's change
+                           notifications.
+                         
+                  </p>
+               </div>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           <a class="xref" href="basics.groups.html" title="Groups">Groups</a> have per-group notification settings. See
+                           <a class="xref" href="groups.add.html" title="Add a group">Add a group</a> for details.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="admin.mainline.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Mainline branch identification</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="admin.ova.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">OVA Management</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

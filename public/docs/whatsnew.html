@@ -1,0 +1,311 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>What's new in 2016.1 // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="index.html" title="Perforce Swarm" />
+      <link rel="prev" href="index.html" title="Perforce Swarm" />
+      <link rel="next" href="chapter.quickstart.html" title="Quickstart" />
+      <meta name="Section-title" content="What's new in 2016.1" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="whatsnew">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">What's new in 2016.1</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  This section provides a summary of the notable changes in Swarm for the
+                      2016.1 release. Full details are available in the distribution's
+                      <code class="filename">RELNOTES.txt</code> file.
+                    
+               </p>
+               <div class="section" id="major-new-functionality">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Major new functionality</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="variablelist">
+                     <dl class="variablelist">
+                        <dt><span class="term">
+                                        Add support for managing user groups in Swarm
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          You can now view, list, search, add, edit and delete groups.
+                                          Each group can have notifications enabled so that members
+                                          of the group get emails anytime another member of the group
+                                          creates a review or commits a change.
+                                        
+                           </p>
+                           <p>
+                                          When viewing a group you may see activity performed by any member of
+                                          the group and reviews created by any member of the group.
+                                        
+                           </p>
+                           <p>
+                                          When listing groups, groups that you own or are a member of appear
+                                          first, groups with notifications enabled appear second and lastly,
+                                          groups are ordered by name.
+                                        
+                           </p>
+                           <p>
+                                          See the <a class="xref" href="basics.groups.html" title="Groups">Groups</a> section and the
+                                          <a class="xref" href="chapter.groups.html" title="Groups">“Groups”</a> chapter for details.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        Liking comments
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Users can like comments. At the bottom of each comment Swarm now
+                                          displays the number of likes and a heart icon. The icon can be
+                                          clicked to 'like' the comment.
+                                        
+                           </p>
+                           <p>
+                                          When a comment is liked, Swarm records the activity and sends an
+                                          email notification to the author of the comment.
+                                        
+                           </p>
+                           <p>
+                                          See <a class="xref" href="basics.comments.html#basics.comments.features.like" title="Liking comments">Liking comments</a> for details.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        Updated Swarm's RESTful API to version 2
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Version 2 adds the following functionality: list activity, list
+                                          groups, fetch a group, create a group, update a group, delete a
+                                          group, fetch a project, create a project, update a project, delete a
+                                          project, transition a review and commit a review.
+                                        
+                           </p>
+                           <p>
+                                          See <a class="xref" href="api.endpoints.html#api.endpoints.Groups" title="Groups : Swarm Groups">Groups : Swarm Groups</a> for details.
+                                        
+                           </p>
+                        </dd>
+                     </dl>
+                  </div>
+               </div>
+               <div class="section" id="minor-new-functionality">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Minor new functionality</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="variablelist">
+                     <dl class="variablelist">
+                        <dt><span class="term">
+                                        require_login enabled by default
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Swarm now requires users to be logged in by default. See
+                                          <a class="xref" href="admin.security.html#admin.security.require_login" title="Require login">Require login</a> for details.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        Improved blame performance
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Improved performance for the Swarm blame button. Using a 20,000 line
+                                          test file, this change reduces the rendering time from ~60s to ~2s
+                                          in Firefox and Chrome. Internet Explorer 10 improves from ~730s to
+                                          ~8s.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        Re-instated <span class="guilabel">My Reviews</span>
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Added a <span class="guilabel">My Reviews</span> dropdown button to the
+                                          Reviews page. This allows reviews to be filtered by those that you
+                                          authored or those that you are participating in.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        Made <code class="literal">P4.Swarm.URL</code> auto-configuration configurable
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Added an option to disable Swarm's auto-registration of the
+                                          <code class="literal">P4.Swarm.URL</code> property. See
+                                          <a class="xref" href="admin.client_integration.html" title="Client integration">Client integration</a> for details.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        Made <code class="literal">X-Frame-Options</code> HTTP header configurable
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          The <code class="literal">X-Frame-Options</code> header is now configurable.
+                                          This header controls when Swarm can be embedded in frames. See
+                                          <a class="xref" href="admin.security.html#admin.security.x_frame_options" title="X-Frame-Options header">X-Frame-Options header</a> for details.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        Improved performance for users and groups
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Testing with 10,000 users and a comment thread with 100 comments,
+                                          page load times were reduced from 7s to 250ms.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        Renamed configuration options
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Renamed config options for adding projects to be more consistent
+                                          with other options. Existing settings are still honored. The
+                                          'security -&gt; add_project_admin_only' option becomes 'projects
+                                          -&gt; add_admin_only'. The 'security -&gt; add_project_groups'
+                                          becomes 'projects -&gt; add_groups_only'.
+                                        
+                           </p>
+                           <p>
+                                          See <a class="xref" href="admin.security.html#admin.security.restricted_changes" title="Restricted Changes">Restricted Changes</a> for details.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        Updated P4PHP
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Updated the precompiled P4PHP binaries that come with Swarm to use
+                                          P4API 2015.2/1340214.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        Email logging
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          To assist with troubleshooting email configuration problems Swarm
+                                          now logs successful emails at the <code class="literal">DEBUG</code>
+                                          (<code class="literal">7</code>) log level.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        Updated Project toolbar
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Updated the project toolbar to look more modern.
+                                        
+                           </p>
+                        </dd>
+                     </dl>
+                  </div>
+               </div>
+               <div class="section" id="known-limitations">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Known limitations</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="variablelist">
+                     <dl class="variablelist">
+                        <dt><span class="term">
+                                        Access Control
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Swarm maintains a variety of information in the Helix Versioning
+                                          Engine's keys facility. By default, users with
+                                          <span class="emphasis"><em>list</em></span>-level privileges can read these keys,
+                                          which can include comments that contain excerpts of code they may
+                                          not normally have access to.
+                                        
+                           </p>
+                           <p>
+                                          The Helix Versioning Engine, version 2013.1/659207 or higher, has a
+                                          configuration setting to require <span class="emphasis"><em>admin</em></span>-level
+                                          privileges for access to read and write keys. See
+                                          <a class="xref" href="setup.perforce.html#setup.perforce.dm_keys" title="Hiding Swarm storage from regular users">Hiding Swarm storage from regular users</a>.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        Task Stream Reviews
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Pre-commit reviews in a task stream are not yet supported.
+                                        
+                           </p>
+                        </dd>
+                     </dl>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="index.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Perforce Swarm</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="chapter.quickstart.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Quickstart</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

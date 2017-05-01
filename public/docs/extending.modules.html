@@ -1,0 +1,234 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Modules // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.extending.html" title="Extending Swarm" />
+      <link rel="prev" href="extending.development.html" title="Development mode" />
+      <link rel="next" href="extending.example_linkify.html" title="Example linkify module" />
+      <meta name="Section-title" content="Modules" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="extending.modules">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Modules</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      A Swarm module is a folder that exists within the
+                      <code class="filename">modules</code> folder within your Swarm installation, where
+                      the folder name matches the module's name, and that folder must contain (at
+                      a minimum) a <code class="filename">Module.php</code> file. The file
+                      <code class="filename">Module.php</code> describes the dependencies, namespace,
+                      events subscriptions, and otherwise how the module integrates with Swarm.
+                    
+               </p>
+               <p>
+                      This chapter provides only cursory coverage of how modules integrate with
+                      Swarm. Refer to the included <code class="literal">Jira</code> module for a good
+                      example of a simple module implementation within Swarm:
+                    
+               </p><pre class="programlisting">
+<em class="replaceable"><code>swarm_install</code></em>/module/Jira
+</pre><div class="section" id="extending.modules.influence">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Influence activity events, emails, etc.</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           When something occurs in Perforce (change submitted, files shelved, job
+                           added/edited), or state changes within Swarm (comment added, review state
+                           changed, etc.), the event is pushed onto a task queue. A background worker
+                           process subsequently pulls events off of the queue and publishes an event
+                           alerting modules about activity they may be interested in processing. This
+                           architecture allows the Swarm user interface to be fairly quick while
+                           accommodating tasks that might require notable processing time, or need to
+                           wait for related information to become available.
+                         
+                  </p>
+                  <p>
+                           Subscribers to the worker event flesh the item out (fetch the change/job
+                           details, for example) and indicate if it should result in an activity
+                           entry, email notification, etc. By subscribing to various event topics,
+                           your module can pay attention to specific types of events. While your
+                           module is processing an event, it can modify the text of activity events,
+                           change the contents of emails, drop things entirely from activity, etc.
+                         
+                  </p>
+                  <p>
+                           When your module subscribes to an event, set the priority to influence how
+                           early or late in the process it runs. You will likely want your module to
+                           run after most other modules have done their work to flesh out the
+                           event, but before Swarm's activity module processes it. The activity
+                           module sets a good example of subscribing to these events:
+                         
+                  </p><pre class="programlisting">
+<em class="replaceable"><code>swarm_install</code></em>/module/Activity/Module.php
+</pre><p>
+                           Note that its priority is set to -100. Select a value before that
+                           for your own module (for example, 0 would be neutral and -90 would
+                           indicate that you are interested in being last).
+                         
+                  </p>
+                  <p>
+                           The activity module listens to all events. However, be more
+                           selective. For example, if you are only interested in changes,
+                           subscribe to <code class="literal">task.change</code> instead of
+                           <code class="literal">*</code>. Current task types are:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">task.change</code>
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">task.shelve</code>
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">task.review</code>
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">task.comment</code>
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">task.job</code>
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="section" id="extending.modules.templates">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Templates</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Override existing view templates using your custom module. Have a look at
+                           an <a class="link" href="extending.example_email.html" title="Example email module">example module</a> that
+                           demonstrates how to customize the email templates Swarm uses for comment
+                           notifications.
+                         
+                  </p>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information about views, see the
+                                <a class="link" href="http://framework.zend.com/manual/2.1/en/modules/zend.view.quick-start.html" target="_top">Zend/View
+                                   Quick Start</a>.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="extending.modules.view_helpers">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">View helpers</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="section" id="extending.modules.view_helpers.options">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Set options on existing helpers</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                It is possible to influence the behavior of existing view helpers by
+                                setting options on them; for an example see:
+                                <code class="filename"><em class="replaceable"><code>swarm_install</code></em>/module/Application/Module.php</code>
+                              
+                     </p>
+                  </div>
+                  <div class="section" id="extending.modules.view_helpers.register">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Register new helpers</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                It is also possible to register new view helpers by placing them
+                                within your module's hierarchy, for example,
+                                <code class="filename">MyModule/src/MyModule/View/Helper/Foo.php</code>. Use the
+                                following Swarm view helper for inspiration:
+                                <code class="filename"><em class="replaceable"><code>swarm_install</code></em>/module/Activity/src/Activity/View/Helper/Activity.php</code>
+                              
+                     </p>
+                     <p>
+                                Then register your view helper with the view manager via your
+                                <code class="literal">ModuleConfig</code>:
+                                <code class="filename"><em class="replaceable"><code>swarm_install</code></em>/module/Activity/config/module.config.php</code>
+                              
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="extending.development.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Development mode</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="extending.example_linkify.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Example linkify module</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

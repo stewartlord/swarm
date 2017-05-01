@@ -1,0 +1,2 @@
+For Swarm installation instructions, please refer to:
+https://www.perforce.com/perforce/r16.1/manuals/swarm/chapter.setup.html

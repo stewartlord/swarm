@@ -1,0 +1,168 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Comment attachments // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.administration.html" title="Administration" />
+      <link rel="prev" href="admin.client_integration.html" title="Client integration" />
+      <link rel="next" href="admin.commit_credit.html" title="Commit credit" />
+      <meta name="Section-title" content="Comment attachments" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="admin.comment_attachments">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Comment attachments</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      Swarm supports attaching arbitrary files to comments in code reviews and
+                      jobs.
+                    
+               </p>
+               <p>
+                      To store files attached to comments, Swarm looks for a depot named
+                      <code class="literal">//.swarm</code>. As Swarm does not create this depot, you need
+                      to create it, or specify another depot that the Swarm
+                      <span class="emphasis"><em>admin</em></span> user can write to.
+                    
+               </p>
+               <p>
+                      To create a <code class="literal">//.swarm</code> depot, run the following as a user
+                      with <span class="emphasis"><em>admin</em></span>-level privileges:
+                    
+               </p><pre class="programlisting">
+$ <span class="command"><strong>p4 depot .swarm</strong></span>
+</pre><p>
+                      Ensure that the Swarm <span class="emphasis"><em>admin</em></span> user can write to the
+                      <code class="literal">//.swarm</code> depot.
+                    
+               </p>
+               <div class="tip admonition">
+                  <h3 class="title">Tip</h3>
+                  <p>
+                           For more information and depot creation, see:
+                  </p>
+                  <div class="literallayout">
+                     <p><br />
+                        
+                     </p>
+                  </div>
+                  <p><a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/p4sag/chapter.superuser.html#d0e7434" target="_top">Perforce
+                              System Administrator's Guide: Using multiple depots</a>
+                         
+                  </p>
+               </div>
+               <p>
+                      Specifying a depot path for comment attachments, if you prefer not to use
+                      the default <code class="literal">//.swarm</code> depot, is done with the
+                      <code class="literal">depot_storage</code> configuration block in the
+                      <code class="filename">data/config.php</code> file:
+                    
+               </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'depot_storage' =&gt; array(
+        'base_path'  =&gt; '//<em class="replaceable"><code>depot_name</code></em>',
+    ),
+</pre><p>
+                      Replace <em class="replaceable"><code>depot_name</code></em> with the depot where comment
+                      attachments should be stored. The Swarm <span class="emphasis"><em>admin</em></span> needs to
+                      be able to write to this depot.
+                    
+               </p>
+               <p>
+                      You can limit the size of comment attachments with the
+                      <code class="literal">attachments</code> configuration block in the
+                      <code class="filename">data/config.php</code> file:
+                    
+               </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'attachments' =&gt; array(
+        'max_file_size'  =&gt; <em class="replaceable"><code>0</code></em>, // the maximum file size to accept in bytes
+    ),
+</pre><p>
+                      Replace the <em class="replaceable"><code>0</code></em> with the maximum file size in bytes
+                      that you want Swarm to accept for a comment attachment. If the file size is
+                      exceeded, users will see an error.
+                    
+               </p>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           Be aware that PHP's <code class="literal">upload_max_filesize</code> setting in
+                           <code class="filename">public/.htaccess</code> overrides
+                           <code class="literal">max_file_size</code> (which overrides the setting in PHP's
+                           <code class="filename">php.ini</code>). You can only use
+                           <code class="literal">max_file_size</code> to be more restrictive than the setting
+                           in <code class="filename">public/.htaccess</code>.
+                         
+                  </p>
+                  <p>
+                           The default for <code class="literal">upload_max_filesize</code> is
+                           <code class="literal">8M</code> (8 megabytes). Increase this limit if your
+                           commentors need to upload larger files.
+                         
+                  </p>
+                  <p>
+                           You may also have to increase <code class="literal">post_max_size</code>.
+                           <code class="literal">post_max_size</code> should always be set larger or equal to
+                           <code class="literal">upload_max_filesize</code>, and Swarm's
+                           <code class="literal">max_file_size</code> should always be either unset, or set
+                           smaller or equal to <code class="literal">upload_max_filesize</code>,
+                           otherwise users will encounter unexpected rejection of their comment
+                           attachments.
+                         
+                  </p>
+                  <p>
+                           See
+                           <a class="link" href="http://www.php.net/manual/en/features.file-upload.common-pitfalls.php" target="_top">Handling
+                              file uploads: Common Pitfalls</a> for more details.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="admin.client_integration.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Client integration</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="admin.commit_credit.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Commit credit</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

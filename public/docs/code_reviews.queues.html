@@ -1,0 +1,475 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Review queues // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.code_reviews.html" title="Code reviews" />
+      <link rel="prev" href="code_reviews.model.html" title="Models" />
+      <link rel="next" href="code_reviews.display.html" title="Review display" />
+      <meta name="Section-title" content="Review queues" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="code_reviews.queues">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Review queues</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      Code review queues help you keep track of code reviews that:
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   Have been requested and are awaiting review
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Are underway
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Have been accepted, rejected, or archived
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                      <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-reviews_link.png" alt="The main toolbar's Reviews link" /></span></span>
+                  
+                      To see all available reviews, click the
+                      <span class="guibutton">Reviews</span> link in the main toolbar.
+                    
+               </p>
+               <p>
+                      The Reviews page lists open reviews for all projects in the Helix Versioning
+                      Engine.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><img src="images/page-reviews.png" alt="The Reviews page" /></span>
+                    
+               </p>
+               <p>
+                      Opened reviews, those that have just begun, are being reviewed, or are
+                      awaiting further changes, are displayed on the <span class="guibutton">Opened</span>
+                      tab. Closed reviews, those that have been completed successfully, have been
+                      rejected, or have been archived (where it might be unclear of their
+                      benefit), are displayed on the <span class="guibutton">Closed</span> tab.
+                    
+               </p>
+               <p>
+                      Each review queue entry displays the following information:
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><img src="images/thumb-reviews_columns.png" alt="Review details in a review queue" /></span>
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   The review id
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   The avatar of the review's author
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   The review's description
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   The associated project's name and branch
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   When the review was created
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   An icon indicating the current review state
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   An icon indicating the test suite state
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   A
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-review-comment_count-tooltip.png" alt="Drop-down menu for flagging a comment as a task." /></span></span>
+                           
+                                   counter for the number of open (non-archived) comments that are
+                                   associated with the review. Hover your mouse over the comment count
+                                   to display a tooltip showing the number of archived comments associated
+                                   with the review.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   An indicator showing the number of up votes and down votes
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           Hover your mouse over any of the icons to see tooltips.
+                         
+                  </p>
+               </div>
+               <p>
+                      <a class="xref" href="basics.projects.html" title="Projects">Projects</a> and <a class="xref" href="basics.groups.html" title="Groups">Groups</a> have
+                      their own review queues that display reviews created by their members.
+                    
+               </p>
+               <div class="section" id="code_reviews.filtering">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Filtering open reviews</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           The <span class="guibutton">Opened</span> tab presents a list of all code reviews
+                           that have started, are being reviewed, are awaiting revisions, or need to
+                           be committed. The following filtering options are available for opened
+                           code reviews:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p class="popup">
+                                        <span class="inlinemediaobject"><span class="popup"><img src="images/dropdown-reviews-projects.png" alt="The Project's drop-down menu" /></span></span>
+                              
+                                        <span class="guibutton">Project</span>: click the <span class="guibutton">All</span>
+                                        button and select a project from the drop-down menu.
+                                      
+                           </p>
+                           <p>
+                                        When you are viewing a project-specific review queue, Swarm displays
+                                        the project's list of branches in the drop-down menu, with the
+                                        <span class="emphasis"><em>main</em></span> branch appearing first and other branches
+                                        afterwards. A main branch is typically identified by its name, such as
+                                        <span class="emphasis"><em>main</em></span>, <span class="emphasis"><em>mainline</em></span>,
+                                        <span class="emphasis"><em>master</em></span>, <span class="emphasis"><em>trunk</em></span>. The list of
+                                        names can be configured; see <a class="xref" href="admin.mainline.html" title="Mainline branch identification">Mainline branch identification</a> for
+                                        details.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p class="clear">
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/dropdown-myreviews.png" alt="The &#34;My Reviews&#34; dropdown, unexpanded, showing the currently active filter." /></span></span>
+                              
+                                        <span class="guibutton">My Reviews</span>: a dropdown menu that lets you
+                                        filter which reviews to display based on your involvement:
+                                      
+                           </p>
+                           <div class="itemizedlist">
+                              <ul class="itemizedlist" style="list-style-type: circle; ">
+                                 <li class="listitem">
+                                    <p class="clear">
+                                                     <span class="inlinemediaobject"><span class="popup"><img src="images/dropdown-myreviews-all.png" alt="The &#34;My Reviews&#34; dropdown, with &#34;All Reviews&#34; selected." /></span></span><span class="bold"><strong>All Reviews</strong></span>:
+                                                     all reviews within the current project are displayed.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     <span class="bold"><strong>Reviews I've Authored</strong></span>: all
+                                                     reviews within the current project that you have authored are
+                                                     displayed.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     <span class="bold"><strong>Reviews I'm Participating In</strong></span>: All
+                                                     reviews within the current project that you have authored, or are a
+                                                     reviewer, are displayed.
+                                                   
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                           <p>
+                                        When you select one of the available options, the list of options
+                                        updates to match the currently selected filter, and the <span class="guibutton">My
+                                           Reviews</span> dropdown indicates the current filter:
+                                        <span class="guilabel">All</span>, <span class="guilabel">Author</span>, or
+                                        <span class="guilabel">Participant</span>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/buttons-has_hasno_reviewers.png" alt="Review filter buttons for has reviewers/no reviewers" /></span></span>
+                              
+                                        <span class="guibutton">Has Reviewers</span> or <span class="guibutton">No
+                                           Reviewers</span>: displays reviews that have one or more
+                                        reviewers, or reviews that have no reviewers.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/buttons-needs-review_revision-approved.png" alt="Review filter buttons for assigned/unassigned" /></span></span>
+                              
+                                        Review state: one of the following (left to right):
+                                      
+                           </p>
+                           <div class="itemizedlist">
+                              <ul class="itemizedlist" style="list-style-type: circle; ">
+                                 <li class="listitem">
+                                    <p>
+                                                     <code class="literal">Needs review</code>: the review's changes need to be
+                                                     reviewed.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     <code class="literal">Needs revision</code>: the review's changes have been
+                                                     reviews, but further revisions are required before the review can
+                                                     be accepted.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     <code class="literal">Approved</code>: the review's changes have been
+                                                     approved, and should be committed.
+                                                   
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/buttons-tests-pass_fail.png" alt="Review filter buttons for tests pass/fail" /></span></span>
+                              
+                                        Test status: one of the following:
+                                      
+                           </p>
+                           <div class="itemizedlist">
+                              <ul class="itemizedlist" style="list-style-type: circle; ">
+                                 <li class="listitem">
+                                    <p>
+                                                     <code class="literal">Tests pass</code>: when automated tests are enabled
+                                                     for the associated project, and the test suite execution succeeds,
+                                                     Swarm updates the review accordingly.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     <code class="literal">Tests fail</code>: similar to the <code class="literal">Tests
+                                                        pass</code> state, except that the test suite execution has
+                                                     failed. Check with your test suite to determine why the tests
+                                                     failed.
+                                                   
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/buttons-search.png" alt="Review search field" /></span></span>
+                              
+                                        <code class="literal">Search term</code>: where review descriptions match your
+                                        search string.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           Swarm updates the URL in your browser to reflect filtering options. This
+                           makes it easy to bookmark or share review queue URLs, and it maintains the
+                           current filtering if you click on a review and then use your browser's
+                           back button to return to the review queue.
+                         
+                  </p>
+               </div>
+               <div class="section" id="code_reviews.queues.filtering_closed">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Filtering closed reviews</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           The <span class="guibutton">Closed</span> tab presents a list of all code reviews
+                           that have been approved and committed, rejected, or archived.
+                           The following filtering options are available for closed code reviews:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="popup"><img src="images/dropdown-reviews-projects.png" alt="The Project's drop-down menu" /></span></span>
+                              
+                                        <code class="literal">Project</code>: click the <span class="guibutton">All</span>
+                                        button and select a project from the drop-down menu.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/buttons-approved-rejected-archived.png" alt="Review filter buttons for approved/rejected/archived" /></span></span>
+                              
+                                        Review state: one of the following (left to right):
+                                      
+                           </p>
+                           <div class="itemizedlist">
+                              <ul class="itemizedlist" style="list-style-type: circle; ">
+                                 <li class="listitem">
+                                    <p>
+                                                     <code class="literal">Approved</code>: the review's changes have been
+                                                     approved, and should be committed.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     <code class="literal">Rejected</code>: the review's changes have been
+                                                     rejected.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     <code class="literal">Archived</code>: the review's changes have been put
+                                                     aside.
+                                                   
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/buttons-tests-pass_fail.png" alt="Review filter buttons for tests pass/fail" /></span></span>
+                                      
+                           </p>
+                           <p>
+                                        Test status: one of the following:
+                                      
+                           </p>
+                           <div class="itemizedlist">
+                              <ul class="itemizedlist" style="list-style-type: circle; ">
+                                 <li class="listitem">
+                                    <p>
+                                                     <code class="literal">Tests pass</code>: when automated tests are enabled
+                                                     for the associated project, only reviews where the tests have
+                                                     passed are displayed.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     <code class="literal">Tests fail</code>: similar to the <code class="literal">Tests
+                                                        pass</code> state, except that only reviews where the tests
+                                                     have failed are displayed.
+                                                   
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/buttons-search.png" alt="Review search field" /></span></span>
+                              
+                                        <code class="literal">Search term</code>: where review descriptions match your
+                                        search string.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           Swarm updates the URL in your browser to reflect filtering options. This
+                           makes it easy to bookmark or share review queue URLs, and it maintains the
+                           current filtering if you click on a review and then use your browser's
+                           back button to return to the review queue.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="code_reviews.model.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Models</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="code_reviews.display.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Review display</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Swarm API // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="prev" href="extending.clients.html" title="CSS &amp; JavaScript" />
+      <link rel="next" href="api.endpoints.html" title="API Endpoints" />
+      <meta name="Section-title" content="Swarm API" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="chapter" id="api">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h1 class="title">Swarm API</h1>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  This chapter describes the REST-like API provided by Swarm, which can be
+                      used to automate common Swarm interactions or integrate with external
+                      systems.
+                    
+               </p>
+               <h2 id="d0e18660">Authentication</h2>
+               <p>
+                      Swarm's API requires an authenticated connection for all data-modifying
+                      endpoints. Authenticated connections are achieved using HTTP Basic Access
+                      Authentication.
+                    
+               </p>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           If the
+                           <a class="link" href="admin.security.html#admin.security.require_login" title="Require login"><code class="literal">require_login</code></a> 
+                           configuration flag is set to <code class="literal">true</code>, all API endpoints
+                           require authentication.
+                         
+                  </p>
+               </div>
+               <p>
+                      For example:
+                    
+               </p><pre class="programlisting">
+curl -u "<em class="replaceable"><code>apiuser</code></em>:<em class="replaceable"><code>password</code></em>" https://<em class="replaceable"><code>myswarm.url</code></em>/api/v2/projects
+</pre><p>
+                      Swarm accepts a ticket from the Helix Versioning Engine, which is either
+                      host-unlocked or locked to the Swarm host. It may also be possible to use a
+                      password in place of the ticket.
+                    
+               </p>
+               <p>
+                      To acquire a ticket, run the following command:
+                    
+               </p><pre class="programlisting">
+$ <span class="command"><strong>p4 -p <em class="replaceable"><code>myp4host:1666</code></em> -u <em class="replaceable"><code>apiuser</code></em> login -p</strong></span>
+</pre><p>
+                      To acquire a host-unlocked ticket, run the following command:
+                    
+               </p><pre class="programlisting">
+$ <span class="command"><strong>p4 -p <em class="replaceable"><code>myp4host:1666</code></em> -u <em class="replaceable"><code>apiuser</code></em> login -ap</strong></span>
+</pre><div class="important admonition">
+                  <h3 class="title">Important</h3>
+                  <p>
+                           For a Helix Versioning Engine that has been configured for security level
+                           3, passwords are not accepted.
+                         
+                  </p>
+                  <p>
+                           For more information on security levels, see:
+                  </p>
+                  <div class="literallayout">
+                     <p><br />
+                        
+                     </p>
+                  </div>
+                  <p><a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4sag/chapter.superuser.html#DB5-49899" target="_top">Perforce
+                              System Administrator's Guide: Server security levels</a>.
+                         
+                  </p>
+               </div>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           If you use a ticket to authenticate against the Swarm API and the ticket
+                           expires, you need to acquire a new ticket to continue using the API.
+                         
+                  </p>
+               </div>
+               <p>
+                      If you make a request that requires authentication and you have
+                      not authenticated, the response is:
+                    
+               </p><pre lang="json" class="programlisting">
+{
+  "error": "Unauthorized"
+}
+</pre><h2 id="d0e18732">Requests</h2>
+               <p>
+                      Swarm's API includes endpoints that provide, create, and update information
+                      within Swarm.
+                    
+               </p>
+               <p>
+                      If you make a request against an endpoint that is not supported, the
+                      response is:
+                    
+               </p><pre lang="json" class="programlisting">
+{
+  "error": "Method Not Allowed"
+}
+</pre><h4 id="d0e18740">GET information</h4>
+               <p>
+                      Use HTTP <code class="literal">GET</code> requests to ask for information from the
+                      API.
+                    
+               </p>
+               <p>
+                      For example, to get the list of reviews:
+                    
+               </p><pre class="programlisting">
+$ <span class="command"><strong>curl https://<em class="replaceable"><code>myswarm.url</code></em>/api/v2/reviews</strong></span>
+</pre><p>
+                      Certain API calls support a <em class="parameter"><code>fields</code></em> parameter that
+                      allows you to specify which fields to include in the response, enabling more
+                      compact data sets. The following endpoints support fields:
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   <code class="literal">/api/v2/projects</code>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <code class="literal">/api/v2/reviews</code>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <code class="literal">/api/v2/reviews/{id}</code>
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                      Fields can be expressed as a comma-separated list, or using array-notation.
+                      For example:
+                    
+               </p><pre class="programlisting">
+$ <span class="command"><strong>curl 'https://<em class="replaceable"><code>myswarm.url</code></em>/api/v2/reviews?fields=id,description,participants'</strong></span>
+</pre><p>
+                      Or:
+                    
+               </p><pre class="programlisting">
+$ <span class="command"><strong>curl 'https://<em class="replaceable"><code>myswarm.url</code></em>/api/v2/reviews?fields[]=id,fields[]=description,fields[]=participants'</strong></span>
+</pre><h4 id="d0e18801">POST new information</h4>
+               <p>
+                      Use HTTP <code class="literal">POST</code> requests to create information via the API.
+                    
+               </p>
+               <p>
+                      For example, to create a review using form-encoded values:
+                    
+               </p><pre class="programlisting">
+$ <span class="command"><strong>curl -u "<em class="replaceable"><code>apiuser</code></em>:<em class="replaceable"><code>password</code></em>" -d"change=<em class="replaceable"><code>12345</code></em>" https://<em class="replaceable"><code>myswarm.url</code></em>/api/v2/reviews</strong></span>
+</pre><p>
+                      The response should be similar to:
+                    
+               </p><pre class="screen">
+{
+  "isValid": true,
+  "id": 12206
+}
+</pre><p>
+                      To create a review using JSON:
+                    
+               </p><pre class="programlisting">
+$ <span class="command"><strong>curl -u "<em class="replaceable"><code>apiuser</code></em>:<em class="replaceable"><code>password</code></em>" -H "Content-type: application/json" \
+  -d'{"change": <em class="replaceable"><code>12345</code></em>}' https://<em class="replaceable"><code>myswarm.url</code></em>/api/v2/reviews</strong></span>
+</pre><h4 id="d0e18850">Update</h4>
+               <p>
+                      Use HTTP <code class="literal">PATCH</code> requests to update information via the
+                      API.
+                    
+               </p>
+               <p>
+                      If your HTTP client does not support <code class="literal">PATCH</code> requests, you
+                      can emulate this behavior by submitting an HTTP <code class="literal">POST</code>
+                      with a <code class="literal">"?_method=PATCH"</code> parameter.
+                    
+               </p>
+               <h2 id="d0e18868">Responses</h2>
+               <p>
+                      Swarm's API responses are JSON formatted.
+                    
+               </p>
+               <h2 id="d0e18872">API versions</h2>
+               <p>
+                      The current Swarm API version is <code class="literal">v2</code>. Here is a list of
+                      historical API versions:
+                    
+               </p>
+               <div class="informaltable">
+                  <table>
+                     <colgroup>
+                        <col width="16%" class="api" />
+                        <col width="17%" class="swarm" />
+                        <col width="16%" class="date" />
+                        <col width="51%" class="description" />
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th>
+                              <p>API version</p>
+                           </th>
+                           <th>
+                              <p>Swarm Release</p>
+                           </th>
+                           <th>
+                              <p>Date</p>
+                           </th>
+                           <th>
+                              <p>Description</p>
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td>
+                              <p>v2</p>
+                           </td>
+                           <td>
+                              <p>2016.1</p>
+                           </td>
+                           <td>
+                              <p>May 2016</p>
+                           </td>
+                           <td>
+                                          
+                              <p>
+                                               Include new endpoints for projects, groups, etc.
+                                             
+                              </p>
+                                        
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <p>v1.2</p>
+                           </td>
+                           <td>
+                              <p>2015.3</p>
+                           </td>
+                           <td>
+                              <p>October 2015</p>
+                           </td>
+                           <td>
+                                          
+                              <p>
+                                               Add author filter to the list reviews endpoint.
+                                             
+                              </p>
+                                        
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <p>v1.1</p>
+                           </td>
+                           <td>
+                              <p>2014.4</p>
+                           </td>
+                           <td>
+                              <p>January 2015</p>
+                           </td>
+                           <td>
+                                          
+                              <p>
+                                               Addition of required reviewers, and
+                                               <code class="literal">apiVersions</code>.
+                                             
+                              </p>
+                                        
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <p>v1</p>
+                           </td>
+                           <td>
+                              <p>2014.3</p>
+                           </td>
+                           <td>
+                              <p>July 2014</p>
+                           </td>
+                           <td>
+                                          
+                              <p>
+                                               Initial release.
+                                             
+                              </p>
+                                        
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="extending.clients.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">CSS &amp; JavaScript</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="api.endpoints.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">API Endpoints</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

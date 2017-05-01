@@ -1,0 +1,49 @@
+<?php
+use P4\File\File;
+
+$limit    = 1000;
+$p4Admin  = $services->get('p4_admin');
+$review   = $event->getParam('review');
+$change   = P4\Spec\Change::fetch($review->getHeadChange(), $p4Admin);
+$shelf    = $review->getId() === $change->getId() ? $change : P4\Spec\Change::fetch($review->getId(), $p4Admin);
+$projects = $this->projectList($event->getParam('review')->getProjects(), null, array('noLink' => true));
+
+echo trim($activity->get('user') . ' ' . $this->t($activity->get('action')) . ' ' . $activity->get('target'));
+
+if ($activity->get('preposition') && $projects) {
+    echo ' ' . $activity->get('preposition') . ' ' . $projects;
+}
+
+if ($activity->getDetails('reviewers')) {
+    echo "\n\n";
+    echo $this->reviewersChanges($activity->getDetails('reviewers'))->setPlainText(true);
+}
+
+if (trim($activity->get('description'))) {
+    echo "\n\n" . trim($this->wordWrap($activity->get('description'), 900));
+}
+
+// append affected jobs
+if (count($shelf->getJobs())) {
+    echo "\n\n{$this->te('Jobs')}";
+    foreach ($change->getJobObjects() as $job) {
+        // prepare job description:
+        //  - convert line breaks into spaces
+        //  - trim to length of 60 chars
+        $description = str_replace("\n", " ", trim($job->getDescription()));
+        $description = (string) $this->truncate($description, 55);
+
+        echo "\n" . $job->getId() . ' (' . $job->getStatus() . '): ' . $description;
+    }
+}
+
+// append list of files
+echo "\n\n{$this->te('Files')}";
+$files = $change->getFileData(true, $limit + 1);
+foreach (array_slice($files, 0, $limit) as $file) {
+    echo "\n" . File::decodeFilespec($file['depotFile']) . '#' . $file['rev'] . ' ' . $file['action'];
+}
+echo count($files) > $limit ? "\n{$this->te('Snip')} (>$limit {$this->te('files')})" : "";
+
+echo "\n\n" . $activity->getUrl($this->plugin('qualifiedUrl'));
+?>

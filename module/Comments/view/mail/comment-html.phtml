@@ -1,0 +1,83 @@
+<?php
+$comment    = $event->getParam('comment');
+$user       = $activity->get('user');
+$userLink   = $user ? $this->qualifiedUrl('user', array('user' => $user)) : null;
+$targetLink = $activity->getUrl($this->plugin('qualifiedUrl'));
+
+// if we are emailing about a new comment like to the comment author, tweak the action to be more personal
+$mail      = $event->getParam('mail');
+$toUsers   = $mail && isset($mail['toUsers']) ? (array) $mail['toUsers'] : array();
+$isAddLike = $event->getParam('commentAction') === $comment::ACTION_LIKE;
+$action    = $isAddLike && array_values($toUsers) === array($comment->get('user'))
+    ? 'liked your comment on'
+    : $activity->get('action');
+?>
+<html>
+    <body style="font-family: sans-serif;">
+        <div style="padding-top: .25em;">
+            <div style="font-size: 115%;">
+                <?php if ($user): ?>
+                    <a style="text-decoration: none;" href="<?php echo $userLink ?>">
+                        <?php echo $this->escapeHtml($user) ?>
+                    </a>
+                <?php endif; ?>
+                <?php echo $this->te($action) ?>
+                <a style="text-decoration: none;" href="<?php echo $targetLink ?>">
+                    <?php echo $this->escapeHtml($activity->get('target'))?>
+                </a>
+            </div>
+            <br/>
+            <?php
+            // if the comment has file context, show it.
+            $context = $comment->getFileContext();
+            if (is_array($context['content']) && $context['line']) {
+                $line = $context['line'] - count($context['content']) + 1;
+                echo '<div style="font-family: monospace; white-space: nowrap;'
+                   . ' padding: .5em 1em; overflow-x: auto; color: #444;'
+                   . ' border: 1px solid #ddd; background-color: #f7f7f7;">';
+                foreach ((array) $context['content'] as $i => $content) {
+                    echo '<div><span style="color: #999;">'
+                        . str_pad($line + $i, strlen($context['line']), "0", STR_PAD_LEFT)
+                        . '.</span>&nbsp;'
+                        . $this->preformat($content)->setLinkify(false)->setEmojify(false)->setWordWrap(900)
+                        . "</div>\n";
+                }
+                echo '</div><br/>';
+            }
+            ?>
+            <div style="padding-bottom: .5em;">
+                <?php
+                echo $this->preformat($activity->get('description'))
+                          ->setBaseUrl($this->qualifiedUrl())
+                          ->setEmojify(false)
+                          ->setWordWrap(900)
+                ?>
+            </div>
+            <?php
+            // if the event has attachments, link to them - if they are images, embed them
+            $attachments = $event->getParam('attachments');
+            if ($attachments && count($attachments) > 0) {
+                echo '<br/>'
+                    . '<div style="font-size: 85%; color: #666666; padding: .25em 0">'.$this->te('ATTACHMENTS').'</div>'
+                    . '<div style="font-size: 85%;">';
+
+                foreach ($attachments as $attachment) {
+                    if ($attachment->isWebSafeImage()) {
+                        echo '<img src="'
+                            . $this->qualifiedUrl('attachments', array('attachment' => $attachment->getId()))
+                            . '"><br/>';
+                    }
+
+                    echo '<a href="'
+                        . $this->qualifiedUrl('attachments', array('attachment' => $attachment->getId())) . '">'
+                        . $this->escapeHtml($attachment->get('name'))
+                        . '</a> <span style="color: #555555;">('
+                        . $this->fileSize($attachment->get('size'))
+                        . ')</span><br/>';
+                }
+                echo '</div>';
+            }
+        ?>
+        </div>
+    </body>
+</html>

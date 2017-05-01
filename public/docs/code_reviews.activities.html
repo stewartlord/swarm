@@ -1,0 +1,839 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Activities // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.code_reviews.html" title="Code reviews" />
+      <link rel="prev" href="code_reviews.display.html" title="Review display" />
+      <link rel="next" href="code_reviews.responsibility.html" title="Responsibility" />
+      <meta name="Section-title" content="Activities" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="code_reviews.activities">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Activities</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  This section describes the major activities that affect code reviews,
+                      including starting a review, updating a review, and fetching a review's
+                      files.
+                    
+               </p>
+               <div class="section" id="code_reviews.activities.start">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Start a review</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           To start a code review, choose one of the following approaches:
+                         
+                  </p>
+                  <div class="important admonition">
+                     <h3 class="title">Important</h3>
+                     <p>
+                            If your Helix Versioning Engine is configured as a commit-edge deployment,
+                            and your normal connection is to an edge server, Swarm refuses to start
+                            reviews for shelved changes that have not been promoted to the commit
+                            server.
+                          
+                     </p>
+                     <p>
+                            Within Swarm, this means that the <span class="guilabel">Request Review</span> button
+                            does not appear for unpromoted shelved changes. Outside of Swarm, attempts
+                            to start reviews for unpromoted shelved changelists appear to do nothing.
+                            Ask your Helix Versioning Engine administrator for assistance if you cannot
+                            start a review.
+                          
+                     </p>
+                     <p>
+                            An administrator of the Helix Versioning Engine can automatically promote
+                            shelved changes to the commit server by setting the configurable
+                            <code class="literal">dm.shelve.promote</code> to <code class="literal">1</code>.
+                          
+                     </p>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="a">
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-request_review.png" alt="The Request Review button" /></span></span>
+                              
+                                        When you use Swarm to view a submitted changelist, click the
+                                        <span class="guibutton">Request Review</span> button to request a review of
+                                        that changelist. This uses the
+                                        <a class="link" href="code_reviews.model.html" title="Models">post-commit</a> model.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-request_review.png" alt="The Request Review button" /></span></span>
+                              
+                                        When you use Swarm to view a shelved changelist, click the
+                                        <span class="guibutton">Request Review</span> button to request a review of
+                                        that shelved changelist. This uses the
+                                        <a class="link" href="code_reviews.model.html" title="Models">pre-commit</a> model.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        When you are about to shelve or submit files:
+                                      
+                           </p>
+                           <div class="orderedlist">
+                              <ol class="orderedlist" type="i">
+                                 <li class="listitem">
+                                    <p>
+                                                     Include <code class="literal">#review</code> within your changelist
+                                                     (separated from other text with whitespace, or on a separate
+                                                     line).
+                                                   
+                                    </p>
+                                    <p>
+                                                     Once the review begins, Swarm replaces <code class="literal">#review</code>
+                                                     with <code class="literal">#review-12345</code>, where
+                                                     <code class="literal">12345</code> is the review's identifier.
+                                                   
+                                    </p>
+                                    <div class="note admonition">
+                                       <h3 class="title">Note</h3>
+                                       <p>
+                                                          The <code class="literal">#review</code> keyword is customizable.
+                                                          For details, see <a class="xref" href="admin.review_keyword.html" title="Review keyword">Review keyword</a>.
+                                                        
+                                       </p>
+                                    </div>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     At this time, you can add reviewers to the code review by using an
+                                                     <a class="link" href="basics.notable.html#basics.notable.mentions" title="@mentions">@mention</a> in the
+                                                     changelist description for each desired reviewer. Including an
+                                                     asterisk (<code class="literal">*</code>) before the userid in an @mention,
+                                                     for example <code class="literal">@*userid</code>, adds that user as a
+                                                     <span class="emphasis"><em>required</em></span> reviewer.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     Complete your shelve or submit operation.
+                                                   
+                                    </p>
+                                 </li>
+                              </ol>
+                           </div>
+                           <div class="warning admonition">
+                              <h3 class="title">Warning</h3>
+                              <p>
+                                             If you shelve a changelist and subsequently edit the description to
+                                             include <code class="literal">#review</code>, a review is
+                                             <span class="bold"><strong>not started</strong></span>. You must re-shelve the
+                                             files after adding <code class="literal">#review</code>.
+                                           
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        When you are using <a class="glossterm" href="glossary.html#GF"><em class="glossterm">Git Fusion</em></a>, you
+                                        can start a review by pushing your changes to a target branch using
+                                        the following command:
+                              
+                              
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>git push origin <em class="replaceable"><code>task1</code></em>:review/<em class="replaceable"><code>master</code></em>/new</strong></span>
+</pre><p>
+                              
+                                        <em class="replaceable"><code>task1</code></em> is the name of the current Git task
+                                        branch, and <em class="replaceable"><code>master</code></em> is the target branch
+                                        that the proposed changes are intended for.
+                                      
+                           </p>
+                           <div class="important admonition">
+                              <h3 class="title">Important</h3>
+                              <p>
+                                             The target branch must be mapped to a named Perforce branch in the Git
+                                             Fusion repo configuration.
+                                           
+                              </p>
+                              <p>
+                                             See
+                                             <a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/git-fusion/chapter_dyn_ngj_3l.html" target="_top">"Setting
+                                                up Repos"</a> in the
+                                             <a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/git-fusion/" target="_top">Git
+                                                Fusion Guide</a> for details on
+                                             <a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/git-fusion/chapter_dyn_ngj_3l.html#section_kkz_gqv_rl" target="_top">converting
+                                                a lightweight branch into a fully populated Perforce branch</a>.
+                                           
+                              </p>
+                           </div>
+                           <p>
+                                        When the command completes, the output indicates the <span class="emphasis"><em>review
+                                              id</em></span> that has been created:
+                              
+                              
+                           </p><pre class="programlisting">
+remote: Perforce: Swarm review assigned: review/master/<em class="replaceable"><code>1234</code></em>
+</pre><p>
+                              
+                                        where <em class="replaceable"><code>1234</code></em> is the review id that was just
+                                        created.
+                                      
+                           </p>
+                           <div class="tip admonition">
+                              <h3 class="title">Tip</h3>
+                              <p>
+                                             For more information on Git Fusion, see the
+                                             <a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/git-fusion/" target="_top">Git Fusion Guide</a>
+                                           
+                              </p>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="section" id="code_reviews.activities.update">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Update a review</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           To update a code review, use one of the following approaches:
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="a">
+                        <li class="listitem">
+                           <p>
+                                        For a <span class="emphasis"><em>pre-commit</em></span> review that you authored:
+                                      
+                           </p>
+                           <div class="orderedlist">
+                              <ol class="orderedlist" type="i">
+                                 <li class="listitem">
+                                    <p>
+                                                     edit the files
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     shelve the files
+                                                   
+                                    </p>
+                                 </li>
+                              </ol>
+                           </div>
+                           <p>
+                                        You can repeat these steps as many times as necessary.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        For a <span class="emphasis"><em>post-commit</em></span> review, or a review where you
+                                        are not the author:
+                                      
+                           </p>
+                           <div class="orderedlist">
+                              <ol class="orderedlist" type="i">
+                                 <li class="listitem">
+                                    <p>
+                                                     <a class="link" href="code_reviews.activities.html#code_reviews.activities.fetch" title="Fetch a review's files">fetch the review's
+                                                        files</a> into a new changelist
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     edit the files
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     update the changelist's description to include
+                                                     <code class="literal">#review-12345</code> (separated from other text with
+                                                     whitespace, or on a separate line)
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     shelve the changelist's files
+                                                   
+                                    </p>
+                                 </li>
+                              </ol>
+                           </div>
+                           <p>
+                                        Once these steps are complete, further updates involve editing the
+                                        files, and then shelving the changelist's files.
+                                      
+                           </p>
+                           <div class="warning admonition">
+                              <h3 class="title">Warning</h3>
+                              <p>
+                                             If you use an invalid review identifier, it will appear that nothing
+                                             happens. Swarm is currently unable to notify you of this situation.
+                                           
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        When you are working with <a class="glossterm" href="glossary.html#GF"><em class="glossterm">Git Fusion</em></a>:
+                                      
+                           </p>
+                           <div class="important admonition">
+                              <h3 class="title">Important</h3>
+                              <p>
+                                             You can only update Git Fusion-initiated reviews using Git Fusion.
+                                           
+                              </p>
+                           </div>
+                           <p>
+                                        In the following example, the current Git task branch is
+                                        <em class="replaceable"><code>task1</code></em>, the target branch is
+                                        <em class="replaceable"><code>master</code></em>, the review id is
+                                        <em class="replaceable"><code>1234</code></em>, the Git Fusion hostname is
+                                        <em class="replaceable"><code>gfserver</code></em>, and the remote repo name is
+                                        <em class="replaceable"><code>p4gf_repo</code></em>.
+                                      
+                           </p>
+                           <div class="procedure">
+                              <ol class="procedure" type="1">
+                                 <li class="step">
+                                    <p>
+                                                     Fetch the review's head version:
+                                                   
+                                    </p><pre class="programlisting">
+$ <span class="command"><strong>git fetch --prune origin</strong></span>
+From <em class="replaceable"><code>gfserver</code></em>:<em class="replaceable"><code>p4gf_repo</code></em>
+ * [new_branch]      review/<em class="replaceable"><code>master</code></em>/<em class="replaceable"><code>1234</code></em> -&gt; origin/review/<em class="replaceable"><code>master</code></em>/<em class="replaceable"><code>1234</code></em>
+ x [deleted]         (none)     -&gt; origin/review/<em class="replaceable"><code>dev</code></em>/new
+</pre><p>
+                                                     The <em class="parameter"><code>--prune</code></em> option lets the local Git repo
+                                                     delete the unwanted
+                                                     <code class="literal">review/<em class="replaceable"><code>master</code></em>/new</code>
+                                                     reference created by the initial <span class="command"><strong>git push origin
+                                                           <em class="replaceable"><code>task1</code></em>:review/<em class="replaceable"><code>master</code></em>/new</strong></span>
+                                                     command.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="step">
+                                    <p>
+                                                     Check out the review's head version:
+                                                   
+                                    </p><pre class="programlisting">
+$ <span class="command"><strong>git checkout review/<em class="replaceable"><code>master</code></em>/<em class="replaceable"><code>1234</code></em></strong></span>
+</pre></li>
+                                 <li class="step">
+                                    <p>
+                                                     Edit the files as required.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="step">
+                                    <p>
+                                                     Add the edited files to the index of files, in preparation for the
+                                                     next commit.
+                                                   
+                                    </p>
+                                    <p>
+                                                     There are several ways to do this. For example, to add all
+                                                     modified files to the index, run:
+                                                   
+                                    </p><pre class="programlisting">
+$ <span class="command"><strong>git add -A</strong></span>
+</pre></li>
+                                 <li class="step">
+                                    <p>
+                                                     Commit the files in Git:
+                                                   
+                                    </p><pre class="programlisting">
+$ <span class="command"><strong>git commit -m "made some changes"</strong></span>
+</pre></li>
+                                 <li class="step">
+                                    <p>
+                                                     Push the Git changes to the review:
+                                                   
+                                    </p><pre class="programlisting">
+$ <span class="command"><strong>git push origin review/<em class="replaceable"><code>master</code></em>/<em class="replaceable"><code>1234</code></em></strong></span>
+</pre><div class="note admonition">
+                                       <h3 class="title">Note</h3>
+                                       <p>
+                                                          If you get review feedback that is better expressed as a Git
+                                                          rebase and cleaned up history, you can make your changes and
+                                                          push them as a new review.
+                                                        
+                                       </p>
+                                       <p>
+                                                          You <span class="bold"><strong>cannot</strong></span> clean up history and
+                                                          then push your changes to the <span class="emphasis"><em>same</em></span> review.
+                                                        
+                                       </p>
+                                    </div>
+                                 </li>
+                              </ol>
+                           </div>
+                           <div class="tip admonition">
+                              <h3 class="title">Tip</h3>
+                              <p>
+                                             For more information on Git Fusion, see the
+                                             <a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/git-fusion/" target="_top">Git Fusion Guide</a>
+                                           
+                              </p>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="section" id="code_reviews.activities.fetch">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Fetch a review's files</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           First, determine the changelist containing the review's files:
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Visit the review's page.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        The current review version's changelist appears in the file list
+                                        heading:
+                                      
+                           </p>
+                           <p>
+                                        <span class="inlinemediaobject"><img src="images/thumb-pre_commit_change_number.png" alt="A pre-commit review's changelist in the file list heading" /></span>
+                                      
+                           </p>
+                           <p>
+                                        In this example, the changelist is <code class="literal">697707</code>.  You use
+                                        the identified changelist in place of <span class="emphasis"><em>shelved
+                                              changelist</em></span> below.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Decide whether you will use
+                                        <a class="link" href="code_reviews.activities.html#code_reviews.activities.fetch.via_p4" title="Using P4">p4</a>,
+                                        <a class="link" href="code_reviews.activities.html#code_reviews.activities.fetch.via_p4v" title="Using P4V">P4V</a>, or
+                                        <a class="link" href="code_reviews.activities.html#code_reviews.activities.fetch.via_gf" title="Using Git Fusion">Git Fusion</a>
+                                        to fetch the files, and follow the instructions in the appropriate
+                                        section below.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+                  <div class="section" id="code_reviews.activities.fetch.via_p4">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Using P4</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="orderedlist">
+                        <ol class="orderedlist" type="a">
+                           <li class="listitem">
+                              <p>
+                                             For a <span class="bold"><strong>shelved changelist</strong></span>, use a
+                                             command-line shell and type:
+                                           
+                              </p><pre class="programlisting">
+$ <span class="command"><strong>p4 unshelve -c <em class="replaceable"><code>shelved changelist</code></em></strong></span>
+</pre></li>
+                           <li class="listitem">
+                              <p>
+                                             For a <span class="bold"><strong>committed changelist</strong></span>, use a
+                                             command-line shell and type:
+                                           
+                              </p><pre class="programlisting">
+$ <span class="command"><strong>p4 sync @<em class="replaceable"><code>committed changelist</code></em></strong></span>
+</pre></li>
+                        </ol>
+                     </div>
+                     <div class="note admonition">
+                        <h3 class="title">Note</h3>
+                        <p>
+                                     Your client's view mappings need to include the changelist's path.
+                                   
+                        </p>
+                     </div>
+                  </div>
+                  <div class="section" id="code_reviews.activities.fetch.via_p4v">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Using P4V</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="orderedlist">
+                        <ol class="orderedlist" type="a">
+                           <li class="listitem">
+                              <p>
+                                             For a <span class="bold"><strong>shelved changelist</strong></span>:
+                                           
+                              </p>
+                              <div class="orderedlist">
+                                 <ol class="orderedlist" type="i">
+                                    <li class="listitem">
+                                       <p>
+                                                          <span class="inlinemediaobject"><span class="popup"><img src="images/p4v-search-goto.png" alt="P4V &#34;go to&#34; menu option" /></span></span>
+                                                          
+                                                          Select <span class="guimenuitem">Search &gt; Go To...</span>.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          <span class="inlinemediaobject"><span class="popup"><img src="images/p4v-goto-pending_change.png" alt="P4V &#34;go to&#34; dialog with &#34;Pending Changelist&#34; selected" /></span></span>
+                                                          
+                                                          Change the select box to <span class="guimenuitem">Pending
+                                                             Changelist</span>.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          <span class="inlinemediaobject"><span class="popup"><img src="images/p4v-goto-shelved_changelist.png" alt="P4V &#34;go to&#34; dialog with changelist entered" /></span></span>
+                                                          
+                                                          Type in the <span class="emphasis"><em>shelved changelist</em></span> number and
+                                                          click <span class="guibutton">OK</span>.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          <span class="inlinemediaobject"><span class="popup"><img src="images/p4v-dialog-pending_change-select.png" alt="P4V &#34;Pending Changelist&#34; dialog with shelved files selected" /></span></span>
+                                                          
+                                                          Select the files in the <span class="guilabel">Shelved Files</span>
+                                                          area.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          <span class="inlinemediaobject"><span class="popup"><img src="images/p4v-dialog-pending_change-unshelve.png" alt="P4V &#34;Pending Changelist&#34; dialog with content menu selecting &#34;Unshelve...&#34;" /></span></span>
+                                                          
+                                                          Context-click, and select
+                                                          <span class="guimenuitem">Unshelve...</span>.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          <span class="inlinemediaobject"><span class="popup"><img src="images/p4v-dialog-unshelve.png" alt="P4V &#34;Unshelve&#34; dialog" /></span></span>
+                                                          
+                                                          Click <span class="guibutton">Unshelve</span>.
+                                                        
+                                       </p>
+                                    </li>
+                                 </ol>
+                              </div>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             For a <span class="bold"><strong>committed changelist</strong></span>:
+                                           
+                              </p>
+                              <div class="orderedlist">
+                                 <ol class="orderedlist" type="i">
+                                    <li class="listitem">
+                                       <p>
+                                                          <span class="inlinemediaobject"><span class="popup"><img src="images/p4v-search-goto.png" alt="P4V &#34;go to&#34; menu option" /></span></span>
+                                                          
+                                                          Select
+                                                          <span class="guimenuitem">Search &gt; Go To...</span>.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          <span class="inlinemediaobject"><span class="popup"><img src="images/p4v-goto-submitted_change.png" alt="P4V &#34;go to&#34; dialog with &#34;Submitted Changelist&#34; selected" /></span></span>
+                                                          
+                                                          Change the select box to <span class="guimenuitem">Submitted
+                                                             Changelist</span>.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          <span class="inlinemediaobject"><span class="popup"><img src="images/p4v-goto-submitted_changelist.png" alt="P4V &#34;go to&#34; dialog with changelist entered" /></span></span>
+                                                          
+                                                          Type in the <span class="emphasis"><em>submitted changelist</em></span> number
+                                                          and click <span class="guibutton">OK</span>.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          <span class="inlinemediaobject"><span class="popup"><img src="images/p4v-dialog-submitted_change-select.png" alt="P4V &#34;Submitted Changelist&#34; dialog with files selected" /></span></span>
+                                                          
+                                                          Select the files in the <span class="guilabel">Files</span> area.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          <span class="inlinemediaobject"><span class="popup"><img src="images/p4v-dialog-submitted_change-get_revision.png" alt="P4V &#34;Submitted Changelist&#34; dialog with content menu selecting &#34;Get this Revision&#34;" /></span></span>
+                                                          
+                                                          Context-click, and select <span class="guimenuitem">Get this
+                                                             Revision</span>.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          <span class="inlinemediaobject"><span class="popup"><img src="images/p4v-dialog-close.png" alt="P4V dialog close button" /></span></span>
+                                                          
+                                                          Click <span class="guibutton">Close</span>.
+                                                        
+                                       </p>
+                                    </li>
+                                 </ol>
+                              </div>
+                           </li>
+                        </ol>
+                     </div>
+                  </div>
+                  <div class="section" id="code_reviews.activities.fetch.via_gf">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Using Git Fusion</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                In the following example, the current local task branch is
+                                <em class="replaceable"><code>task1</code></em>, the target branch is
+                                <em class="replaceable"><code>master</code></em>, the review id is
+                                <em class="replaceable"><code>1234</code></em>, the Git Fusion hostname is
+                                <em class="replaceable"><code>gfserver</code></em>, and the remote repo name is
+                                <em class="replaceable"><code>p4gf_repo</code></em>.
+                              
+                     </p>
+                     <div class="orderedlist">
+                        <ol class="orderedlist" type="a">
+                           <li class="listitem">
+                              <p>
+                                             Fetch the review's head version:
+                                           
+                              </p><pre class="programlisting">
+$ <span class="command"><strong>git fetch --prune origin</strong></span>
+From <em class="replaceable"><code>gfserver</code></em>:<em class="replaceable"><code>p4gf_repo</code></em>
+ * [new_branch]      review/<em class="replaceable"><code>master</code></em>/<em class="replaceable"><code>1234</code></em> -&gt; origin/review/<em class="replaceable"><code>master</code></em>/<em class="replaceable"><code>1234</code></em>
+ x [deleted]         (none)     -&gt; origin/review/<em class="replaceable"><code>dev</code></em>/new
+</pre><p>
+                                             The <em class="parameter"><code>--prune</code></em> option lets the local Git repo
+                                             delete the unwanted
+                                             <code class="literal">review/<em class="replaceable"><code>master</code></em>/new</code>
+                                             reference created by the initial <span class="command"><strong>git push origin
+                                                   <em class="replaceable"><code>task1</code></em>:review/<em class="replaceable"><code>master</code></em>/new</strong></span>
+                                             command.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             Check out the review's head version:
+                                           
+                              </p><pre class="programlisting">
+$ <span class="command"><strong>git checkout review/<em class="replaceable"><code>master</code></em>/<em class="replaceable"><code>1234</code></em></strong></span>
+</pre></li>
+                        </ol>
+                     </div>
+                     <div class="important admonition">
+                        <h3 class="title">Important</h3>
+                        <p>
+                                     You can only update Git Fusion-initiated reviews using Git Fusion.
+                                   
+                        </p>
+                     </div>
+                     <div class="tip admonition">
+                        <h3 class="title">Tip</h3>
+                        <p>
+                                     For more information on Git Fusion, see the
+                                     <a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/git-fusion/" target="_top">Git Fusion Guide</a>
+                                   
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <div class="section" id="code_reviews.activities.edit_reviewers">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Edit reviewers</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           A review author, or users with <span class="emphasis"><em>admin</em></span> or
+                           <span class="emphasis"><em>super</em></span> privileges are always able to edit the reviewers
+                           for a review. Reviewers are always able to join or leave reviews, or to
+                           change whether their vote is required or optional.
+                         
+                  </p>
+                  <p>
+                           Additionally, the following individuals may edit reviewers:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        If the review is <a class="link" href="projects.add.html" title="Add a project">moderated</a>, the
+                                        moderators.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        If the review is part of a project, but not moderated, all project
+                                        members.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        If the review is not part of a project, any authenticated user.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           To edit reviewers for a review:
+                         
+                  </p>
+                  <div class="procedure">
+                     <ol class="procedure" type="1">
+                        <li class="step">
+                           <p>
+                                        Navigate to a review.
+                                      
+                           </p>
+                        </li>
+                        <li class="step">
+                           <p>
+                                        Click the edit reviewers button, which appears just to the left of
+                                        reviewer avatars:
+                                      
+                                        <span class="inlinemediaobject"><img src="images/icon-edit_description.png" alt="The edit reviewers button" /></span>
+                                      
+                           </p>
+                           <p>
+                                        The <span class="guilabel">Reviewers</span> dialog is displayed:
+                                      
+                           </p>
+                           <p>
+                                        <span class="inlinemediaobject"><img src="images/dialog-reviewers.png" alt="The Reviewers dialog" /></span>
+                                      
+                           </p>
+                        </li>
+                        <li class="step">
+                           <p>
+                                        Add or remove reviewers, or change the vote requirement.
+                                      
+                           </p>
+                           <p>
+                                        Use the reviewer search field to find users by name or userid. The
+                                        field auto-completes as you type.
+                                      
+                           </p>
+                           <p>
+                                        For existing reviewers, click the star icon to the left of the userid
+                                        to toggle whether their vote is required or not. A solid star means
+                                        that their vote is required to approve a review, whereas the outlined
+                                        star means that their vote is optional.
+                                      
+                           </p>
+                           <p>
+                                        Click the <span class="guibutton">X</span> icon to the right of the userid to
+                                        remove that reviewer from the review.
+                                      
+                           </p>
+                        </li>
+                        <li class="step">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-save.png" alt="Save button" /></span></span>
+                              
+                                        Click the <span class="guibutton">Save</span> button to save any changes made.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="code_reviews.display.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Review display</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="code_reviews.responsibility.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Responsibility</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

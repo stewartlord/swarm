@@ -1,0 +1,498 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Notable minor features // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.basics.html" title="Basics" />
+      <link rel="prev" href="basics.login_logout.html" title="Log in / Log out" />
+      <link rel="next" href="chapter.groups.html" title="Groups" />
+      <meta name="Section-title" content="Notable minor features" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="basics.notable">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Notable minor features</h2>
+                     </div>
+                  </div>
+               </div>
+               <div class="section" id="basics.notable.quick_urls">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Quick URLs</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                     Many developers like to type the least amount of information to
+                           locate the data they're looking for. Swarm tries to assist by
+                           handling URLs intelligently. If you visit a URL like:
+                         
+                  </p><pre class="programlisting">
+https://<span class="emphasis"><em>myswarm.url</em></span>/<em class="replaceable"><code>identifier</code></em>
+</pre><p>
+                           Swarm attempts to locate <em class="replaceable"><code>identifier</code></em> as a
+                           <a class="link" href="chapter.code_reviews.html" title="Code reviews">review</a>,
+                           <a class="link" href="basics.changelists.html" title="Changelists">changelist</a>,
+                           <a class="link" href="basics.files.html" title="Files">depot path</a>,
+                           <a class="link" href="basics.projects.html" title="Projects">project</a>,
+                           <a class="link" href="basics.jobs.html" title="Jobs">job</a>,
+                           <a class="link" href="basics.users.html" title="Users">user</a>,
+                           <a class="link" href="basics.groups.html" title="Groups">group</a>, depot name, and Git Fusion
+                           SHA1 (or fragment). If you visit the URL
+                           <code class="code">https://<em class="replaceable"><code>myswarm.url</code></em>/123</code>, Swarm
+                           redirects to
+                           <code class="code">https://<em class="replaceable"><code>myswarm.url</code></em>/changes/123</code>,
+                           provided that changelist <code class="literal">123</code> exists. If you visit the
+                           URL <code class="code">https://<em class="replaceable"><code>myswarm.url</code></em>/bob</code>, Swarm
+                           tries each of the following URLs and redirects to the first match:
+                         
+                  </p><pre class="programlisting">
+https://<span class="emphasis"><em>myswarm.url</em></span>/changes/<em class="replaceable"><code>bob</code></em>
+https://<span class="emphasis"><em>myswarm.url</em></span>/files/<em class="replaceable"><code>bob</code></em>
+https://<span class="emphasis"><em>myswarm.url</em></span>/projects/<em class="replaceable"><code>bob</code></em>
+https://<span class="emphasis"><em>myswarm.url</em></span>/jobs/<em class="replaceable"><code>bob</code></em>
+https://<span class="emphasis"><em>myswarm.url</em></span>/users/<em class="replaceable"><code>bob</code></em>
+https://<span class="emphasis"><em>myswarm.url</em></span>/groups/<em class="replaceable"><code>bob</code></em>
+</pre><p>
+                           If you enter an identifier that does not exist for any type of resource,
+                           Swarm displays a <code class="literal">Page Not Found</code> error.
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                Note that changelist identifiers must be numeric, so there could never
+                                be a changelist called <code class="literal">bob</code>.
+                              
+                     </p>
+                  </div>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                Git Fusion SHA1 identifiers (or a fragment of one) work when the SHA1
+                                refers to a single changelist. If the SHA1 refers to more than one
+                                changelist, which can occur for Git branches, Swarm reports a 404 error.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="basics.notable.mentions">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">@mentions</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Whenever you write a changelist description, job description, comment, or
+                           review, use an <span class="emphasis"><em>@mention</em></span> to refer to projects,
+                           changelists, jobs, and users. Swarm automatically creates a link for each
+                           @mention, so it's easy to navigate to the specified resource. For example,
+                           when you include <code class="literal">@job12345</code> in a comment, Swarm turns
+                           that text into a link that, when clicked, displays the
+                           <a class="xref" href="basics.jobs.html" title="Jobs">Jobs</a> page for <code class="literal">job12345</code>.
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                For jobs, the <code class="literal">@</code> character is optional: Swarm creates
+                                job links for any text that looks like a job identifier, such as
+                                <code class="literal">job012345</code>.
+                              
+                     </p>
+                     <p>
+                                Similarly, Swarm creates change links for <code class="literal">change
+                                   1234</code>, or review links for <code class="literal">review 2345</code>.
+                              
+                     </p>
+                  </div>
+                  <p>
+                           When you start a code review, any users included as @mentions in the
+                           changelist description automatically become reviewers for that code
+                           review. During a code review, including a user @mention in a
+                           <a class="link" href="basics.comments.html" title="Comments">comment</a> also causes the mentioned
+                           user to receive <a class="link" href="basics.notifications.html" title="Notifications">notifications</a>
+                           of code review events, even if they are not a member of your project or
+                           following you or your project. Including an asterisk
+                           (<code class="literal">*</code>) before the userid in an @mention, for example
+                           <code class="literal">@*<em class="replaceable"><code>userid</code></em></code>, that user becomes
+                           a <span class="emphasis"><em>required</em></span> reviewer. See
+                           <a class="xref" href="code_reviews.responsibility.html#code_reviews.responsibility.required" title="Required reviewers">Required reviewers</a> for details.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.notable.search">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Search</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           <span class="inlinemediaobject"><span class="popup"><img src="images/panel-search.png" alt="Searching with Swarm" /></span></span>
+                     
+                           Swarm can search for users, projects, and file paths. Enter keywords or
+                           path elements into the search field, which appears at the right of the
+                           Swarm toolbar, to display any matching results.
+                         
+                  </p>
+                  <p>
+                           Navigate the results with the <span class="keycap"><strong>↑</strong></span> (up arrow) or
+                           <span class="keycap"><strong>↓</strong></span> (down arrow) keys, and display the
+                           details for the result by pressing <span class="keycap"><strong>Enter</strong></span>. Or, click a
+                           search result with your mouse.
+                         
+                  </p>
+                  <p>
+                           Full-content searching is only available if your Swarm administrator
+                           installs the Helix Search Tool. See <a class="xref" href="admin.search.html" title="Search">Search</a> for
+                           details.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="popup"><img src="images/panel-search-no_results_yet.png" alt="No search results, yet..." /></span></span>
+                     
+                           Swarm updates the search results as you type. Some results should appear
+                           within a second or two. You may have to wait a few seconds for final
+                           results to be incorporated into the results list. When Swarm does not yet
+                           have any results, it indicates such.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.notable.jira">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">JIRA integration</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm ships with a JIRA module that can:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        create links to JIRA when Swarm displays JIRA issue identifiers in
+                                        changelists, comments, jobs, reviews, etc.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        add links within JIRA back to Swarm, for JIRA issues associated with
+                                        reviews or committed changes. These links reflect the current status
+                                        of associated code reviews.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           By default, the JIRA module is disabled. To enable JIRA integration, see
+                           <a class="xref" href="integrations.jira.html#integrations.jira.enable" title="Enabling the JIRA module">Enabling the JIRA module</a>.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.notable.avatars">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Avatars</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-avatar.png" alt="An Avatar in an activity stream" /></span></span>
+                     
+                           Each event in an activity stream includes an <span class="emphasis"><em>avatar</em></span>,
+                           an image that represents the user responsible for the event. Avatars help
+                           to visually tie together various events and personalize the history
+                           presented in the stream.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-avatars.png" alt="Avatar variations" /></span></span>
+                     
+                           Based on the email address entered in a user's Perforce account, Swarm
+                           attempts to fetch an avatar from
+                           <a class="link" href="http://gravatar.com/" target="_top">gravatar.com</a>. Otherwise,
+                           Swarm selects from its collection of default avatars and color palettes to
+                           provide pleasing variations.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-avatar-tooltip.png" alt="An Avatar tooltip" /></span></span>
+                     
+                           Hover your mouse over an avatar to display a tooltip with the user's full
+                           name.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.notable.follow">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Following</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/button-follow.png" alt="The Follow button" /></span></span>
+                     
+                           Whenever you see a <span class="guibutton">Follow</span> button, for example when
+                           you are viewing a project page or user profile, clicking the button causes
+                           Swarm to send you notifications whenever there is activity generated by
+                           the current resource.
+                         
+                  </p>
+                  <p>
+                           This is useful if, in the case of a project, you are not a project member
+                           but want to know what's happening in the project. Or, in the case of a
+                           user, you want to see what activity that user generates.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/button-unfollow.png" alt="The Unfollow button" /></span></span>
+                     
+                           To stop receiving notifications, visit the project page or user
+                           profile and click the <span class="guibutton">Unfollow</span> button.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.notable.time">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Time</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/tooltip-timeago.png" alt="The timeago tooltip" /></span></span>
+                     
+                           Swarm typically displays the time of an event, such as when a file was
+                           created, as <span class="emphasis"><em>about X units ago</em></span>. Hover your mouse
+                           pointer over a time display to see a tooltip displaying the exact date and
+                           time of the event.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.notable.shortcuts">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Keyboard shortcuts</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm provides the following keyboard shortcuts:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <span class="keycap"><strong>n</strong></span> - While viewing <a class="xref" href="basics.diffs.html" title="Diffs">Diffs</a>,
+                                        pressing <span class="keycap"><strong>n</strong></span> scrolls to the next difference.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="keycap"><strong>p</strong></span> - While viewing <a class="xref" href="basics.diffs.html" title="Diffs">Diffs</a>,
+                                        pressing <span class="keycap"><strong>p</strong></span> scrolls to the previous difference.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="keycap"><strong>ESC</strong></span> - While viewing a dialog, pressing
+                                        <span class="keycap"><strong>ESC</strong></span> closes the dialog.
+                                      
+                           </p>
+                           <p>
+                                        While entering text into a textarea, pressing <span class="keycap"><strong>ESC</strong></span>
+                                        stops text entry.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="section" id="basics.notable.about">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">About Swarm</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           You can discover the version of Swarm you are using:
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        <a class="link" href="basics.login_logout.html" title="Log in / Log out">Log in</a> to Swarm.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="popup"><img src="images/dropdown-userid-closed.png" alt="userid in toolbar" /></span></span>
+                              
+                                        Click your userid, found at the right of the main toolbar.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="popup"><img src="images/dropdown-userid-open-about.png" alt="userid drop-down menu" /></span></span>
+                              
+                                        <span class="inlinemediaobject"><span class="popup"><img src="images/dialog-about_swarm.png" alt="About Swarm dialog" /></span></span>
+                              
+                                        Select <span class="guimenuitem">About Swarm</span>. A dialog appears
+                                        displaying Swarm's version:
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="section" id="basics.notable.custom_error_pages">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Custom error pages</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p class="popup">
+                           <span class="inlinemediaobject"><span class="popup"><img src="images/error-404.jpg" alt="Custom 404 Page featuring Bizzy Heisenbug" /></span></span>
+                           
+                           <span class="inlinemediaobject"><span class="popup"><img src="images/anim-bee_swarm.gif" alt="Bees swarm your mouse pointer on error pages." /></span></span>
+                     
+                           If Swarm encounters an error during processing, such as when a
+                           <a class="link" href="basics.notable.html#basics.notable.quick_urls" title="Quick URLs">Quick URL</a> is used that
+                           points to a non-existent resource, Swarm presents a custom error page
+                           featuring its mascot, Bizzy Heisenbug. Bizzy's friends swarm your mouse
+                           pointer while you are moving it.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.notable.short_links">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Short links</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm provides a <span class="emphasis"><em>short link</em></span> feature that creates
+                           shorter URLs than normal to make sharing specific views within Swarm
+                           easier. It is also possible to register or configure an alternate, shorter
+                           hostname to have even shorter URLs. See
+                           <a class="xref" href="admin.short_links.html" title="Short links">Short links</a> for details.
+                         
+                  </p>
+                  <p>
+                           Conceptually, this is identical to
+                           <a class="link" href="http://tinyurl.com/" target="_top">http://tinyurl.com/</a>, or Twitter's
+                           <a class="link" href="http://t.co/" target="_top">http://t.co/</a>, but is restricted to Swarm URLs on a
+                           hostname you control.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/button-short_link.png" alt="The short links &#34;bookmark&#34; button." /></span></span>
+                         
+                  </p>
+                  <p>
+                           Swarm displays a <span class="emphasis"><em>bookmark</em></span> button when viewing files
+                           or folders in the depot.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/tooltip-short_link.png" alt="The short links &#34;bookmark&#34; button." /></span></span>
+                         
+                  </p>
+                  <p>
+                           Click the button to display a popup containing the short link. Press
+                           <span class="keycap"><strong>CTRL</strong></span>+<span class="keycap"><strong>C</strong></span>
+                           (on Windows and Linux), or <span class="keycap"><strong>Command</strong></span>+<span class="keycap"><strong>C</strong></span> (on Mac OSX), to copy the short link. You can
+                           then paste the short link anywhere you'd like to share the current file
+                           or folder view in Swarm.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.notable.mobile_browser_compatibility">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Mobile browser compatibility</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm is intended to be used from any modern browser, including most
+                           mobile device browsers. For our initial release, mobile browser testing
+                           has been quite limited. We anticipate that you may encounter various
+                           issues, but we certainly look forward to hearing about your mobile device
+                           experiences using Swarm.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="basics.login_logout.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Log in / Log out</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="chapter.groups.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Groups</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

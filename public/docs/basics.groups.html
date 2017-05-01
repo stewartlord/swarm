@@ -1,0 +1,287 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Groups // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.basics.html" title="Basics" />
+      <link rel="prev" href="basics.users.html" title="Users" />
+      <link rel="next" href="basics.projects.html" title="Projects" />
+      <meta name="Section-title" content="Groups" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="basics.groups">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Groups</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      <span class="emphasis"><em>Groups</em></span> are a feature of the Helix Versioning Engine
+                  that makes it easier to manage permissions for users. Swarm can use groups
+                      to coordinate review activities and responsibilities.
+                    
+               </p>
+               <p>
+                      It is important to be aware of certain aspects of Helix groups:
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   Groups can can have both users and sub-groups. A user that is a member
+                                   of a sub-group is also a member of the parent group.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Groups have owners, but owners are not members of their groups. A group
+                                   owner can be added as a member of a group.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Groups can be created by users with <span class="emphasis"><em>super</em></span>
+                                   privileges in the Helix Versioning Engine (<span class="command"><strong>p4d</strong></span>). If
+                                   <span class="command"><strong>p4d</strong></span> is at version 2012.1 or newer, users with
+                                   <span class="emphasis"><em>admin</em></span> privileges can also add groups.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Groups can be edited by their owners, or by users with
+                                   <span class="emphasis"><em>super</em></span> privileges in the Helix Versioning Engine.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Groups have a separate namespace from users; you can have a user named
+                                   <code class="literal">fish</code> that is a member of a group named
+                                   <code class="literal">fish</code>.
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                      More information on adding, editing, and removing groups is included in the
+                      <a class="xref" href="chapter.groups.html" title="Groups">“Groups”</a> chapter.
+                    
+               </p>
+               <div class="section" id="basics.groups.list">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Listing groups</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Begin browsing groups by clicking the <span class="guibutton">Groups</span> link
+                           in the main toolbar.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/page-groups.png" alt="The Groups page" /></span></span>
+                         
+                  </p>
+                  <p>
+                           For each group, the group's name, description, list of owner avatars,
+                           membership count (which has a darker background when you are a member),
+                           and a bell icon when the group has notification enabled (all group members
+                           could receive notifications for new reviews, or commits). Click on a group
+                           name to display details for that group.
+                         
+                  </p>
+                  <p>
+                           The groups listing is sorted by multiple criteria:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        Groups that you own, or belong to, are listed first. A thicker row
+                                        border indicates where your group ownership/membership ends; you are
+                                        not an owner/member of any group below the thicker border.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Groups that have configuration for notification are listed earlier
+                                        than other groups.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Groups are then sorted by name.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           You can search available groups by entering some text in the
+                           <span class="guilabel">Search</span> and clicking <span class="guibutton">Search</span>.
+                           Any group names or descriptions that match the entered text are displayed.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/page-groups-search.png" alt="A specific Group page" /></span></span>
+                         
+                  </p>
+                  <p>
+                           If you have <span class="emphasis"><em>super</em></span> privileges in the Helix Versioning
+                           Engine (<span class="command"><strong>p4d</strong></span>), or have <span class="emphasis"><em>admin</em></span>
+                           privileges in <span class="command"><strong>p4d</strong></span> version 2012.1 or newer, Swarm
+                           displays the <span class="guibutton">Add Group</span> button. Click <span class="guibutton">Add
+                              Group</span> to add a new group.
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                If your Helix Versioning Engine has a large number of groups, the time
+                                required to display the list of groups might be notable.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="basics.groups.display">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Viewing a group</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           View a specific group by clicking on a linked group name, or by visiting
+                           the URL:
+                         
+                  </p><pre class="programlisting">
+https://<em class="replaceable"><code>myswarm.url</code></em>/<b><em class="replaceable"><code>groups</code></em></b>/<em class="replaceable"><code>group-id</code></em>
+</pre><p>
+                           When Swarm displays a group, the presentation is similar to:
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/page-group.png" alt="A specific Group page" /></span></span>
+                         
+                  </p>
+                  <p>
+                           The information presented in the group display includes:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        In the left sidebar:
+                                      
+                           </p>
+                           <div class="itemizedlist">
+                              <ul class="itemizedlist" style="list-style-type: circle; ">
+                                 <li class="listitem">
+                                    <p>
+                                                     The group's name.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     The group's description, if it has one.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     The count of the group's owners and members.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     The avatars of the group's owners.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     The avatars of the group's members.
+                                                   
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Any events generated by a group member is associated with the group,
+                                        and appears in the right-hand area as an
+                                        <a class="link" href="basics.activity_streams.html" title="Activity streams">activity stream</a>.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/button-reviews.png" alt="The Reviews button appearing in the groups toolbar" /></span></span>
+                     
+                           Click the <span class="guilabel">Reviews</span> link in the group toolbar to
+                           display the <a class="link" href="code_reviews.queues.html" title="Review queues">review queue</a>
+                           associated with the group, which includes all reviews authored by any of
+                           the group's members.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="basics.users.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Users</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="basics.projects.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Projects</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

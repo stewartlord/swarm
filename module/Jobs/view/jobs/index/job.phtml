@@ -1,0 +1,172 @@
+<?php
+$this->headTitle()->set($job->getId())->setTranslatorEnabled(false);
+
+// prepare by-line text for the popover title
+$createdBy  = $job->hasCreatedByField()    ? $job->get($job->getCreatedByField())          : null;
+$modifiedBy = $job->hasModifiedByField()   ? $job->get($job->getModifiedByField())         : null;
+$created    = $job->hasCreatedDateField()  ? $job->getAsTime($job->getCreatedDateField())  : null;
+$modified   = $job->hasModifiedDateField() ? $job->getAsTime($job->getModifiedDateField()) : null;
+
+$view       = $this;
+$renderDate = function ($time) use ($view) {
+    return '<span class="timeago" title="' . $view->escapeHtmlAttr(date('c', $time)) . '"></span>';
+};
+
+if ($createdBy && $modifiedBy && $created && $modified) {
+    $user   = $createdBy;
+    $byLine = $this->userLink($createdBy) . ' ' . $this->te('created this job') . ' ' . $renderDate($created);
+    if ($created !== $modified) {
+        $byLine .= ", " . $this->t('modified by') . ' ' . $this->userLink($modifiedBy) . ' ' . $renderDate($modified);
+    }
+} else if ($createdBy && $modified) {
+    $user   = $createdBy;
+    $byLine = $this->userLink($createdBy) . ' ' . $this->t('created this job')
+            . ($modified === $created ? ' ' : ', ' . $this->t('last modified') . ' ') . $renderDate($modified);
+} else {
+    $user   = $job->getUser();
+    $byLine = $this->userLink($user) . ' ' . $this->te('modified this job') . ' ' . $renderDate($job->getTime());
+}
+
+// prepare job status
+$status = ucwords($job->getStatus());
+$class  = 'status-' . strtolower($status);
+?>
+
+<div class="job-wrapper">
+
+    <div class="job-header change-header">
+        <h1><?php echo $this->escapeHtml($job->getId()) ?></h1>
+
+        <div class="row-fluid">
+
+            <div class="span author-avatar">
+                <?php echo $this->avatar($user, 256) ?>
+            </div>
+
+            <div class="popover right span job-info change-info">
+                <div class="arrow"></div>
+                <div class="popover-title clearfix pad1">
+                    <div class="job-byline change-byline pull-left pad1"><?php echo $byLine ?></div>
+                    <span class="pull-right pad1 padw2 label job-status <?php echo $this->escapeHtmlAttr($class) ?>">
+                        <span><?php echo $this->escapeHtml($status) ?></span>
+                    </span>
+                </div>
+                <div class="popover-content change-description monospace force-wrap"><?php
+                    if ($job->getDescription()) {
+                        echo $this->preformat($job->getDescription());
+                    } else {
+                        echo '<span class="first-line no-description">' . $this->te('No description') . '</span>';
+                    }
+                ?></div>
+
+                <?php if (count($job->getChanges())): ?>
+                    <div class="change-fixes fixes popover-footer">
+                        <table>
+                            <?php
+                            foreach ($fixes as $type => $changes) {
+                                $icon  = '';
+                                $title = ucfirst($type);
+                                $route = 'change';
+                                if ($type == 'pending') {
+                                    $icon = 'icon-review-needsRevision';
+                                } elseif ($type == 'committed') {
+                                    $icon = 'icon-committed';
+                                } elseif ($type == 'reviews') {
+                                    $title = 'Review';
+                                    $route = 'review';
+                                    $icon  = 'icon-reviewer';
+                                }
+                                foreach ($changes as $change) {
+                                    echo '<tr>';
+                                    echo '<td class="change-id">';
+                                    echo   '<a href="' . $this->url($route, array($route => $change->getId())) . '">';
+                                    echo   '<i class="swarm-icon ' . $icon . '" title="' . $title . '"></i>';
+                                    echo   $this->escapeHtml($change->getId()) . '</a>';
+                                    echo '</td>';
+                                    echo '<td class="description force-wrap">' . $this->preformat($change->getDescription()) . '</td>';
+                                    echo '</tr>';
+                                }
+                            }
+                            ?>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs change-tabs">
+        <li class="active">
+            <a href="#details" data-toggle="tab"><i class="icon-list"></i> <?php echo $this->te('Details')?></a>
+        </li>
+        <li>
+            <a href="#comments" data-toggle="tab">
+                <i class="icon-comment"></i> <?php echo $this->te('Comments')?>
+                <span class="badge comments-counter">-</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content job-details">
+        <div class="tab-pane fade in active" id="details">
+
+            <dl class="dl-horizontal">
+            <?php
+            $spec       = $job->getSpecDefinition();
+            $skipFields = array('Job', 'Description');
+            foreach ($job->get() as $key => $value):
+                if (in_array($key, $skipFields) || empty($value)) {
+                    continue;
+                }
+
+                // normalize key to
+                //  - replace underscores and dashes by spaces
+                //  - add spaces between words in camel-case strings:
+                //    FixVerifiedBy  ->  Fix Verified By
+                //    JIRASummary    ->  JIRA Summary
+                $field = $this->wordify($key);
+
+                // build field class from name and type.
+                $info  = $spec->getField($key) + array('default' => null);
+                $type  = $info['dataType'];
+                $class = "field-" . strtolower($key) . " " . "type-"  . strtolower($type);
+            ?>
+                <dt class="<?php echo $this->escapeHtmlAttr($class) ?>">
+                    <?php echo $this->escapeHtml($field) ?>
+                </dt>
+                <dd class="<?php echo $this->escapeHtmlAttr($class) . ($type == 'text' ? ' monospace' : '') ?> force-wrap"><?php
+                if (!strlen($value)) {
+                    // if value is empty, nothing to do
+                    // handle this case early to avoid errors trying to
+                    // create links to null users or similar
+                } elseif ($info['code'] == 102) {
+                    echo $this->wordify($value);
+                } else if ($info['default'] == '$user') {
+                    echo $this->userLink($value);
+                } else if ($info['default'] == '$now') {
+                    echo $renderDate($job->getAsTime($key));
+                } else {
+                    echo $this->preformat($value);
+                }
+                ?></dd>
+            <?php endforeach ?>
+            </dl>
+
+        </div>
+        <div class="tab-pane fade" id="comments"></div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.fixes .description').expander({slicePoint: 80});
+        $('.timeago').timeago();
+        swarm.comments.init(
+            '<?php echo 'jobs/' . $this->escapeUrl($job->getId()) ?>',
+            null,
+            '#comments',
+            '.comments-counter'
+        );
+    });
+</script>

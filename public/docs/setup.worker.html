@@ -1,0 +1,219 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Set up a recurring task to spawn workers // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.setup.html" title="Setting up" />
+      <link rel="prev" href="setup.perforce.html" title="Perforce configuration for Swarm" />
+      <link rel="next" href="setup.upgrade.html" title="Upgrading Swarm" />
+      <meta name="Section-title" content="Set up a recurring task to spawn workers" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="setup.worker">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Set up a recurring task to spawn workers</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  To ensure that incoming Perforce events are automatically processed by
+                      Swarm, it is important to set up a cron job to do this. The cron job
+                      can be installed on any host, although you may want to place this on
+                      the Swarm host.
+                    
+               </p>
+               <div class="warning admonition">
+                  <h3 class="title">Warning</h3>
+                  <p>
+                           <span class="command"><strong>curl</strong></span> or <span class="command"><strong>wget</strong></span> must be installed
+                           or workers do not spawn and Swarm cannot process any events. See
+                           <a class="link" href="setup.worker.html#setup.worker.verification" title="curl/wget verification">below</a> for
+                           verification steps.
+                         
+                  </p>
+               </div>
+               <div class="orderedlist">
+                  <ol class="orderedlist" type="1">
+                     <li class="listitem">
+                        <p>
+                                   Create a file named <code class="literal">helix-swarm</code> in
+                                   <code class="filename">/etc/cron.d</code>.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Edit <code class="filename">/etc/cron.d/helix-swarm</code> to contain
+                                   <span class="bold"><strong>one</strong></span> of the following blocks; select a
+                                   block depending on whether your system has <span class="command"><strong>curl</strong></span> or
+                                   <span class="command"><strong>wget</strong></span> installed.
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: disc; ">
+                              <li class="listitem">
+                                 <p>
+                                                If you have <span class="command"><strong>curl</strong></span> installed:
+                                              
+                                 </p><pre lang="bash" class="programlisting">
+# This ensures that a worker is fired up every minute
+* * * * * nobody curl -so /dev/null -m5 https://<em class="replaceable"><code>myswarm.url</code></em>/queue/worker
+</pre></li>
+                              <li class="listitem">
+                                 <p>
+                                                If you have <span class="command"><strong>wget</strong></span> installed:
+                                              
+                                 </p><pre lang="bash" class="programlisting">
+# This ensures that a worker is fired up every minute
+* * * * * nobody wget -q -O /dev/null -T5 https://<em class="replaceable"><code>myswarm.url</code></em>/queue/worker
+</pre></li>
+                           </ul>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Replace <span class="emphasis"><em>myswarm.url</em></span> above with the actual hostname you
+                                   have configured for Swarm.
+                                 
+                        </p>
+                        <p>
+                                   If this is running on the Swarm host, and you have specified the
+                                   correct <code class="literal">hostname</code> item in the
+                                   <a class="xref" href="admin.environment.html" title="Environment">Environment</a> configuration, this can be set to
+                                   <code class="literal">localhost</code>.
+                                 
+                        </p>
+                        <p>
+                                   In the example configuration lines above, where you see
+                                   <em class="parameter"><code>-m5</code></em> or <em class="parameter"><code>-T5</code></em>, the
+                                   <code class="literal">5</code> is the number of seconds that the cron task will
+                                   wait for a response from the Swarm host. When the cron task is installed
+                                   on the Swarm host, such as in the Swarm OVA, that value could be reduced
+                                   to 1 seconds (e.g. <em class="parameter"><code>-m1</code></em> or
+                                   <em class="parameter"><code>-T1</code></em>).
+                                 
+                        </p>
+                        <div class="note admonition">
+                           <h3 class="title">Note</h3>
+                           <p>
+                                        If you configure Swarm to use HTTPS, and you install a self-signed
+                                        certificate, the cron jobs need to be adjusted to avoid certificate
+                                        validity test which could cause silent failures to process events.
+                                      
+                           </p>
+                           <div class="itemizedlist">
+                              <ul class="itemizedlist" style="list-style-type: disc; ">
+                                 <li class="listitem">
+                                    <p>
+                                                     If you have <span class="command"><strong>curl</strong></span> installed:
+                                                   
+                                    </p><pre lang="bash" class="programlisting">
+# This ensures that a worker is fired up every minute
+* * * * * nobody curl -so /dev/null <span class="bold"><strong>--insecure</strong></span> -m5 https://<em class="replaceable"><code>myswarm.url</code></em>/queue/worker
+</pre></li>
+                                 <li class="listitem">
+                                    <p>
+                                                     If you have <span class="command"><strong>wget</strong></span> installed:
+                                                   
+                                    </p><pre lang="bash" class="programlisting">
+# This ensures that a worker is fired up every minute
+* * * * * nobody wget -q -O /dev/null <span class="bold"><strong>--no-check-certificate</strong></span> -T5 https://<em class="replaceable"><code>myswarm.url</code></em>/queue/worker
+</pre></li>
+                              </ul>
+                           </div>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Save the edited file.
+                                 
+                        </p>
+                     </li>
+                  </ol>
+               </div>
+               <p>
+                      You are now all set to start using Swarm. Enjoy!
+                    
+               </p>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           If the recurring task is disabled, or stops functioning for any reason,
+                           logged-in users see the following error message when Swarm detects that no
+                           workers are running:
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/screen-no_workers.png" alt="The error message that appears when there are no running workers." /></span></span>
+                         
+                  </p>
+               </div>
+               <div class="section" id="setup.worker.verification">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">curl/wget verification</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           The cron job depends on having <span class="command"><strong>curl</strong></span> or
+                           <span class="command"><strong>wget</strong></span> installed, as indicated in
+                           <a class="xref" href="setup.dependencies.html" title="Runtime dependencies">Runtime dependencies</a>.
+                         
+                  </p>
+                  <p>
+                           To verify that <span class="command"><strong>curl</strong></span> or <span class="command"><strong>wget</strong></span> is
+                           installed, use the which command. For example:
+                         
+                  </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>which curl</strong></span>
+</pre><p>
+                           If you see any output, the referenced command is installed.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="setup.perforce.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Perforce configuration for Swarm</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="setup.upgrade.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Upgrading Swarm</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

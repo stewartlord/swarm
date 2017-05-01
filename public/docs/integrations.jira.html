@@ -1,0 +1,134 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>JIRA // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.integrations.html" title="Integrations" />
+      <link rel="prev" href="chapter.integrations.html" title="Integrations" />
+      <link rel="next" href="integrations.libreoffice.html" title="LibreOffice" />
+      <meta name="Section-title" content="JIRA" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="integrations.jira">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">JIRA</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Swarm's JIRA integration allows code reviews and committed changes to be
+                  associated with JIRA issues, making it easy to reference associated issues,
+                      and see the state of a code review or committed change within JIRA.
+                    
+               </p>
+               <p>
+                      To associate a code review with a JIRA issue, include a JIRA issue
+                      identifier in the review's description, e.g. <code class="literal">SW-1234</code>;
+                      Swarm links to the JIRA issue and creates a link within the JIRA issue back
+                      to the code review in Swarm. Multiple JIRA issues can be included in the
+                      changelist description.
+                    
+               </p>
+               <p>
+                      As a code review progresses, Swarm updates each associated JIRA
+                      issue with the review's current status.
+                    
+               </p>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           Swarm fetches JIRA project identifiers using a worker, once per the worker
+                           process' lifetime. See <a class="xref" href="admin.workers.html#admin.workers.configuration" title="Worker configuration">Worker configuration</a>. New
+                           JIRA projects will not auto-link to JIRA until the project identifiers
+                           have been updated. By default, project identifiers are updated once every
+                           ten minutes.
+                         
+                  </p>
+               </div>
+               <p>
+                      By default, the JIRA module is disabled. Use the following instructions to
+                      enable the JIRA module.
+                    
+               </p>
+               <div class="section" id="integrations.jira.enable">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Enabling the JIRA module</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           When enabled, the JIRA module links JIRA issues referenced in change
+                           descriptions, job descriptions, comments, and reviews to your local JIRA
+                           service. By default, the JIRA module is not enabled.
+                         
+                  </p>
+                  <p>
+                           To enable the JIRA module, add the following configuration block
+                           to your <code class="filename">data/config.php</code> file:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'jira' =&gt; array(
+        'host'      =&gt; '', // URL for your installed JIRA web interface
+        'user'      =&gt; '', // the username required for JIRA API access
+        'password'  =&gt; '', // the password required for JIRA API access
+        'job_field' =&gt; '', // optional, if P4DTG is replicating JIRA issue IDs
+                           // to a job field, list that field here
+    ),
+</pre><div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                If your JIRA web interface uses <code class="literal">HTTPS</code>, you may need
+                                to configure <a class="xref" href="admin.security.html#admin.security.http_client_options" title="HTTP client options">HTTP client options</a> so
+                                that Swarm can connect successfully.
+                              
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="chapter.integrations.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Integrations</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="integrations.libreoffice.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">LibreOffice</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

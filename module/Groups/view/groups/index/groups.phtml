@@ -1,0 +1,39 @@
+<?php
+$this->headTitle()->set('Groups');
+?>
+<h1><?php echo $this->te('Groups') ?></h1>
+
+<div class="groups-toolbar">
+    <div class="input-prepend input-append search">
+        <span class="add-on"><i class="icon-search"></i></span>
+        <input class="input-large" type="text" name="keywords" placeholder="<?php echo $this->te('Keywords')?>"
+               value="<?php echo $this->escapeHtmlAttr($keywords) ?>">
+        <button class="btn btn-search" type="button"><?php echo $this->te('Search')?></button>
+    </div>
+    <?php if ($canAddGroups): ?>
+    <a class="btn btn-add" href="<?php echo $this->url('add-group') ?>">
+        <i class="icon-plus"></i> <?php echo $this->te('Add Group') ?>
+    </a>
+    <?php endif; ?>
+</div>
+
+<table class="groups table">
+    <thead>
+        <tr>
+            <th class="name"><?php echo $this->te('Name') ?></th>
+            <th class="description"><?php echo $this->te('Description') ?></th>
+            <th class="owners"><?php echo $this->te('Owners') ?></th>
+            <th class="members"><?php echo $this->te('Members') ?></th>
+            <th class="notifications" title="<?php echo $this->te('Email Notifications') ?>"
+                data-custom-class="group-notifications"
+                aria-label="<?php echo $this->te('Email Notifications') ?>"><i class="icon-bell"></i></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+    $(function(){
+        swarm.groups.init();
+    });
+</script>

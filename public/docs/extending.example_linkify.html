@@ -1,0 +1,158 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Example linkify module // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.extending.html" title="Extending Swarm" />
+      <link rel="prev" href="extending.modules.html" title="Modules" />
+      <link rel="next" href="extending.example_email.html" title="Example email module" />
+      <meta name="Section-title" content="Example linkify module" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="extending.example_linkify">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Example linkify module</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The following example module demonstrates how to turn text that appears in
+                      changelist, job, or code review descriptions, comments, and activity entries
+                      into links.
+                    
+               </p>
+               <div class="orderedlist">
+                  <ol class="orderedlist" type="1">
+                     <li class="listitem">
+                        <p>
+                                   Create a folder called Rickroll in the module folder.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Create the file <code class="filename">Module.php</code> within
+                                   <code class="filename">module/Rickroll</code> and edit it to contain:
+                                 
+                        </p><pre lang="php" class="programlisting">
+&lt;?php
+/**
+ * Perforce Swarm
+ *
+ * @copyright   2014 Perforce Software. All rights reserved.
+ * @license     Please see LICENSE.txt in top-level folder of this distribution.
+ * @version     &lt;release&gt;/&lt;patch&gt;
+ */
+
+namespace Rickroll;
+
+use Application\Filter\Linkify;
+
+class Module
+{
+  public function onBootstrap()
+  {
+    Linkify::addCallback(
+      function ($value, $escaper) {
+        if (strcasecmp($value, 'rickroll')) {
+          // not a hit; tell caller we did not handle this one
+          return false;
+        }
+
+        return '&lt;a target="_new" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"&gt;'
+               . $escaper-&gt;escapeHtml($value) . "&lt;/a&gt;";
+      },
+      'rickroll',
+      strlen('rickroll')
+    );
+  }
+
+  public function getConfig()
+  {
+    return array();
+  }
+}
+</pre><p>
+                                   This file achieves several things. It:
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: disc; ">
+                              <li class="listitem">
+                                 <p>
+                                                makes the <code class="filename">Rickroll</code> folder a recognized module.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                declares the module's namespace, which matches the module's folder
+                                                name <code class="filename">Rickroll</code>.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                provides an <code class="methodname">onBootstrap()</code> method that
+                                                allows the module's configuration to be established immediately
+                                                after the module is loaded
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Adds a callback to the Linkify module that declares what text is to
+                                                be searched for (<code class="literal">rickroll</code>) and, when found, how
+                                                to compose the link for that text.
+                                              
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="extending.modules.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Modules</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="extending.example_email.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Example email module</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

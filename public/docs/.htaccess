@@ -1,0 +1,690 @@
+DirectoryIndex index.html
+
+# Handles rewriting old HTML filenames to new HTML filenames.
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+
+  # The following looks way too complicated to be necessary, but in fact it is.
+  # It is not straightforward to redirect to renamed files that used to exist
+  # in a subdirectory AND be agnostic to where these files live in the document
+  # root.
+  RewriteBase /
+
+  # administration chapter rewrites --------------------------------------------
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/index.html)$                     %2chapter.administration.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/index.html)$                %2chapter.administration.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/avatars.html)$                   %2admin.avatars.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/avatars.html)$              %2admin.avatars.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/backups.html)$                   %2admin.backup.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/backups.html)$              %2admin.backup.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/configuration.html)$             %2admin.configuration.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/configuration.html)$        %2admin.configuration.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/email.html)$                     %2admin.email.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/email.html)$                %2admin.email.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/emoji.html)$                     %2admin.emoji.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/emoji.html)$                %2admin.emoji.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/environment.html)$               %2admin.environment.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/environment.html)$          %2admin.environment.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/excluding_users.html)$           %2admin.exclude_users.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/excluding_users.html)$      %2admin.exclude_users.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/license.html)$                   %2admin.license.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/license.html)$              %2admin.license.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/logging.html)$                   %2admin.logging.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/logging.html)$              %2admin.logging.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/mainline.html)$                  %2admin.mainline.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/mainline.html)$             %2admin.mainline.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/notifications.html)$             %2admin.notifications.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/notifications.html)$        %2admin.notifications.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/ova.html)$                       %2admin.ova.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/ova.html)$                  %2admin.ova.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/review_keyword.html)$            %2admin.review_keyword.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/review_keyword.html)$       %2admin.review_keyword.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/reviews.html)$                   %2admin.reviews.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/reviews.html)$              %2admin.reviews.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/security.html)$                  %2admin.security.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/security.html)$             %2admin.security.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/system_information.html)$        %2admin.system_information.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/system_information.html)$   %2admin.system_information.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/uninstall.html)$                 %2admin.uninstall.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/uninstall.html)$            %2admin.uninstall.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(administration/workers.html)$                   %2admin.workers.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/administration/workers.html)$              %2admin.workers.html [QSA,R,L]
+
+  # basics chapter rewrites ----------------------------------------------------
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/index.html)$                             %2chapter.basics.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/index.html)$                        %2chapter.basics.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/activity.html)$                          %2basics.activity_streams.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/activity.html)$                     %2basics.activity_streams.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/changelists.html)$                       %2basics.changelists.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/changelists.html)$                  %2basics.changelists.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/comments.html)$                          %2basics.comments.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/comments.html)$                     %2basics.comments.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/diffs.html)$                             %2basics.diffs.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/diffs.html)$                        %2basics.diffs.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/files.html)$                             %2basics.files.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/files.html)$                        %2basics.files.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/history.html)$                           %2basics.commits.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics.history.html)$                           %2basics.commits.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/history.html)$                      %2basics.history.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/jobs.html)$                              %2basics.jobs.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/jobs.html)$                         %2basics.jobs.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/login_logout.html)$                      %2basics.login_logout.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/login_logout.html)$                 %2basics.login_logout.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/notable.html)$                           %2basics.notable.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/notable.html)$                      %2basics.notable.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/notifications.html)$                     %2basics.notifications.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/notifications.html)$                %2basics.notifications.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/projects.html)$                          %2basics.projects.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/projects.html)$                     %2basics.projects.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(basics/users.html)$                             %2basics.users.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/basics/users.html)$                        %2basics.users.html [QSA,R,L]
+
+  # code reviews chapter rewrites ----------------------------------------------
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(code_reviews/index.html)$                       %2chapter.code_reviews.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/code_reviews/index.html)$                  %2chapter.code_reviews.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(code_reviews/activities.html)$                  %2code_reviews.activities.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/code_reviews/activities.html)$             %2code_reviews.activities.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(code_reviews/code_review_queues.html)$          %2code_reviews.queues.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/code_reviews/code_review_queues.html)$     %2code_reviews.queues.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(code_reviews/model.html)$                       %2code_reviews.model.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/code_reviews/model.html)$                  %2code_reviews.model.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(code_reviews/responsibility.html)$              %2code_reviews.responsibility.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/code_reviews/responsibility.html)$         %2code_reviews.responsibility.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(code_reviews/review_display.html)$              %2code_reviews.display.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/code_reviews/review_display.html)$         %2code_reviews.display.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(code_reviews/states.html)$                      %2code_reviews.states.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/code_reviews/states.html)$                 %2code_reviews.states.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(code_reviews/workflow.html)$                    %2code_reviews.workflow.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/code_reviews/workflow.html)$               %2code_reviews.workflow.html [QSA,R,L]
+
+  # extending chapter rewrites -------------------------------------------------
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(extending/index.html)$                          %2chapter.extending.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/extending/index.html)$                     %2chapter.extending.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(extending/clients.html)$                        %2extending.clients.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/extending/clients.html)$                   %2extending.clients.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(extending/development.html)$                    %2extending.development.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/extending/development.html)$               %2extending.development.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(extending/example_email.html)$                  %2extending.example_email.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/extending/example_email.html)$             %2extending.example_email.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(extending/modules.html)$                        %2extending.modules.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/extending/modules.html)$                   %2extending.modules.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(extending/resources.html)$                      %2extending.resources.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/extending/resources.html)$                 %2extending.resources.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(extending/restful.html)$                        %2index.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(extending.restful.html)$                        %2index.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/extending/restful.html)$                   %2extending.restful.html [QSA,R,L]
+
+  # integrations chapter rewrites ----------------------------------------------
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(integrations/index.html)$                       %2chapter.integrations.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/integrations/index.html)$                  %2chapter.integrations.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(integrations/jira.html)$                        %2integrations.jira.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/integrations/jira.html)$                   %2integrations.jira.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(integrations/libreoffice.html)$                 %2integrations.libreoffice.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/integrations/libreoffice.html)$            %2integrations.libreoffice.html [QSA,R,L]
+
+  # projects chapter rewrites --------------------------------------------------
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(projects/index.html)$                           %2chapter.projects.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/projects/index.html)$                      %2chapter.projects.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(projects/add.html)$                             %2projects.add.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/projects/add.html)$                        %2projects.add.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(projects/edit.html)$                            %2projects.edit.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/projects/edit.html)$                       %2projects.edit.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(projects/membership.html)$                      %2projects.membership.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/projects/membership.html)$                 %2projects.membership.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(projects/remove.html)$                          %2projects.remove.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/projects/remove.html)$                     %2projects.remove.html [QSA,R,L]
+
+  # quickstart chapter rewrites ------------------------------------------------
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(quickstart/index.html)$                         %2chapter.quickstart.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/quickstart/index.html)$                    %2chapter.quickstart.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(quickstart/code_review_contribute.html)$        %2quickstart.code_review_contribute.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/quickstart/code_review_contribute.html)$   %2quickstart.code_review_contribute.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(quickstart/fix_non_mergeable.html)$             %2quickstart.fix_non_mergeable.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/quickstart/fix_non_mergeable.html)$        %2quickstart.fix_non_mergeable.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(quickstart/integrate_test_suite.html)$          %2quickstart.integrate_test_suite.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/quickstart/integrate_test_suite.html)$     %2quickstart.integrate_test_suite.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(quickstart/local_copy.html)$                    %2quickstart.local_copy.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/quickstart/local_copy.html)$               %2quickstart.local_copy.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(quickstart/logging_level.html)$                 %2quickstart.logging_level.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/quickstart/logging_level.html)$            %2quickstart.logging_level.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(quickstart/manage_branches.html)$               %2quickstart.manage_branches.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/quickstart/manage_branches.html)$          %2quickstart.manage_branches.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(quickstart/review_deployment.html)$             %2quickstart.review_deployment.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/quickstart/review_deployment.html)$        %2quickstart.review_deployment.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(quickstart/start_code_review.html)$             %2quickstart.start_code_review.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/quickstart/start_code_review.html)$        %2quickstart.start_code_review.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(quickstart/workers.html)$                       %2quickstart.workers.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/quickstart/workers.html)$                  %2quickstart.workers.html [QSA,R,L]
+
+  # setup chapter rewrites -----------------------------------------------------
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/index.html)$                              %2chapter.setup.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/index.html)$                         %2chapter.setup.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/apache_config.html)$                      %2setup.apache.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/apache_config.html)$                 %2setup.apache.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/dependencies.html)$                       %2setup.dependencies.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/dependencies.html)$                  %2setup.dependencies.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/installation.html)$                       %2setup.installation.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/installation.html)$                  %2setup.installation.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/ova_config.html)$                         %2setup.ova.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/ova_config.html)$                    %2setup.ova.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/perforce_config.html)$                    %2setup.perforce.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/perforce_config.html)$               %2setup.perforce.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/php_config.html)$                         %2setup.php.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/php_config.html)$                    %2setup.php.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/swarm_config.html)$                       %2setup.swarm.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/swarm_config.html)$                  %2setup.swarm.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/trigger_token.html)$                      %2setup.trigger_token.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/trigger_token.html)$                 %2setup.trigger_token.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/upgrade_2013.1.html)$                     %2setup.upgrade.2013.1.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/upgrade_2013.1.html)$                %2setup.upgrade.2013.1.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/upgrade_2013.2.html)$                     %2setup.upgrade.2013.2.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/upgrade_2013.2.html)$                %2setup.upgrade.2013.2.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/upgrade_beta_preview.html)$               %2setup.upgrade.beta_preview.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/upgrade_beta_preview.html)$          %2setup.upgrade.beta_preview.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/upgrade_open_beta.html)$                  %2setup.upgrade.open_beta.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/upgrade_open_beta.html)$             %2setup.upgrade.open_beta.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(setup/worker_config.html)$                      %2setup.worker.html [QSA,R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/setup/worker_config.html)$                 %2setup.worker.html [QSA,R,L]
+
+  # other book file rewrites ---------------------------------------------------
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(genindex.html)$                                 %2index.html [R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/genindex.html)$                            %2index.html [R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(search.html)$                                   %2index.html [R,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*)\1$
+  RewriteRule ^(html/search.html)$                              %2index.html [R,L]
+
+  # unconditional serving of assets in this tree
+  # with no invocation of Swarm.
+  RewriteRule ^.*$ - [NC,L]
+</IfModule>

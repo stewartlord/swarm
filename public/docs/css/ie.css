@@ -1,0 +1,11 @@
+#header {
+  border-bottom: 1px solid #ddd;
+}
+
+div.body {
+  padding-bottom: 32px;
+}
+
+.search-interface {
+  right: -9999px;
+}

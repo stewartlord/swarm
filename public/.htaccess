@@ -1,0 +1,115 @@
+# Swarm .htaccess file for Apache
+
+# For reference, consult this reference:
+# https://httpd.apache.org/docs/2.2/mod/quickreference.html
+
+# If the rewrite module is not enabled, make default and 404 page point to warning
+<IfModule !mod_rewrite.c>
+  DirectoryIndex norewrite.html
+  ErrorDocument 404 /norewrite.html
+</IfModule>
+
+# If PHP is not enabled, make default page point to warning
+<IfModule !mod_php5.c>
+  DirectoryIndex nophp.html
+</IfModule>
+
+# Configure PHP
+<IfModule mod_php5.c>
+  DirectoryIndex index.php
+
+  # For information on the meaning of these settings, please see:
+  # http://www.php.net/manual/en/ini.list.php
+
+  # These settings are required for Perforce Swarm
+  php_value magic_quotes_gpc        false
+  php_value magic_quotes_runtime    false
+  php_value session.auto_start      false
+
+  # These settings govern how large file uploads can be
+  # - The post_max_size value must be larger than upload_max_filesize
+  # - The memory_limit value must be larger than post_max_size
+  php_value upload_max_filesize     8M
+  php_value post_max_size           16M
+</IfModule>
+
+# Disable MultiViews as it interferes with rewrite
+# Disable directory listings for the potential security benefit
+Options -MultiViews -Indexes
+
+# Configure Rewrite Engine
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  <IfModule mod_php5.c>
+    # The queue/add action is handled by a lightweight script
+    # so we handle routing it here via rewrite rules
+    RewriteRule ^queue/add(/|/(.+)/?)?$ queue.php?token=$2
+
+    # The search action is handled by a lightweight script
+    # so we handle routing it here via rewrite rules
+    RewriteRule ^search/?$ search.php
+
+    # Respect server-info or server-status if their modules are active
+    <IfModule mod_info.c>
+      RewriteRule ^server-info - [L]
+    </IfModule>
+    <IfModule mod_status.c>
+      RewriteRule ^server-status - [L]
+    </IfModule>
+
+    # If its a request for a file that exists; just serve it
+    RewriteCond %{REQUEST_FILENAME} -s [OR]
+    RewriteCond %{REQUEST_FILENAME} -l
+    RewriteRule ^.*$ - [NC,L]
+
+    # Drop numeric 'cache-buster' from minified css/js requests
+    RewriteRule ^build/(.+)\-[0-9]+\.((css|js)(gz)?)$   build/$1.$2 [L]
+
+    # Everything else gets handled by the app
+    RewriteRule ^.*$ index.php [NC,L]
+  </IfModule>
+
+  <IfModule !mod_php5.c>
+    # Without PHP, rewrite all non-docs and vendor material (JavaScript) to warning page
+    RewriteCond %{REQUEST_URI}  !^/docs/
+    RewriteCond %{REQUEST_URI}  !^/vendor/
+    RewriteRule ^.*$ nophp.html [L]
+  </IfModule>
+</IfModule>
+
+# Configure Static Resource Cache Headers
+<IfModule mod_expires.c>
+  ExpiresActive   On
+  ExpiresDefault  "access plus 12 hours"
+
+  # In order for the cache headers to apply to all static resources we
+  # apply our 12 hour timeout to anything that isn't a php script.
+  # The php scripts will quite possibly provide expiration headers on
+  # their own but we didn't want them to have to fight this setting.
+  <FilesMatch \.php$>
+    ExpiresActive Off
+  </FilesMatch>
+</IfModule>
+
+# Enable apache based gzip'ing of text output
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml application/json
+</IfModule>
+
+# By default apache ETags include the inode which makes them fail in
+# a horizontally scaled environment; we remove inode to fix this and
+# to make yslow a happier camper.
+FileETag MTime Size
+
+# Disable mod_cache as it serves out the wrong content for dynamic pages.
+# Our mod_rewrite rules direct all dynamic requests to index.php, which
+# is incompatible with mod_cache's lookups.
+<IfModule mod_cache.c>
+  SetEnv no-cache
+</IfModule>
+
+# Headers for Compressed CSS/JS
+AddType     text/css        .cssgz
+AddType     text/javascript .jsgz
+AddEncoding x-gzip          .cssgz .jsgz

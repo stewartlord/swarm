@@ -1,0 +1,499 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Review display // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.code_reviews.html" title="Code reviews" />
+      <link rel="prev" href="code_reviews.queues.html" title="Review queues" />
+      <link rel="next" href="code_reviews.activities.html" title="Activities" />
+      <meta name="Section-title" content="Review display" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="code_reviews.display">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Review display</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      During a code review, reviewers spend most of their time using the review
+                      interface:
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="frame"><img src="images/page-review.png" alt="The Review interface" /></span></span>
+                    
+               </p>
+               <p>
+                      The review interface is very similar to the
+                      <a class="link" href="basics.changelists.html" title="Changelists">changelist interface</a>; and provides
+                      largely the same functionality, but has several notable differences:
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-gf_review.png" alt="A Review heading with Git logo" /></span></span>
+                           
+                                   Git Fusion-initiated reviews include the Git logo beside the main review
+                                   identifier. This indicator is important because Perforce users cannot
+                                   update Git Fusion-initiated reviews.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/panel-task_counts.png" alt="Task counts/status summary." /></span></span>
+                           
+                                   A <span class="emphasis"><em>Tasks</em></span> area appears below the review's
+                                   description. This area summarizes the number of comments that have been
+                                   flagged as tasks, with separate counts for open, addressed, and verified
+                                   tasks. See <a class="xref" href="basics.comments.html#basics.comments.tasks" title="Tasks">Tasks</a> for more details.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-reviewers.png" alt="The Reviewers area" /></span></span>
+                           
+                                   A <span class="emphasis"><em>Reviewers</em></span> area appears below the review's
+                                   description whenever a review has one or more reviewers, or you are
+                                   logged in.
+                                 
+                        </p>
+                        <p>
+                                   This area includes, from left to right, the
+                                   <a class="link" href="code_reviews.activities.html#code_reviews.activities.edit_reviewers" title="Edit reviewers">edit reviewers
+                                      button</a>
+                                   
+                                   <span class="inlinemediaobject"><img src="images/icon-edit_description.png" alt="The edit reviewers button" /></span>, the current up and down vote counts, and the
+                                   avatars of current reviewers.
+                                   <a class="link" href="code_reviews.responsibility.html#code_reviews.responsibility.required" title="Required reviewers">Required
+                                      reviewers</a> have a star badge over their avatar. Whenever a
+                                   reviewer has voted on a review, their icon displays a badge indicating
+                                   whether they voted up or down. If you are logged in and viewing a review
+                                   you did not author, your avatar appears to the right of any other
+                                   reviewers and its appearance varies according to the following
+                                   conditions:
+                                 
+                        </p>
+                        <div class="informaltable">
+                           <table>
+                              <colgroup>
+                                 <col width="50%" />
+                                 <col width="50%" />
+                              </colgroup>
+                              <tbody>
+                                 <tr>
+                                    <td>
+                                                       
+                                       <p>
+                                                            <span class="bold"><strong>When you are not yet a
+                                                                  reviewer</strong></span>, your avatar appears muted. Clicking
+                                                            your avatar presents a menu allowing you to vote up or down
+                                                            and thereby become a reviewer, or simply join a review as a
+                                                            reviewer.
+                                                          
+                                       </p>
+                                       
+                                                       
+                                       <p>
+                                                            <span class="inlinemediaobject"><img src="images/dropdown-reviewer-not_reviewing.png" alt="Menu options when you are not yet a reviewer" /></span>
+                                                          
+                                       </p>
+                                                     
+                                    </td>
+                                    <td>
+                                                       
+                                       <p>
+                                                            <span class="bold"><strong>When you are a reviewer</strong></span>,
+                                                            your avatar does not appear muted. If you have not yet
+                                                            voted, no badge appears on your avatar and clicking your
+                                                            avatar presents a menu allowing you to vote up or down, change
+                                                            whether your vote required or not, or leave the review.
+                                                          
+                                       </p>
+                                       
+                                                       
+                                       <p>
+                                                            <span class="inlinemediaobject"><img src="images/dropdown-reviewer-reviewing.png" alt="Menu options when you are a reviewer" /></span>
+                                                          
+                                       </p>
+                                                     
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td>
+                                                       
+                                       <p>
+                                                            <span class="bold"><strong>When you are a reviewer and have
+                                                                  already voted</strong></span>, your avatar displays a badge
+                                                            indicating your vote. Clicking your avatar presents a menu
+                                                            allowing you to clear or change your vote, change whether your
+                                                            vote is required or not, or leave the review.
+                                                          
+                                       </p>
+                                       
+                                                       
+                                       <p>
+                                                            <span class="inlinemediaobject"><img src="images/dropdown-reviewer-voted.png" alt="Menu options after you have voted" /></span>
+                                                          
+                                       </p>
+                                                     
+                                    </td>
+                                    <td>
+                                                       
+                                       <p>
+                                                            <span class="bold"><strong>When you are a
+                                                                  <a class="link" href="code_reviews.responsibility.html#code_reviews.responsibility.required" title="Required reviewers">required
+                                                                     reviewer</a></strong></span>, your avatar displays a star badge
+                                                            indicating that the review cannot be approved until you vote
+                                                            up. Clicking your avatar presents a menu allowing you to
+                                                            change your vote, make your vote optional, or leave the
+                                                            review.
+                                                          
+                                       </p>
+                                       
+                                                       
+                                       <p>
+                                                            <span class="inlinemediaobject"><img src="images/dropdown-reviewer-required.png" alt="Menu options after you have voted" /></span>
+                                                          
+                                       </p>
+                                                     
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-reviewers-stale_vote.png" alt="A stale vote." /></span></span>
+                           
+                                   When a review is updated, if the review's list of files, file content,
+                                   or file-types changes, any votes cast on the review become
+                                   <span class="emphasis"><em>stale</em></span>. The vote counts are reset, and the vote
+                                   indicators become muted.
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-reviewers-stale_vote-tooltip.png" alt="A tooltip for a stale vote." /></span></span>
+                           
+                                   If you hover your mouse over a reviewer with a stale vote, a tooltip
+                                   appears displaying the userid, how they voted, and on which version of
+                                   the review; each version is represented as a point on the Review
+                                   Timeline (see below).
+                                 
+                        </p>
+                        <div class="note admonition">
+                           <h3 class="title">Note</h3>
+                           <p>
+                                        Stale vote handling is not supported for Git-created reviews.
+                                      
+                           </p>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   A slider control, called the Review Timeline, appears just above the
+                                   list of files. If the review's files have been updated at least once,
+                                   this slider allows you to browse and compare arbitrary versions of the
+                                   review's files.
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/slider-review_timeline.png" alt="The Review Timeline slider" /></span>
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/tooltip-review_timeline.png" alt="A Review Timeline tooltip" /></span></span>
+                                   
+                                   Each point on the slider represents a version of the review's files,
+                                   with the oldest version on the left and newer versions on the right.
+                                   Hover your mouse over each point to see a tooltip displaying the version
+                                   number, who created it and when, plus the changelist containing a copy
+                                   of that version's files.
+                                 
+                        </p>
+                        <p>
+                                   The button to the left of the slider toggles <span class="emphasis"><em>diff</em></span>
+                                   mode for arbitrary versions of the review's files. In diff mode, the
+                                   slider shows a bar indicating which two versions are being compared, and
+                                   the endpoints of the slider can be dragged to any of the available
+                                   points to compare any earlier version of the review with any later
+                                   version.
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/slider-review_timeline-diff.png" alt="The Review Timeline slider in diff mode" /></span>
+                                 
+                        </p>
+                        <p>
+                                   Hovering your mouse over the bar shows a tooltip displaying the versions
+                                   being compared, and the changelists that contain the files.
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/tooltip-review_timeline-diff.png" alt="A Review Timeline diff tooltip" /></span>
+                                 
+                        </p>
+                        <p>
+                                   It is good to remember that a review consists of one or more
+                                   Swarm-managed changelists. When comparing versions of a review, Swarm is
+                                   showing any differences between the selected versions, not the review
+                                   author's personal changelist. See
+                                   <a class="xref" href="code_reviews.model.html#code_reviews.internal_representation" title="Internal representation">Internal representation</a> for details.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   The file listing header displays:
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/thumb-review_version_heading.png" alt="The file listing heading for a code review" /></span>
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: circle; ">
+                              <li class="listitem">
+                                 <p>
+                                                The current version of the files in the review.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Which changelist contains a shelved copy of the review's files.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                The common path for all of the files in the review.
+                                              
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <p>
+                                   In diff mode, the file listing header displays:
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/thumb-review_version_heading-diff.png" alt="The file listing heading for a code review while in diff mode" /></span>
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: circle; ">
+                              <li class="listitem">
+                                 <p>
+                                                Which two versions of the review's files are being compared.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Which changelists contain the files being compared.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                The common path for all of the files in both versions of the review.
+                                              
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/tooltip-review_test_status.png" alt="A tooltip showing the test status and timestamp" /></span></span>
+                           
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-review_tests-fail.png" alt="The Review's tests-failed button" /></span></span>
+                           
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-review_tests-pass.png" alt="The Review's tests-succeeded button" /></span></span>
+                           
+                                   When <a class="link" href="quickstart.integrate_test_suite.html" title="How can I integrate my test suite to inform review acceptance or rejection?">continuous
+                                      integration</a> has been configured for a project, test success or
+                                   failure is indicated in the review's heading. If your continuous
+                                   integration tests can provide a URL that provides details of a test
+                                   run, the indicator becomes linked; click the indicator to see the test
+                                   details.
+                                 
+                        </p>
+                        <p>
+                                   When you hover your mouse over the test status indicator, Swarm
+                                   indicates the test status and how long ago that status was achieved.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-review_deployment-failure.png" alt="The Review's deployment-failed button" /></span></span>
+                           
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-review_deployment-success.png" alt="The Review's deployment-success button" /></span></span>
+                           
+                                   When <a class="link" href="quickstart.review_deployment.html" title="How can I automatically deploy code within a review?">automated
+                                      deployment</a> has been configured for a project, the deployment
+                                   success or failure is indicated in the review's heading. If your
+                                   deployment program can provide a URL that provides details of the
+                                   deployment, the indicator becomes linked; click the indicator to see the
+                                   deployment results.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-needs_review.png" alt="The Needs Review drop-down button" /></span></span>
+                           
+                                   The <span class="guibutton">Request Review</span> button is replaced with the
+                                   review state drop-down button that indicates the review's current
+                                   disposition. See <a class="xref" href="code_reviews.states.html" title="States">States</a> for more
+                                   information.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/icon-edit_description.png" alt="The Edit Description icon" /></span></span>
+                           
+                                   An <span class="guibutton">Edit Description</span> icon appears in the review's
+                                   description, which allows you to update the description to reflect any
+                                   updates have been made during the review.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   The History tab presents a list of the events that affect this review,
+                                   including:
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><span class="frame"><img src="images/panel-review-history.png" alt="A Review's History" /></span></span>
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: circle; ">
+                              <li class="listitem">
+                                 <p>
+                                                When the review was started
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                When a new reviewer joins the review
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                When the review's state changes
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                When the review's files are updated
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                When a reviewer votes on the review
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                When someone comments on the review, or one of its files
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                When tests pass or fail, provided continuous integration is
+                                                configured
+                                              
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-mark_as_read.png" alt="The &#34;Mark as Read&#34; button." /></span></span>
+                           
+                                   Beside each file in a review is a <span class="guibutton">Mark as Read</span>
+                                   button, which help you keep track of which files you have
+                                   reviewed. The read flag is remembered independently for each user. If
+                                   the content of a file is changed in an update to the review, the read
+                                   flag automatically clears. This is particularly useful when a code
+                                   review consists of many files.
+                                 
+                        </p>
+                        <p>
+                                   When clicked, the button's colors invert and the associated file is
+                                   visually muted, to make it easy to distinguish read files from unread
+                                   files:
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/panel-diffs-marked_read.png" alt="A file marked as read." /></span>
+                                 
+                        </p>
+                        <p>
+                                   If a file has been marked as read, click the button a second time to
+                                   reset the status to unread.
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="code_reviews.queues.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Review queues</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="code_reviews.activities.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Activities</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

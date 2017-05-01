@@ -1,0 +1,111 @@
+<table class="table table-compact file-history">
+
+<?php
+foreach ($file->getFilelog() as $filename => $revisions):
+    $remote = null;
+    $path   = trim($filename, '/');
+?>
+
+    <?php
+    // open a table heading for each file
+    // - if this is direct history, output column headings
+    // - if this is inherited history, output file name.
+    if ($filename == $file->getFilespec(true)):
+    ?>
+    <thead>
+        <tr>
+            <th class="rev">#</th>
+            <th class="change"><?php echo $this->te('Change')?></th>
+            <th class="user"><?php echo $this->te('User')?></th>
+            <th class="description"><?php echo $this->te('Description')?></th>
+            <th class="time"><?php echo $this->te('Committed')?></th>
+            <th class="action"></th>
+        </tr>
+    </thead>
+    <?php else: ?>
+    <thead>
+        <tr class="inherited-file">
+            <th colspan="6">
+                <i class="swarm-icon icon-branch"></i>
+                <?php echo $this->decodeFilespec($filename) ?>
+            </th>
+        </tr>
+    </thead>
+    <?php endif; ?>
+
+    <tbody>
+
+    <?php
+    // print a row for each revision
+    foreach ($revisions as $revision):
+        $time        = date('c', $revision['time']);
+        $isDeleted   = preg_match('/delete|purge/', $revision['action']);
+        $version     = '?v='. $this->escapeUrl($revision['rev']);
+        $url         = $this->url('file',     array('path' => $path)) . $version;
+        $viewUrl     = $this->url('view',     array('path' => $path)) . $version;
+        $downloadUrl = $this->url('download', array('path' => $path)) . $version;
+
+        // if we have no description on the first file we need
+        // to check if we're on a remote depot. if it isn't the
+        // first file or we've already checked its simply empty.
+        if (!strlen($revision['desc']) && $remote === null) {
+            $depot  = substr($path, 0, strpos($path, '/'));
+            $depot  = \P4\Spec\Depot::fetch($depot, $file->getConnection());
+            $remote = $depot->get('Type') == 'remote';
+        } elseif ($remote === null) {
+            $remote = false;
+        }
+    ?>
+
+        <tr>
+            <td class="rev">
+                <a href="<?php echo $url ?>">
+                    #<?php echo $this->escapeHtml($revision['rev']) ?>
+                </a>
+            </td>
+            <td class="change">
+                <?php
+                if (!$remote) {
+                    echo '<a href="' . $this->url('change', array('change' => $revision['change'])) . '">';
+                    echo $this->escapeHtml($revision['change']);
+                    echo '</a>';
+                } else {
+                    echo $this->escapeHtml($revision['change']);
+                }
+                ?>
+            </td>
+            <td class="user">
+                <?php
+                if (!$remote) {
+                    echo $this->userLink($revision['user']);
+                } else {
+                    echo $this->escapeHtml($revision['user']);
+                }
+                ?>
+            </td>
+            <td class="description">
+                <?php echo !$remote
+                    ? $this->preformat($revision['desc'])
+                    : '<span class="muted">' . $this->te('Remote depot (change details are not available)') . '</span>'
+                ?>
+            </td>
+            <td class="time">
+                <span class="timeago" title="<?php echo $this->escapeHtmlAttr($time) ?>"></span>
+            </td>
+            <td class="action">
+                <?php if ($isWebSafe && !$isDeleted): ?>
+                    <a href="<?php echo $viewUrl ?>" class="padw1"><span class="icon-share"></span></a>
+                <?php endif; ?>
+                <?php if (!$isDeleted): ?>
+                    <a href="<?php echo $downloadUrl ?>" class="padw1"><span class="icon-download-alt"></span></a>
+                <?php endif; ?>
+                <?php if ($isDeleted): ?>
+                    <i class="icon-trash" title="<?php echo $this->te('Deleted')?>"></i>
+                <?php endif; ?>
+            </td>
+        </tr>
+
+    <?php endforeach; ?>
+    </tbody>
+<?php endforeach; ?>
+</table>

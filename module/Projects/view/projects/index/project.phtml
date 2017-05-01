@@ -1,0 +1,12 @@
+<?php
+$this->headTitle()->set($project->getName())->setTranslatorEnabled(false);
+$this->bodyClass()->append('login-reload');
+echo $this->projectToolbar($project);
+?>
+
+<div class="row-fluid">
+    <?php echo $this->projectSidebar($project) ?>
+    <div class="span9 profile-body">
+        <?php echo $this->activity('project-' . $project->getId()) ?>
+    </div>
+</div>

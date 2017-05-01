@@ -1,0 +1,211 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Workers // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.administration.html" title="Administration" />
+      <link rel="prev" href="admin.uninstall.html" title="Uninstall Swarm" />
+      <link rel="next" href="chapter.extending.html" title="Extending Swarm" />
+      <meta name="Section-title" content="Workers" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="admin.workers">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Workers</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      Perforce Swarm uses background processes, called
+                      <span class="emphasis"><em>workers</em></span>, to respond to events in the Helix Versioning
+                      Engine.  The default number of workers is 3, and each worker processes
+                      events for up to 10 minutes. When a worker terminates, a new one is spawned.
+                    
+               </p>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           Each worker maintains a connection to the Helix Versioning Engine for the
+                           duration of its lifetime. This may impact your Helix Versioning Engine
+                           management practices.
+                         
+                  </p>
+               </div>
+               <div class="section" id="admin.workers.status">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Worker status</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           To determine the current status of workers, visit the URL:
+                         
+                  </p><pre class="programlisting">
+https://<em class="replaceable"><code>myswarm.url</code></em>/queue/status
+</pre><p>
+                           The response is formatted in JSON, and looks like this:
+                         
+                  </p><pre lang="json" class="programlisting">
+{"tasks":0,"futureTasks":1,"workers":3,"maxWorkers":3,"workerLifetime":"595s"}
+</pre><p>
+                           During normal use of Swarm, the following error message appears for
+                           logged-in users when Swarm detects that no workers are running:
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/screen-no_workers.png" alt="The error message that appears when there are no running workers." /></span></span>
+                         
+                  </p>
+               </div>
+               <div class="section" id="admin.workers.configuration">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Worker configuration</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           To adjust the configuration for workers, add a configuration block to the
+                           <code class="filename">data/config.php</code> file:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'queue'  =&gt; array(
+        'workers'             =&gt; 3,    // defaults to 3
+        'worker_lifetime'     =&gt; 595,  // defaults to 10 minutes (less 5 seconds)
+        'worker_task_timeout' =&gt; 1800, // defaults to 30 minutes
+        'worker_memory_limit' =&gt; '1G', // defaults to 1 gigabyte
+    ),
+</pre><p>
+                           <em class="parameter"><code>workers</code></em> specifies the number of worker processes
+                           that should be available. The default is 3. The
+                           <a class="link" href="setup.worker.html" title="Set up a recurring task to spawn workers">cron job</a> ensures that new worker
+                           processes are started when necessary. If the limit is reached or exceeded,
+                           new worker processes are not started.
+                         
+                  </p>
+                  <p>
+                           <em class="parameter"><code>worker_lifetime</code></em> specifies the amount of time in
+                           seconds that a worker process should run for. The default is 595 seconds
+                           (10 minutes less 5 seconds). If a worker process exceeds this limit while
+                           processing a task, it will complete the active task and then terminate.
+                           <em class="parameter"><code>worker_lifetime</code></em> does not cause tasks to terminate
+                           mid-processing.
+                         
+                  </p>
+                  <p>
+                           <em class="parameter"><code>worker_task_timeout</code></em> specifies the maximum amount of
+                           time in seconds that a worker process can spend processing a single task.
+                           The default is 1800 seconds (30 minutes). This is useful for terminating
+                           workers that might get stalled in a variety of situations.
+                         
+                  </p>
+                  <p>
+                           <em class="parameter"><code>worker_memory_limit</code></em> specifies the maximum amount of
+                           memory that a worker process is allowed to use while processing a task.
+                           The default is <code class="literal">1G</code> (1 gigabyte).
+                         
+                  </p>
+               </div>
+               <div class="section" id="admin.workers.manual_start">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Manually start workers</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           To kick off a new worker process, visit the URL:
+                         
+                  </p><pre class="programlisting">
+https://<em class="replaceable"><code>myswarm.url</code></em>/queue/worker
+</pre><p>
+                           When the number of workers running matches the configured limit, the
+                           requested worker process is not started.
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                This technique does start a worker, but it lasts only for its configured
+                                lifetime. Typically, you would always want at least one worker running.
+                                See <a class="xref" href="setup.worker.html" title="Set up a recurring task to spawn workers">Set up a recurring task to spawn workers</a> for details.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="admin.workers.restart">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Manually restart workers</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           To restart an idle worker process, remove its lock file:
+                         
+                  </p><pre class="programlisting">
+rm data/queue/workers/<em class="replaceable"><code>worker_id</code></em>
+</pre><p>
+                           A worker process that is busy processing a task will continue operation
+                           until its task is complete. Immediately afterwards, if the worker notices
+                           that its lock file is missing it exits.
+                         
+                  </p>
+                  <p>
+                           If you have a recurring task to start workers, the recurring task starts a
+                           fresh worker, if necessary. See <a class="xref" href="setup.worker.html" title="Set up a recurring task to spawn workers">Set up a recurring task to spawn workers</a> for
+                           details.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="admin.uninstall.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Uninstall Swarm</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="chapter.extending.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Extending Swarm</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

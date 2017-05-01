@@ -1,0 +1,12 @@
+<?php
+$this->headTitle()->set('Activity');
+?>
+
+<div class="row-fluid">
+    <div class="span4">
+        <?php echo $this->projectsSidebar() ?>
+    </div>
+    <div class="span8">
+        <?php echo $this->activity(null, null, 'switchable') ?>
+    </div>
+</div>

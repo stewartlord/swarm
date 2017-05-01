@@ -1,0 +1,242 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Code reviews // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="prev" href="projects.remove.html" title="Remove a project" />
+      <link rel="next" href="code_reviews.model.html" title="Models" />
+      <meta name="Section-title" content="Code reviews" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="chapter" id="chapter.code_reviews">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h1 class="title">Code reviews</h1>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  A code review is a process in which other developers can see your code and
+                  provide feedback that can suggest ways to improve the code's structure,
+                      performance, maintainability, and interaction with other code.
+                    
+               </p>
+               <h2 id="code_reviews.index.benefits">Benefits</h2>
+               <p>
+                      Some of the benefits of code review are:
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   Enforcing coding standards: code reviews can catch code that does not
+                                   meet your team's coding standards. This improves the readability and
+                                   consistency of your codebase.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Knowledge and experience sharing: your team can help you learn to code
+                                   better. This is particularly useful for developers new to the team.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Early defect detection: small errors can be caught before they become
+                                   problems later on.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Code sharing: code reviews spread knowledge of the current codebase,
+                                   which helps both with maintaining a mental model of the overall
+                                   project, as well as defending against developer absences.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Better personal review: knowing that someone might catch a simple
+                                   coding error often increases the review developers perform of their
+                                   own code.
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                      Swarm attempts to provide these benefits without adding onerous overhead
+                      for developers.
+                    
+               </p>
+               <h2 id="code_reviews.index.facilities">Facilities</h2>
+               <p>
+                      Swarm provides the following code review facilities. In the list, the term
+                      <span class="emphasis"><em>author</em></span> refers to the person who creates a change to
+                      be reviewed, <span class="emphasis"><em>reviewer</em></span> refers to any authenticated
+                      Swarm user performing code review tasks, and <span class="emphasis"><em>required
+                            reviewer</em></span> refers to a reviewer whose up-vote is required before a
+                      review can be approved.
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   Authors can request reviews, and can designate reviewers and required
+                                   reviewers.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Reviewers can start a code review on existing changes.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Reviewers can add themselves a review to indicate that they are
+                                   participating in the review and sharing responsibility for the review.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Reviewers can provide comments to overall changes or specific lines of
+                                   files.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Reviewers can vote on a review, to indicate their approval or
+                                   disapproval.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Required reviewers can prevent a review from becoming approved until
+                                   they up-vote the review.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Projects with assigned moderators limit review approval to one of the
+                                   moderators.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Reviewers can mark changes as needing revision, approved, rejected, or
+                                   to be archived for future consideration.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Reviewers can commit approved changes if necessary.
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <h2 id="code_reviews.index.advisory">Advisory nature</h2>
+               <p>
+                      Currently, Swarm's default code review workflow would best be described as
+                      <span class="emphasis"><em>advisory</em></span>. Swarm provides only a few mechanisms to
+                      structure or restrict code review workflows, such as:
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   A required reviewer, which is any user designated by a review author, project
+                                   member or moderator, or is any authenticated user that joins a review
+                                   and makes their vote required, can prevent reviews from being approved
+                                   until they up-vote the review. See
+                                   <a class="xref" href="code_reviews.responsibility.html#code_reviews.responsibility.required" title="Required reviewers">Required reviewers</a> for details.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Branch moderators, when configured for one or more branches in a
+                                   project, prevent reviews from being approved (or rejected) without their
+                                   involvement. See <a class="xref" href="projects.add.html" title="Add a project">Add a project</a> for details.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Administrators can optionally enable triggers in the Helix Versioning
+                                   Engine that can <span class="emphasis"><em>enforce</em></span> that submitted changes are
+                                   associated with approved reviews, and can enable
+                                   <span class="emphasis"><em>strict</em></span> matching of the contents of a changelist to
+                                   the contents of an associated, approved code review. See
+                                   <a class="xref" href="setup.perforce.html" title="Perforce configuration for Swarm">Perforce configuration for Swarm</a> for details.
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                      Agile development teams should find sufficient capability within Swarm to
+                      make code reviews a regular part of their workflow. Swarm's development team
+                      has been using it regularly during development of Swarm. If you have ideas
+                      and suggestions for improvement, please <a class="link" href="contact.html" title="Contact Perforce">contact
+                         us</a>.
+                    
+               </p>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="projects.remove.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Remove a project</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="code_reviews.model.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Models</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

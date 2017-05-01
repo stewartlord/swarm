@@ -1,0 +1,1013 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Runtime dependencies // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.setup.html" title="Setting up" />
+      <link rel="prev" href="chapter.setup.html" title="Setting up" />
+      <link rel="next" href="setup.packages.html" title="Swarm packages" />
+      <meta name="Section-title" content="Runtime dependencies" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="setup.dependencies">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Runtime dependencies</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      In order to successfully install, configure, and deploy Swarm, the following
+                      dependencies are required:
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   a <a class="link" href="setup.dependencies.html#setup.dependencies.os" title="Supported operating system platforms">supported operating system
+                                      platform</a>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   an <a class="xref" href="setup.dependencies.html#setup.dependencies.apache" title="Apache web server">Apache web server</a> with
+                                   <code class="literal">mod_rewrite</code> and <code class="literal">mod_php5</code>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   A supported version of <a class="xref" href="setup.dependencies.html#setup.dependencies.php" title="PHP">PHP</a> with
+                                   the following extensions:
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: circle; ">
+                              <li class="listitem">
+                                 <p>
+                                                iconv
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                JSON
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Session
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                P4PHP
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                one of APC or Zend OPCache (for optimal performance)
+                                              
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <p>
+                                   Swarm greatly benefits from the following optional extensions:
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: circle; ">
+                              <li class="listitem">
+                                 <p>
+                                                Imagick (used for viewing non-web safe images)
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Zip (for downloading archives of files/folders)
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                php-xml (for RSS feeds)
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                php-mbstring (for multi-byte character strings)
+                                              
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   A supported Helix Versioning Engine deployment, and the ability to
+                                   connect to it from the system hosting Swarm.
+                                 
+                        </p>
+                        <div class="note admonition">
+                           <h3 class="title">Note</h3>
+                           <p>
+                                        A "Helix Versioning Engine deployment" can refer to a running
+                                        <span class="command"><strong>p4d</strong></span>, or a proxy, replica, edge server, commit
+                                        server, or cluster/node.
+                                      
+                           </p>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="command"><strong>curl</strong></span> or <span class="command"><strong>wget</strong></span> (for Swarm worker
+                                   operation)
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   a <a class="link" href="setup.dependencies.html#setup.dependencies.triggers" title="Trigger and worker dependencies">supported version
+                                      of perl</a> (to integrate with Helix Versioning Engine triggers)
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   that <a class="link" href="setup.dependencies.html#setup.dependencies.selinux" title="Security-enhanced Linux (SELinux)">SELinux</a>, if
+                                   installed, is disabled
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                      Optional dependencies:
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   LibreOffice (for viewing office-type documents)
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="command"><strong>zip</strong></span>, the command-line archiving tool (for downloading
+                                   archives of files/folders, if the Zip extension is not available to
+                                   PHP)
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <div class="section" id="setup.dependencies.os">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Supported operating system platforms</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Because Swarm includes binary versions of P4PHP (the Perforce
+                           extension for PHP), we support Swarm on the following operating
+                           systems:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        Linux 2.6+ Intel (x86, x86_64) with glibc 2.3.3+
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Mac OS X 10.6+ (x86_64)
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           You may be able to get Swarm running on another platform if you build
+                           P4PHP yourself and satisfy the other runtime dependencies.
+                           Instructions on how obtain and build P4PHP from source can be found
+                           <a class="link" href="https://www.perforce.com/perforce/doc.current/user/p4phpnotes.txt" target="_top">here</a>.
+                         
+                  </p>
+                  <div class="important admonition">
+                     <h3 class="title">Important</h3>
+                     <p>
+                                P4PHP does not support threaded operation. If you compile P4PHP from
+                                source, ensure that the version of PHP you compile for is non-threaded.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="setup.dependencies.apache">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Apache web server</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm requires Apache HTTP Server 2.2 or newer:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <a class="link" href="https://httpd.apache.org/" target="_top">https://httpd.apache.org/</a>
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           Swarm also requires the following Apache modules:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        mod_php5 for interacting with PHP (usually installed with PHP)
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <div class="literallayout">
+                              <p>mod_rewrite URL rewriting engine<br />
+                                 <a class="link" href="https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html" target="_top">https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html</a><br />
+                                 
+                              </p>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="important admonition">
+                     <h3 class="title">Important</h3>
+                     <p>
+                                Only the <code class="literal">prefork</code>
+                                <a class="glossterm" href="glossary.html#MPM"><em class="glossterm">MPM</em></a> is supported. Use of the
+                                <code class="literal">worker</code> or <code class="literal">event</code>
+                                <a class="glossterm" href="glossary.html#MPM"><em class="glossterm">MPM</em></a>s is not supported and is likely
+                                to cause problems because P4PHP does not support threaded operation.
+                              
+                     </p>
+                     <p>
+                                For more information on the <code class="literal">prefork</code>
+                                <a class="glossterm" href="glossary.html#MPM"><em class="glossterm">MPM</em></a>, see:
+                              
+                     </p>
+                     <div class="literallayout">
+                        <p><a class="link" href="https://httpd.apache.org/docs/2.2/mod/prefork.html" target="_top">https://httpd.apache.org/docs/2.2/mod/prefork.html</a><br />
+                           <a class="link" href="https://httpd.apache.org/docs/2.4/mod/prefork.html" target="_top">https://httpd.apache.org/docs/2.4/mod/prefork.html</a><br />
+                           
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <div class="section" id="setup.dependencies.php">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">PHP</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm requires PHP 5.3.3+, 5.4.x, 5.5.x, or 5.6.x:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <a class="link" href="https://secure.php.net/" target="_top">https://secure.php.net/</a>
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="important admonition">
+                     <h3 class="title">Important</h3>
+                     <p>
+                                PHP must be non-threaded because P4PHP does not support threaded
+                                operation.
+                              
+                     </p>
+                  </div>
+                  <p>
+                           Swarm requires the following PHP extensions:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <div class="literallayout">
+                              <p>iconv (character encoding converter)<br />
+                                 <a class="link" href="https://secure.php.net/iconv" target="_top">https://secure.php.net/iconv</a><br />
+                                 
+                              </p>
+                           </div>
+                           <p>
+                                        This is typically enabled by default with most PHP distributions
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <div class="literallayout">
+                              <p>JSON (JavaScript Object Notation)<br />
+                                 <a class="link" href="https://secure.php.net/json" target="_top">https://secure.php.net/json</a><br />
+                                 
+                              </p>
+                           </div>
+                           <p>
+                                        This is typically enabled by default with most PHP distributions,
+                                        although recent distributions are making this optional
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <div class="literallayout">
+                              <p>Session (session handling)<br />
+                                 
+                              </p>
+                           </div>
+                           <p>
+                                        This is typically enabled by default with most PHP distributions
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        P4PHP (the Perforce PHP Extension)
+                                      
+                           </p>
+                           <p>
+                                        Included with the Swarm package. See the
+                                        <a class="link" href="setup.php.html#setup.php.apc" title="Alternative PHP Cache (APC) extension for PHP">install directions</a>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        php-xml (DOM API for XML manipulation)
+                                        
+                           </p>
+                           <div class="literallayout">
+                              <p><br />
+                                 
+                              </p>
+                           </div>
+                           <p>
+                                        Included with PHP on many operating systems, but must be manually
+                                        installed on CentOS/RHEL. When not installed, Swarm's RSS feed does
+                                        not work.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        php-mbstring (multi-byte character strings)
+                                      
+                           </p>
+                           <p>
+                                        Included with PHP on many operating systems, but must be manually
+                                        installed on CentOS/RHEL. When not installed, Swarm's RSS feed does
+                                        not work.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           Swarm greatly benefits from the following PHP extensions:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        One of (but not both):
+                                      
+                           </p>
+                           <div class="itemizedlist">
+                              <ul class="itemizedlist" style="list-style-type: circle; ">
+                                 <li class="listitem">
+                                    <div class="literallayout">
+                                       <p>APC (the Alternative PHP Cache)<br />
+                                          <a class="link" href="https://secure.php.net/apc" target="_top">https://secure.php.net/apc</a><br />
+                                          
+                                       </p>
+                                    </div>
+                                    <p>
+                                                     Installation instructions for <a class="link" href="setup.php.html#setup.php.apc" title="Alternative PHP Cache (APC) extension for PHP">APC</a>.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <div class="literallayout">
+                                       <p>Zend OPCache<br />
+                                          <a class="link" href="https://secure.php.net/opcache" target="_top">https://secure.php.net/opcache</a><br />
+                                          
+                                       </p>
+                                    </div>
+                                    <p>
+                                                     Installation instructions for
+                                                     <a class="link" href="setup.php.html#setup.php.zendopcache" title="Zend OPCache extension for PHP">Zend OPCache</a>.
+                                                   
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <div class="literallayout">
+                              <p>Imagick (integrates ImageMagick into PHP)<br />
+                                 <a class="link" href="https://secure.php.net/imagick" target="_top">https://secure.php.net/imagick</a><br />
+                                 
+                              </p>
+                           </div>
+                           <p>
+                                        Installation instructions for
+                                        <a class="link" href="setup.php.html#setup.php.imagick" title="ImageMagick (imagick) extension for PHP">Imagick</a>.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="section" id="setup.dependencies.perforce">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Perforce Server requirements</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm works with the Helix Versioning Engine at any version that is newer
+                           than, or matches the following:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        2010.2/503309
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        2011.1/506384
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        2012.1/512349
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        2012.2/525804
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        2013.1/610569
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        2013.2/708877
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        2013.3/740675
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        2014.1/807760
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           Swarm performs best with the Helix Versioning Engine version 2013.1 or newer.
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <a class="link" href="https://www.perforce.com" target="_top">https://www.perforce.com</a>
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           Swarm requires a user with <span class="emphasis"><em>admin</em></span> privileges in the
+                           Helix Versioning Engine. This can be an existing user, or a new user
+                           created specifically to support Swarm.
+                         
+                  </p>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information about how to set up a Helix Versioning Engine,
+                                see:
+                     </p>
+                     <div class="literallayout">
+                        <p><br />
+                           
+                        </p>
+                     </div>
+                     <p><a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4sag/index.html" target="_top">https://www.perforce.com/perforce/doc.current/manuals/p4sag/index.html</a>
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="setup.dependencies.triggers">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Trigger and worker dependencies</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                             The Swarm triggers, which are installed on the Helix Versioning Engine
+                             in a <a class="link" href="setup.perforce.html" title="Perforce configuration for Swarm">later step</a>, requires:
+                           
+                  </p>
+                  <div class="literallayout">
+                     <p>perl 5.08+<br />
+                        <a class="link" href="https://www.perl.org/get.html" target="_top">https://www.perl.org/get.html</a><br />
+                        
+                     </p>
+                  </div>
+                  <p>
+                           Both the triggers and the recurring task to invoke Swarm workers,
+                           installed in a <a class="link" href="setup.worker.html" title="Set up a recurring task to spawn workers">later step</a>, require
+                           either of:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <div class="literallayout">
+                              <p>curl<br />
+                                 <a class="link" href="https://curl.haxx.se/download.html" target="_top">https://curl.haxx.se/download.html</a><br />
+                                 
+                              </p>
+                           </div>
+                           <div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                     For Windows, <span class="command"><strong>curl.exe</strong></span> depends on
+                                     <code class="filename">MSVCR100.dll</code>. You can get a copy by installing the
+                                     <span class="bold"><strong>Microsoft Visual C++ Redistributable
+                                           Package</strong></span>, available for:
+                                   
+                              </p>
+                              <div class="itemizedlist">
+                                 <ul class="itemizedlist" style="list-style-type: circle; ">
+                                    <li class="listitem">
+                                       <p>
+                                                  32-bit systems:
+                                                  <a class="link" href="https://www.microsoft.com/download/en/details.aspx?id=5555" target="_top">https://www.microsoft.com/download/en/details.aspx?id=5555</a>
+                                                
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                  64-bit systems:
+                                                  <a class="link" href="https://www.microsoft.com/download/en/details.aspx?id=14632" target="_top">https://www.microsoft.com/download/en/details.aspx?id=14632</a>
+                                                
+                                       </p>
+                                    </li>
+                                 </ul>
+                              </div>
+                              <p>
+                                     If you install Swarm with HTTPS, <span class="command"><strong>curl.exe</strong></span> requires recent
+                                     CA certificates (or HTTPS connections silently fail). You can get a copy of
+                                     the <code class="filename">cacert.pem</code> from:
+                                   
+                              </p>
+                              <p>
+                                     <a class="link" href="https://curl.haxx.se/docs/caextract.html" target="_top">https://curl.haxx.se/docs/caextract.html</a>
+                                   
+                              </p>
+                              <p>
+                                     Once downloaded, copy <code class="filename">cacert.pem</code> to the same folder
+                                     where you installed <span class="command"><strong>curl.exe</strong></span>, and rename it to
+                                     <code class="filename">curl-ca-bundle.crt</code>.
+                                   
+                              </p>
+                           </div>
+                           <div class="warning admonition">
+                              <h3 class="title">Warning</h3>
+                              <p>
+                                     If <span class="command"><strong>curl</strong></span> (or <span class="command"><strong>curl.exe</strong></span> on Windows)
+                                     cannot execute as expected, trigger execution may block or fail. For
+                                     example, if <code class="filename">MSVCR100.dll</code> is missing from a Windows
+                                     system, invoking <span class="command"><strong>curl.exe</strong></span> causes a dialog to appear.
+                                   
+                              </p>
+                              <p>
+                                     Prior to configuring the <a class="link" href="setup.perforce.html" title="Perforce configuration for Swarm">triggers</a>,
+                                     verify that <span class="command"><strong>curl</strong></span> executes. On Linux systems, run:
+                                   
+                              </p><pre class="programlisting">
+$ <span class="command"><strong>curl -h</strong></span>
+</pre><p>
+                                     On Windows systems, run:
+                                   
+                              </p><pre class="programlisting">
+C:\&gt; <span class="command"><strong>curl.exe -h</strong></span>
+</pre><p>
+                                     The start of the output should be similar to:
+                                   
+                              </p><pre class="screen">
+Usage: curl [options...] &lt;url&gt;
+Options: (H) means HTTP/HTTPS only, (F) means FTP only
+     --anyauth       Pick "any" authentication method (H)
+ -a, --append        Append to target file when uploading (F/SFTP)
+     --basic         Use HTTP Basic Authentication (H)
+     --cacert FILE   CA certificate to verify peer against (SSL)
+     --capath DIR    CA directory to verify peer against (SSL)
+
+...[truncated for brevity]...
+</pre><p>
+                                     For a more thorough test that actually fetches content over a network, try
+                                     the following test:
+                                   
+                              </p>
+                              <div class="itemizedlist">
+                                 <ul class="itemizedlist" style="list-style-type: circle; ">
+                                    <li class="listitem">
+                                       <p>
+                                                  For Linux systems, run:
+                                                
+                                       </p><pre class="programlisting">
+$ <span class="command"><strong>curl https://www.perforce.com/</strong></span>
+</pre></li>
+                                    <li class="listitem">
+                                       <p>
+                                                  For Windows systems, run:
+                                                
+                                       </p><pre class="programlisting">
+C:\&gt; <span class="command"><strong>curl.exe https://www.perforce.com/</strong></span>
+</pre></li>
+                                 </ul>
+                              </div>
+                              <p>
+                                     The output should look like HTML.
+                                   
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <div class="literallayout">
+                              <p>wget<br />
+                                 <a class="link" href="https://ftp.gnu.org/gnu/wget/" target="_top">https://ftp.gnu.org/gnu/wget/</a><br />
+                                 <a class="link" href="http://gnuwin32.sourceforge.net/packages/wget.htm" target="_top">http://gnuwin32.sourceforge.net/packages/wget.htm</a> (for Windows)<br />
+                                 
+                              </p>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                            If you are using Powershell on Windows systems, be aware that
+                            Powershell includes aliases for <span class="command"><strong>curl</strong></span> and
+                            <span class="command"><strong>wget</strong></span> that call the Powershell command
+                            <span class="command"><strong>Invoke-WebRequest</strong></span> instead of
+                            <span class="command"><strong>curl.exe</strong></span> or <span class="command"><strong>wget.exe</strong></span>.
+                            <span class="command"><strong>Invoke-WebRequest</strong></span> has different command-line options
+                            than either <span class="command"><strong>curl</strong></span> or <span class="command"><strong>wget</strong></span>, which
+                            can be confusing.
+                          
+                     </p>
+                     <p>
+                            If you want to remove the built-in aliases for <span class="command"><strong>curl</strong></span> and
+                            <span class="command"><strong>wget</strong></span> from Powershell, follow these steps:
+                          
+                     </p>
+                     <div class="procedure">
+                        <ol class="procedure" type="1">
+                           <li class="step">
+                              <p>
+                                         Create a Powershell profile (only if you have not already done so).
+                                       
+                              </p><pre class="programlisting">
+PS C:\&gt; <span class="command"><strong>New-Item $profile -force -itemtype file</strong></span>
+</pre></li>
+                           <li class="step">
+                              <p>
+                                         Edit your profile:
+                                       
+                              </p><pre class="programlisting">
+PS C:\&gt; <span class="command"><strong>notepad $profile</strong></span>
+</pre></li>
+                           <li class="step">
+                              <p>
+                                         Add the following line to your profile:
+                                       
+                              </p><pre class="programlisting">
+remove-item alias:curl
+remove-item alias:wget
+</pre></li>
+                           <li class="step">
+                              <p>
+                                         Save the profile, and close <span class="command"><strong>notepad</strong></span>.
+                                       
+                              </p>
+                           </li>
+                           <li class="step">
+                              <p>
+                                         Reload your profile.
+                                       
+                              </p><pre class="programlisting">
+PS C:\&gt; <span class="command"><strong>. $profile</strong></span>
+</pre></li>
+                        </ol>
+                     </div>
+                  </div>
+               </div>
+               <div class="section" id="setup.dependencies.browsers">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Supported web browsers</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           The following browsers are supported for use with Swarm:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        Apple Safari, latest stable version
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Google Chrome, latest stable version
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Microsoft Internet Explorer 10+
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Mozilla Firefox, latest stable version
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           Other web browsers might also work, including prior, development or
+                           beta builds of the above web browsers, but are not officially
+                           supported.
+                         
+                  </p>
+                  <p>
+                           Swarm requires that JavaScript and cookies are enabled in the web
+                           browser.
+                         
+                  </p>
+               </div>
+               <div class="section" id="setup.dependencies.optional">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Optional dependencies</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm can display previews of office-type documents when LibreOffice is
+                           installed. Installation is not required, but when LibreOffice is installed
+                           Swarm automatically detects its presence.
+                         
+                  </p>
+                  <p>
+                           For more information, see <a class="xref" href="integrations.libreoffice.html" title="LibreOffice">LibreOffice</a>.
+                         
+                  </p>
+                  <p>
+                           To use the <span class="guibutton">Download .zip</span> feature (see
+                           <a class="xref" href="basics.files.html#basics.files.zip" title="Downloading files as ZIP archive">Downloading files as ZIP archive</a>), Swarm requires that either the
+                           <span class="command"><strong>zip</strong></span> command-line tool is available, or that
+                           PHP has been compiled with the <code class="literal">Zip</code> extension.
+                         
+                  </p>
+                  <p>
+                           For more information, see <a class="xref" href="admin.archives.html" title="Archives configuration">Archives configuration</a>.
+                         
+                  </p>
+               </div>
+               <div class="section" id="setup.dependencies.selinux">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Security-enhanced Linux (SELinux)</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm is currently <span class="bold"><strong>not supported with
+                                 SELinux</strong></span>. We hope to support SELinux in a future release and
+                           provide guidance on the required configuration.
+                         
+                  </p>
+                  <p>
+                           This version of Swarm does not work with SELinux with its default
+                           configuration in <span class="emphasis"><em>enforcing mode</em></span>. If you are running a
+                           system with SELinux, Swarm may work if you set it to <span class="emphasis"><em>permissive
+                                 mode</em></span> with the command:
+                         
+                  </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo setenforce 0</strong></span>
+</pre><div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                Setting your system to <span class="emphasis"><em>permissive mode</em></span> might make
+                                <a class="link" href="https://plus.google.com/112917221531140868607/posts/ZiqZVXAjrev" target="_top">Dan
+                                   Walsh cry</a>.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="setup.dependencies.install">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Choose installation approach</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Once you are aware of Swarm's dependencies and can satisfy them, you have
+                           three choices for installing Swarm. Choose
+                           <span class="bold"><strong>one</strong></span> approach:
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Use the Swarm packages (RPM or Debian):
+                                      
+                           </p>
+                           <div class="itemizedlist">
+                              <ul class="itemizedlist" style="list-style-type: disc; ">
+                                 <li class="listitem">
+                                    <p>
+                                                     Follow the steps provided in <a class="xref" href="setup.packages.html" title="Swarm packages">Swarm packages</a>.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     Once Swarm is installed, it needs some initial configuration (common
+                                                     to any installation approach). Skip to the
+                                                     <a class="xref" href="setup.perforce.html" title="Perforce configuration for Swarm">Perforce configuration for Swarm</a> section.
+                                                   
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Use the Swarm OVA (Open Virtualization Appliance):
+                                      
+                           </p>
+                           <div class="itemizedlist">
+                              <ul class="itemizedlist" style="list-style-type: disc; ">
+                                 <li class="listitem">
+                                    <p>
+                                                     Follow the steps provided in <a class="xref" href="setup.ova.html" title="OVA configuration">OVA configuration</a>.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     Once Swarm is installed, it needs some initial configuration (common
+                                                     to any installation approach). Skip to the
+                                                     <a class="xref" href="setup.perforce.html" title="Perforce configuration for Swarm">Perforce configuration for Swarm</a> section.
+                                                   
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Use the Swarm source distribution archive:
+                                      
+                           </p>
+                           <div class="itemizedlist">
+                              <ul class="itemizedlist" style="list-style-type: disc; ">
+                                 <li class="listitem">
+                                    <p>
+                                                     Follow all of the steps provided in the
+                                                     <a class="xref" href="setup.installation.html" title="Initial manual installation">Initial manual installation</a> and subsequent sections.
+                                                   
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+                  <p>
+                           If you have not already done so, download Swarm: <a href="http://www.perforce.com/downloads/swarm" class="btn btn-primary"><i class="glyphicon glyphicon-download glyphicon-white"></i> Download Swarm</a>
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="chapter.setup.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Setting up</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="setup.packages.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Swarm packages</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

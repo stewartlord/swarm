@@ -1,0 +1,523 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Notifications // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.basics.html" title="Basics" />
+      <link rel="prev" href="basics.projects.html" title="Projects" />
+      <link rel="next" href="basics.login_logout.html" title="Log in / Log out" />
+      <meta name="Section-title" content="Notifications" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="basics.notifications">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Notifications</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Provided you have entered a working email address for your userid in the
+                      Helix Versioning Engine, Swarm sends email notifications to you when various
+                      events take place:
+                    
+               </p>
+               <p>
+                      Legend:
+               </p>
+               <div class="literallayout">
+                  <p><br />
+                     
+                  </p>
+               </div>
+               <p>
+                      
+               </p>
+               <table border="0" summary="Simple list" class="simplelist">
+                  <tr>
+                     <td><span class="bold"><strong>A</strong></span> = Author
+                     </td>
+                     <td><span class="bold"><strong>PM</strong></span> = Project member
+                     </td>
+                     <td><i class="glyphicon glyphicon-ok"></i> = role user receives notification
+                     </td>
+                  </tr>
+                  <tr>
+                     <td><span class="bold"><strong>R</strong></span> = Reviewer
+                     </td>
+                     <td><span class="bold"><strong>PF</strong></span> = Project follower
+                     </td>
+                     <td><i class="glyphicon glyphicon-remove"></i> = role user does not receive notification
+                     </td>
+                  </tr>
+                  <tr>
+                     <td><span class="bold"><strong>M</strong></span> = Moderator
+                     </td>
+                     <td><span class="bold"><strong>AF</strong></span> = Author follower
+                     </td>
+                     <td><i class="glyphicon glyphicon-ban-circle"></i> = role not included for this event.
+                     </td>
+                  </tr>
+                  <tr>
+                     <td><span class="bold"><strong>GM</strong></span> = Group member
+                     </td>
+                     <td><span class="bold"><strong>CA</strong></span> = Comment author
+                     </td>
+                     <td> </td>
+                  </tr>
+               </table>
+               <p>
+                    
+               </p>
+               <div class="informaltable" id="basics-notifications-events_table">
+                  <table>
+                     <colgroup>
+                        <col width="33%" align="left" class="event" />
+                        <col width="67%" align="left" class="byyou" />
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th class="noborder" align="left"> </th>
+                           <th class="noborder" colspan="9" align="left">
+                                          Notification sent to one of these roles...
+                                        
+                           </th>
+                        </tr>
+                        <tr>
+                           <th align="left">Event</th>
+                           <th align="left">Event by you?</th>
+                           <th align="left"><abbr class="abbrev" title="Author">A</abbr></th>
+                           <th align="left"><abbr class="abbrev" title="Reviewer">R</abbr></th>
+                           <th align="left"><abbr class="abbrev" title="Moderator">M</abbr></th>
+                           <th align="left"><abbr class="abbrev" title="Group member">GM</abbr></th>
+                           <th align="left"><abbr class="abbrev" title="Project member">PM</abbr></th>
+                           <th align="left"><abbr class="abbrev" title="Project follower">PF</abbr></th>
+                           <th align="left"><abbr class="abbrev" title="Author follower">AF</abbr></th>
+                           <th align="left"><abbr class="abbrev" title="Comment author">CA</abbr></th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td align="left">A review is committed in Swarm</td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.moderators" title="Moderator notifications (***)">***</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.groups" title="Group member notifications (****)">****</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.commit" title="Committed change notifications (*)">*</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.commit" title="Committed change notifications (*)">*</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">A review is committed outside of Swarm</td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.moderators" title="Moderator notifications (***)">***</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.groups" title="Group member notifications (****)">****</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.commit" title="Committed change notifications (*)">*</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.commit" title="Committed change notifications (*)">*</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">
+                                          A change is committed outside of Swarm
+                                          (see <a class="link" href="basics.notifications.html#basics.notifications.commit" title="Committed change notifications (*)">below</a>)
+                                        
+                           </td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.moderators" title="Moderator notifications (***)">***</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.groups" title="Group member notifications (****)">****</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.commit" title="Committed change notifications (*)">*</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.commit" title="Committed change notifications (*)">*</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.commit" title="Committed change notifications (*)">*</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">A review is started</td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.moderators" title="Moderator notifications (***)">***</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.groups" title="Group member notifications (****)">****</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i><a class="link" href="basics.notifications.html#basics.notifications.review" title="Review start notifications (**)">**</a></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">A reviewer casts a vote</td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">A review's state changes</td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">A review's reviewers are changed</td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">A review's files are updated</td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">A review's description is changed</td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">A review comment is created</td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">A review comment is edited</td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">A committed change comment is created</td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">A committed change comment is edited</td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">Someone joins or leaves a review</td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ban-circle"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">Someone likes a comment you wrote</td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                        </tr>
+                        <tr>
+                           <td align="left">You like a comment you wrote</td>
+                           <td align="left"><i class="glyphicon glyphicon-ok"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                           <td align="left"><i class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>
+                      Any custom modules added to Swarm may also send notifications.
+                    
+               </p>
+               <div class="important admonition">
+                  <h3 class="title">Important</h3>
+                  <p>
+                           Email delivery for events related to restricted changes is disabled by
+                           default. See <a class="xref" href="admin.security.html#admin.security.restricted_changes" title="Restricted Changes">Restricted Changes</a> for
+                           details on how to enable restricted change notifications.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.notifications.mentions">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">@mention notifications</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Using an <a class="link" href="basics.notable.html#basics.notable.mentions" title="@mentions">@mention</a> in a
+                           review, changelist, or comment causes the referenced userid to receive a
+                           notification and be included in any future notifications regarding the
+                           associated file or review.
+                         
+                  </p>
+                  <p>
+                           When a comment is added to a job, Swarm sends a notification to users
+                           listed in <span class="emphasis"><em>user</em></span> fields in the job, users @mentioned in
+                           the job description, and the authors of any associated changes.
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                Typically, you would not receive a notification when you @mention
+                                yourself. @mentions themselves do not trigger notifications; they inform
+                                who receives notifications.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="basics.notifications.commit">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Committed change notifications (*)</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Notifications for committed changes are sent by default, but can be
+                           disabled or require users to opt-in. Please see the
+                           <a class="link" href="admin.notifications.html" title="Notifications">notification configuration</a> and
+                           <a class="link" href="projects.add.html" title="Add a project">adding a project</a>
+                           for more details.
+                         
+                  </p>
+                  <p>
+                           When committed change notifications are configured for opt-in, you need to
+                           copy the configuration's special depot path to the
+                           <code class="literal">Reviews:</code> field in your user spec within the Helix
+                           Versioning Engine. Once you have done so, Swarm can send you committed
+                           change notifications for any change that matches a depot path specified in
+                           the <code class="literal">Reviews:</code> field.
+                         
+                  </p>
+                  <div class="section" id="basics.notifications.commit.via_p4">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Update Reviews with p4</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="orderedlist">
+                        <ol class="orderedlist" type="1">
+                           <li class="listitem">
+                              <p>
+                                             Begin editing your user spec:
+                                           
+                              </p><pre class="programlisting">
+$ <span class="command"><strong>p4 user</strong></span>
+</pre></li>
+                           <li class="listitem">
+                              <p>
+                                             Edit the <code class="literal">Reviews:</code> field to include the special
+                                             depot path, plus any other paths you want to receive notifications
+                                             for.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             Save the spec.
+                                           
+                              </p>
+                           </li>
+                        </ol>
+                     </div>
+                  </div>
+                  <div class="section" id="basics.notifications.commit.via_p4v">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Update Reviews with P4V</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="orderedlist">
+                        <ol class="orderedlist" type="1">
+                           <li class="listitem">
+                              <p>
+                                             Select <span class="guimenuitem">Connection &gt; Edit Current
+                                                User...</span>.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             Edit the <code class="literal">Reviews:</code> field to include the special
+                                             depot path, plus any other paths you want to receive notifications
+                                             for.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             Click <span class="guibutton">OK</span>.
+                                           
+                              </p>
+                           </li>
+                        </ol>
+                     </div>
+                  </div>
+               </div>
+               <div class="section" id="basics.notifications.review">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Review start notifications (**)</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           By default, notifications are sent when a review is started, but can be
+                           disabled for a project. See <a class="xref" href="projects.add.html" title="Add a project">Add a project</a> for details.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.notifications.moderators">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Moderator notifications (***)</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Moderators are associated with specific project branches. Moderators
+                           receive notifications for reviews and commits against the branches they
+                           are associated with.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.notifications.groups">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Group member notifications (****)</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           By default, notifications are not sent to group members for started review
+                           and committed changes, but can be selectively enabled. See
+                           <a class="xref" href="groups.add.html" title="Add a group">Add a group</a> for details.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="basics.projects.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Projects</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="basics.login_logout.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Log in / Log out</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

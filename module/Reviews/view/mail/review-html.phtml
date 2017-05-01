@@ -1,0 +1,97 @@
+<?php
+$limit      = 1000;
+$p4Admin    = $services->get('p4_admin');
+$review     = $event->getParam('review');
+$change     = P4\Spec\Change::fetch($review->getHeadChange(), $p4Admin);
+$shelf      = $review->getId() === $change->getId() ? $change : P4\Spec\Change::fetch($review->getId(), $p4Admin);
+$user       = $activity->get('user');
+$userLink   = $user ? $this->qualifiedUrl('user', array('user' => $user)) : null;
+$targetLink = $activity->getUrl($this->plugin('qualifiedUrl'));
+$projects   = $this->projectList(
+    $event->getParam('review')->getProjects(),
+    null,
+    array('baseUrl' => $this->qualifiedUrl(), 'style' => 'text-decoration: none;')
+);
+?>
+<html>
+    <body style="font-family: sans-serif;">
+        <div style="padding-top: .25em; font-size: 115%;">
+            <div>
+                <?php if ($user): ?>
+                    <a style="text-decoration: none;" href="<?php echo $userLink ?>">
+                        <?php echo $this->escapeHtml($user) ?>
+                    </a>
+                <?php endif; ?>
+                <?php echo $this->te($activity->get('action')) ?>
+                <a style="text-decoration: none;" href="<?php echo $targetLink ?>">
+                    <?php echo $this->escapeHtml($activity->get('target'))?>
+                </a>
+                <?php if ($activity->get('preposition') && $projects): ?>
+                    <?php echo $this->te($activity->get('preposition')) . ' ' . $projects ?>
+                <?php endif; ?>
+            </div>
+            <br/>
+            <?php
+            if ($activity->getDetails('reviewers')) {
+                echo '<div style="padding: .5em .75em; color: #444; font-size: 85%;'
+                   . ' border: 1px solid #ddd; background-color: #ffe;">';
+                echo $this->reviewersChanges($activity->getDetails('reviewers'))
+                          ->setBaseUrl($this->qualifiedUrl());
+                echo '</div><br/>';
+            }
+            if (trim($activity->get('description'))) {
+                echo '<div style="font-family: monospace;">';
+                echo $this->preformat($activity->get('description'))
+                          ->setBaseUrl($this->qualifiedUrl())
+                          ->setEmojify(false)
+                          ->setWordWrap(900);
+                echo '</div><br>';
+            }
+            ?>
+            <?php
+            if (count($shelf->getJobs())): ?>
+                <div style="font-size: 85%; color: #666666; padding: .25em 0;"><?php echo $this->te('JOBS') ?></div>
+                <div style="font-size: 85%;">
+                    <?php
+                    foreach ($shelf->getJobObjects() as $job) {
+                        // prepare job description:
+                        //  - convert line breaks into spaces
+                        //  - trim to length of 60 chars
+                        $description = str_replace("\n", " ", trim($job->getDescription()));
+                        $description = (string) $this->truncate($description, 55);
+
+                        $url = $this->qualifiedUrl('job', array('job' => $job->getId()));
+                        echo '<a style="text-decoration: none;" href="' . $url . '">'
+                            . $this->escapeHtml($job->getId())
+                            . '</a>'
+                            . ' <span style="color: #555555;">' . $this->escapeHtml($job->getStatus()) . '</span>: '
+                            . $this->preformat($description)->setBaseUrl($this->qualifiedUrl())->setEmojify(false)
+                            . "<br/>\n";
+                    }
+                    ?>
+                </div>
+                <br/>
+            <?php endif; ?>
+            <div style="font-size: 85%; color: #666666; padding: .25em 0"><?php echo $this->te('FILES') ?></div>
+            <div style="font-size: 85%;">
+                <?php
+                // list files (limit to 1000)
+                $files = $change->getFileData(true, $limit + 1);
+                foreach (array_slice($files, 0, $limit) as $file) {
+                    $url = $targetLink . '#' . md5($file['depotFile']);
+                    echo '<a style="text-decoration: none;" href="' . $url . '">'
+                        . $this->decodeFilespec($file['depotFile'])
+                        . '</a><span style="color: #555555;">'
+                        . '#' . $this->escapeHtml($file['rev'])
+                        . ' ' . $this->escapeHtml($file['action']) . "</span><br/>\n";
+                }
+                echo count($files) > $limit
+                    ? '<a style="font-style: italic; text-decoration: none;" href="' . $targetLink . '">'
+                    . $this->te('Snip') . ' '
+                    . '(>' . $limit . ' ' . $this->te('files') . ')</a>'
+                    : '';
+                ?>
+            </div>
+        </div>
+    </body>
+</html>

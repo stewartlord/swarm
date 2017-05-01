@@ -1,0 +1,463 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Logging // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.administration.html" title="Administration" />
+      <link rel="prev" href="admin.locale.html" title="Locale" />
+      <link rel="next" href="admin.mainline.html" title="Mainline branch identification" />
+      <meta name="Section-title" content="Logging" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="admin.logging">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Logging</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Perforce Swarm is a web application, so there are several types of logging
+                      involved during the course of Swarm's normal operations.
+                    
+               </p>
+               <div class="section" id="admin.logging.web">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Web server logging</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                     All accesses to Swarm may be logged by the web server hosting Swarm. As
+                           web server log configuration is web server specific, refer to your web
+                           server's documentation. Since we recommend the use of Apache, more
+                           information regarding log configuration in Apache can be found here:
+                         
+                  </p>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                <a class="link" href="https://httpd.apache.org/docs/2.2/logs.html" target="_top">https://httpd.apache.org/docs/2.2/logs.html</a>
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="admin.logging.perforce">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Helix Versioning Engine logs</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm communicates with the associated Helix Versioning Engine for every
+                           page request. Review the Swarm-generated requests on your Helix Versioning
+                           Engine by enabling logging.
+                         
+                  </p>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information, see:
+                     </p>
+                     <div class="literallayout">
+                        <p><br />
+                           
+                        </p>
+                     </div>
+                     <p><a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4sag/chapter.configuring.html#configuring.logging" target="_top">Helix
+                                   Versioning Engine Administrator Guide: Fundamentals: Configuring
+                                   logging</a></p>
+                     <div class="literallayout">
+                        <p><br />
+                           
+                        </p>
+                     </div>
+                     <p><a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4sag/chapter.monitoring.html#DB5-19166" target="_top">Helix
+                                   Versioning Engine Administrator Guide: Fundamentals: Auditing user file
+                                   access</a>
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="admin.logging.swarm">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Swarm logs</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Depending on the log configuration you provide to Swarm, Swarm can log its
+                           own operations. Swarm's logs are much more helpful if you encounter
+                           problems.
+                         
+                  </p>
+                  <p>
+                           Swarm stores its log data in the <code class="filename">data/log</code> file. The
+                           volume of entries recorded in the log depends on the configuration stored
+                           in the <code class="filename">data/config.php</code> file. Here is an example:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'log' =&gt; array(
+        'priority'  =&gt; 3, // 7 for max, defaults to 3
+    ),
+</pre><p>
+                           The log <code class="literal">priority</code> specifies the importance of the
+                           messages to be logged. When <code class="literal">priority</code> is set to
+                           <code class="literal">0</code> (the lowest value) only the most important messages
+                           are logged. When <code class="literal">priority</code> is set to
+                           <code class="literal">7</code> (the highest value) all messages, including the
+                           least important messages are logged. The default
+                           <code class="literal">priority</code> is <code class="literal">3</code>.
+                         
+                  </p>
+                  <p>
+                           The different <code class="literal">priority</code> levels are:
+                         
+                  </p>
+                  <div class="informaltable">
+                     <table>
+                        <colgroup>
+                           <col width="14%" class="priority" />
+                           <col width="86%" class="description" />
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th>
+                                               
+                                 <p>
+                                                    Priority
+                                                  
+                                 </p>
+                                             
+                              </th>
+                              <th>
+                                               
+                                 <p>
+                                                    Description
+                                                  
+                                 </p>
+                                             
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>
+                                               
+                                 <p>
+                                                    <code class="literal">0</code>
+                                                  
+                                 </p>
+                                             
+                              </td>
+                              <td>
+                                               
+                                 <p>
+                                                    Emergency: a message about a system instability
+                                                  
+                                 </p>
+                                             
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                               
+                                 <p>
+                                                    <code class="literal">1</code>
+                                                  
+                                 </p>
+                                             
+                              </td>
+                              <td>
+                                               
+                                 <p>
+                                                    Alert: a message about a required immediate action
+                                                  
+                                 </p>
+                                             
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                               
+                                 <p>
+                                                    <code class="literal">2</code>
+                                                  
+                                 </p>
+                                             
+                              </td>
+                              <td>
+                                               
+                                 <p>
+                                                    Critical: a message about a critical condition
+                                                  
+                                 </p>
+                                             
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                               
+                                 <p>
+                                                    <code class="literal">3</code>
+                                                  
+                                 </p>
+                                             
+                              </td>
+                              <td>
+                                               
+                                 <p>
+                                                    Error: a message about an error
+                                                  
+                                 </p>
+                                             
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                               
+                                 <p>
+                                                    <code class="literal">4</code>
+                                                  
+                                 </p>
+                                             
+                              </td>
+                              <td>
+                                               
+                                 <p>
+                                                    Warning: a message about a warning condition
+                                                  
+                                 </p>
+                                             
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                               
+                                 <p>
+                                                    <code class="literal">5</code>
+                                                  
+                                 </p>
+                                             
+                              </td>
+                              <td>
+                                               
+                                 <p>
+                                                    Notice: a message about a normal but significant condition
+                                                  
+                                 </p>
+                                             
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                               
+                                 <p>
+                                                    <code class="literal">6</code>
+                                                  
+                                 </p>
+                                             
+                              </td>
+                              <td>
+                                               
+                                 <p>
+                                                    Info: an informational message
+                                                  
+                                 </p>
+                                             
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                               
+                                 <p>
+                                                    <code class="literal">7</code>
+                                                  
+                                 </p>
+                                             
+                              </td>
+                              <td>
+                                               
+                                 <p>
+                                                    Debug: a debugging message
+                                                  
+                                 </p>
+                                             
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                Setting <code class="literal">priority</code> to a value higher than
+                                <code class="literal">7</code> does not result in increased logging. Setting
+                                <code class="literal">priority</code> to a value lower than <code class="literal">0</code>
+                                does not result in reduced logging.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="admin.logging.trigger_token_errors">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Trigger Token Errors</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           If the trigger tokens are missing or invalid, the web server error log
+                           contains a suitable error:
+                         
+                  </p><pre class="screen">
+queue/add attempted with invalid/missing token: <em class="replaceable"><code>token used</code></em>
+</pre><p>
+                           A token is <span class="emphasis"><em>invalid</em></span> when it is not formed from
+                           the characters <code class="literal">A</code> through <code class="literal">Z</code>
+                           (in upper or lowercase), <code class="literal">0</code> through
+                           <code class="literal">9</code>, or a dash (<code class="literal">-</code>).
+                         
+                  </p>
+                  <p>
+                           A token is <span class="emphasis"><em>missing</em></span> when a file using the token as its
+                           name does not exist in the <code class="filename">data/queue/tokens</code>
+                           directory.
+                         
+                  </p>
+               </div>
+               <div class="section" id="admin.logging.performance">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Performance logging</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm logs warnings whenever commands issued to the Helix Versioning
+                           Engine take longer than expected to complete. These warnings can be used
+                           to diagnose performance problems in the Helix Versioning Engine.
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                By default, warnings are not captured in the Swarm log. To capture
+                                warnings, the <a class="link" href="admin.logging.html#admin.logging.swarm" title="Swarm logs">log priority</a>
+                                must be set to <code class="literal">4</code> or higher.
+                              
+                     </p>
+                  </div>
+                  <p>
+                           The default configuration is:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be placed within the 'p4' block
+    'slow_command_logging' =&gt; array(
+        3, // commands without a specific rule have a 3-second limit
+        10 =&gt; array('print', 'shelve', 'submit', 'sync', 'unshelve'),
+    ),
+</pre><p>
+                           In this configuration block, the numeric key specifies the time threshold
+                           in seconds, and the value (if present) is an array of Helix Versioning
+                           Engine commands that should use the threshold. Should a command be
+                           associated with multiple thresholds, the largest is used for that command.
+                         
+                  </p>
+                  <p>
+                           In addition, Swarm automatically detects when the PHP extension
+                           <code class="literal">xhprof</code> is installed and collects profiling data for
+                           requests that take longer than expected. The profiling data could be
+                           helpful in diagnosing performance issues within Swarm itself, particularly
+                           when analyzed in combination with the slow command logging described
+                           above. When collected, profiling data is stored in the
+                           <code class="filename">data/xhprof</code> folder.
+                         
+                  </p>
+                  <p>
+                           The default configuration is:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'xhprof' =&gt; array(
+        'slow_time'      =&gt; 3, // the threshold in seconds
+        'ignored_routes' =&gt; array('download', 'imagick', 'libreoffice', 'worker'),
+    ),
+</pre><p>
+                           <em class="parameter"><code>slow_time</code></em> specifies the threshold, in seconds, that
+                           should be used to determine when a Swarm request is
+                           <span class="emphasis"><em>slow</em></span>. <em class="parameter"><code>ignored_routes</code></em> is an
+                           array that specifies a list of Zend Framework <span class="emphasis"><em>route</em></span>
+                           names that should not be profiled. For example, Swarm's
+                           <code class="literal">Files</code> module specifies that the
+                           <code class="literal">download</code> route should be ignored from profiling as
+                           downloads could take significantly longer than the default threshold.
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                Depending on the performance of the server hosting Swarm, and
+                                particularly the performance of the associated Helix Versioning Engine,
+                                you may want to monitor the <code class="filename">data/xhprof</code> folder for
+                                disk usage. Each request that exceeds the time threshold causes
+                                200-600KB of data to be written.
+                              
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="admin.locale.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Locale</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="admin.mainline.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Mainline branch identification</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

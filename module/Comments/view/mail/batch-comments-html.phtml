@@ -1,0 +1,114 @@
+<?php
+$comments     = $event->getParam('comments');
+$attachments  = $event->getParam('attachments');
+$review       = $event->getParam('review');
+$sendComments = $event->getParam('sendComments');
+$user         = $comments->first()->get('user');
+$userLink     = $this->qualifiedUrl('user',   array('user'   => $user));
+$reviewLink   = $this->qualifiedUrl('review', array('review' => $review->getId()));
+$previousDate = null;
+
+// we don't want to show archive comments
+$comments->filterByCallback(
+    function ($comment) {
+        return !in_array('closed', $comment->getFlags());
+    }
+);
+?>
+<html>
+    <body style="font-family: sans-serif;">
+        <div style="padding-top: .25em;">
+            <div style="font-size: 115%;">
+                <a style="text-decoration: none;" href="<?php echo $userLink ?>">
+                    <?php echo $this->escapeHtml($user) ?>
+                </a>
+                <?php echo $this->tpe('posted %d comment on', 'posted %d comments on', $comments->count()) ?>
+                <a style="text-decoration: none;" href="<?php echo $reviewLink ?>">
+                    <?php echo $this->te('review') . ' ' . $this->escapeHtml($review->getId()) ?>
+                </a>
+            </div>
+        </div>
+
+        <?php foreach ($comments as $comment): ?>
+        <div style="padding-top: 2.5em;">
+            <div>
+                <?php
+                $context = $comment->getFileContext();
+                if ($context['file']) {
+                    $line    = isset($context['line']) ? ", line " .  $context['line'] : '';
+                    $target  = \P4\File\File::decodeFilespec($context['name']) . $line;
+                    $hash    = $context['md5'] . ',c' . $comment->getId();
+                    $hash    = '#' . $this->escapeFullUrl($hash);
+                    echo '<a style="text-decoration: none;" href="' . $reviewLink . $hash . '">'
+                        . $this->escapeHtml($target)
+                        . '</a>';
+                }
+                ?>
+            </div>
+            <?php
+            // if comment has file context, show it
+            if (is_array($context['content']) && $context['line']) {
+                $line = $context['line'] - count($context['content']) + 1;
+                echo '<div style="font-family: monospace; white-space: nowrap;'
+                   . ' padding: .5em 1em; overflow-x: auto; color: #444;'
+                   . ' border: 1px solid #ddd; background-color: #f7f7f7; margin-bottom: .5em;">';
+                foreach ((array) $context['content'] as $i => $content) {
+                    echo '<div><span style="color: #999;">'
+                        . str_pad($line + $i, strlen($context['line']), "0", STR_PAD_LEFT)
+                        . '.</span>&nbsp;'
+                        . $this->preformat($content)->setLinkify(false)->setEmojify(false)->setWordWrap(900)
+                        . "</div>\n";
+                }
+                echo '</div>';
+            }
+            ?>
+            <div>
+                <?php
+                $batchTime = isset($sendComments[$comment->getId()]) ? $sendComments[$comment->getId()] : null;
+                $isEdit    = $comment->get('time') !== $batchTime;
+
+                echo $isEdit ? '<span style="color: #999;">' . $this->te('Edited') . ':</span> ' : '';
+                echo $this->preformat($comment->get('body'))
+                          ->setBaseUrl($this->qualifiedUrl())
+                          ->setEmojify(false)
+                          ->setWordWrap(900)
+                ?>
+            </div>
+            <?php
+            // if the comment has attachments, link to them - if they are images, embed them
+            if ($comment->getAttachments()) {
+                echo  '<div style="font-size: 85%; color: #999; padding-top: 2px;">'.$this->te('ATTACHMENTS').'</div>'
+                    . '<div style="font-size: 85%; margin: 4px 0;">';
+
+                foreach ($comment->getAttachments() as $attachmentId) {
+                    if (!isset($attachments[$attachmentId])) {
+                        continue;
+                    }
+                    $attachment = $attachments[$attachmentId];
+                    if ($attachment->isWebSafeImage()) {
+                        echo '<img src="'
+                            . $this->qualifiedUrl('attachments', array('attachment' => $attachment->getId()))
+                            . '"><br/>';
+                    }
+
+                    echo '<a href="'
+                        . $this->qualifiedUrl('attachments', array('attachment' => $attachment->getId())) . '">'
+                        . $this->escapeHtml($attachment->get('name'))
+                        . '</a> <span style="color: #555555;">('
+                        . $this->fileSize($attachment->get('size'))
+                        . ')</span><br/>';
+                }
+                echo '</div>';
+            }
+
+            // show time/date (show date only if its different from previous comment)
+            $date         = date('M j Y', $batchTime);
+            $time         = date('g:i A', $batchTime);
+            $time         = $date !== $previousDate ? "$date, $time" : $time;
+            $previousDate = $date;
+            ?>
+            <div style="color: #999; font-size: 85%; padding-top: 2px;"><?php echo $time ?></div>
+        </div>
+        <?php endforeach; ?>
+    </body>
+</html>

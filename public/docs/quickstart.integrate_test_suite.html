@@ -1,0 +1,479 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>How can I integrate my test suite to inform review acceptance or rejection? // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.quickstart.html" title="Quickstart" />
+      <link rel="prev" href="quickstart.view_git_reviews.html" title="How do I see a list of Git-created reviews?" />
+      <link rel="next" href="quickstart.review_deployment.html" title="How can I automatically deploy code within a review?" />
+      <meta name="Section-title" content="How can I integrate my test suite to inform review acceptance or rejection?" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="quickstart.integrate_test_suite">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">How can I integrate my test suite to inform review acceptance or rejection?</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      Integrating Perforce Swarm with a test suite involves enabling
+                      <span class="bold"><strong>Automated Tests</strong></span> in your project's
+                      configuration and providing a <span class="emphasis"><em>trigger URL</em></span>. When
+                      the <span class="emphasis"><em>trigger URL</em></span> is requested, Swarm expects your
+                      test suite to be executed. When the tests complete, Swarm expects
+                      either a <span class="emphasis"><em>pass callback URL</em></span> or <span class="emphasis"><em>fail
+                            callback URL</em></span> to be requested by your test suite.
+                    
+               </p>
+               <div class="orderedlist">
+                  <ol class="orderedlist" type="1">
+                     <li class="listitem">
+                        <p>
+                                   Visit your project page.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-edit.png" alt="Project Edit button" /></span></span>
+                           
+                                   Click <span class="guibutton">Edit</span>. The
+                                   <a class="link" href="projects.edit.html" title="Edit a project">Edit Project</a> page is displayed.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Ensure that paths in each named branch configured for the project do
+                                   not overlap with paths in other named branches.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Click the <span class="guibutton">Enable</span> checkbox next to Automated Tests
+                                   to display the Automated Tests configuration fields:
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/fields-automated_tests.png" alt="The Automated Tests configuration fields" /></span>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Provide a URL that triggers your test suite execution.
+                                 
+                        </p>
+                        <p>
+                                   Special arguments are available to inform your test suite of
+                                   various details from Swarm:
+                                 
+                        </p>
+                        <div class="variablelist">
+                           <dl class="variablelist">
+                              <dt><span class="term">
+                                                {change}
+                                              </span></dt>
+                              <dd>
+                                 <p>
+                                                  The change number.
+                                                
+                                 </p>
+                              </dd>
+                              <dt><span class="term">
+                                                {status}
+                                              </span></dt>
+                              <dd>
+                                 <p>
+                                                  Status of the shelved change, <span class="emphasis"><em>shelved</em></span>
+                                                  or <span class="emphasis"><em>committed</em></span>.
+                                                
+                                 </p>
+                              </dd>
+                              <dt><span class="term">
+                                                {review}
+                                              </span></dt>
+                              <dd>
+                                 <p>
+                                                  The review's identifier.
+                                                
+                                 </p>
+                              </dd>
+                              <dt><span class="term">
+                                                {project}
+                                              </span></dt>
+                              <dd>
+                                 <p>
+                                                  The project's identifier.
+                                                
+                                 </p>
+                              </dd>
+                              <dt><span class="term">
+                                                {projectName}
+                                              </span></dt>
+                              <dd>
+                                 <p>
+                                                  The project's name.
+                                                
+                                 </p>
+                              </dd>
+                              <dt><span class="term">
+                                                {branch}
+                                              </span></dt>
+                              <dd>
+                                 <p>
+                                                  The branch identifier(s) impacted by the review, comma-separated.
+                                                
+                                 </p>
+                              </dd>
+                              <dt><span class="term">
+                                                {branchName}
+                                              </span></dt>
+                              <dd>
+                                 <p>
+                                                  The branch name(s) impacted by the review, comma-separated.
+                                                
+                                 </p>
+                              </dd>
+                              <dt><span class="term">
+                                                {pass}
+                                              </span></dt>
+                              <dd>
+                                 <p>
+                                                  Tests pass callback URL.
+                                                
+                                 </p>
+                              </dd>
+                              <dt><span class="term">
+                                                {fail}
+                                              </span></dt>
+                              <dd>
+                                 <p>
+                                                  Tests fail callback URL.
+                                                
+                                 </p>
+                              </dd>
+                           </dl>
+                        </div>
+                        <div class="note admonition">
+                           <h3 class="title">Note</h3>
+                           <p>
+                                        The <code class="literal">{pass}</code> and <code class="literal">{fail}</code> are
+                                        composed automatically by Swarm, and include Swarm's own per-review
+                                        authentication tokens.
+                                      
+                           </p>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/select-post_format.png" alt="Project Edit button" /></span></span>
+                           
+                                   Optionally, specify any parameters that your automated tests require
+                                   that must be sent via HTTP <code class="literal">POST</code> in the <span class="guilabel">POST
+                                      Parameters</span> field. The <code class="literal">POST</code> parameters can
+                                   include the special arguments listed above.
+                                 
+                        </p>
+                        <p>
+                                   You can also choose the format of the <code class="literal">POST</code>
+                                   parameters, either <code class="literal">GET</code> or <code class="literal">JSON</code>.
+                                   When <code class="literal">GET</code> is selected, the <code class="literal">POST</code>
+                                   parameters are parsed into <code class="literal">name=value</code> pairs. When
+                                   <code class="literal">JSON</code> is selected, any specified parameters are passed
+                                   raw in the <code class="literal">POST</code> body.
+                                 
+                        </p>
+                     </li>
+                  </ol>
+               </div>
+               <div class="section" id="quickstart.integrate_test_suite.configure_jenkins">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Configuring Jenkins for Swarm integration</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="important admonition">
+                     <h3 class="title">Important</h3>
+                     <p>
+                                Your Jenkins host needs to be able to communicate with the Swarm host,
+                                and vice versa. Ensure that the appropriate DNS/host configuration is in
+                                place, and that each server can reach the other via HTTP/HTTPS.
+                              
+                     </p>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Install the <code class="literal">p4-plugin</code> in Jenkins.
+                                      
+                           </p><pre class="programlisting">
+<a class="link" href="https://wiki.jenkins-ci.org/display/JENKINS/P4+Plugin" target="_top">https://wiki.jenkins-ci.org/display/JENKINS/P4+Plugin</a>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                        Configure a Jenkins project:
+                                      
+                           </p>
+                           <div class="orderedlist">
+                              <ol class="orderedlist" type="a">
+                                 <li class="listitem">
+                                    <p>
+                                                     Specify the job name so that it matches the project identifier
+                                                     used in the trigger URL, as defined
+                                                     <a class="link" href="quickstart.integrate_test_suite.html#quickstart.integrate_test_suite.url">below</a>.
+                                                   
+                                    </p>
+                                    <p>
+                                                     For example, the computed value of
+                                                     <code class="literal">{projectName}_{branchName}</code>.
+                                                   
+                                    </p>
+                                    <p>
+                                                     Or, edit the trigger URL to use the Jenkins job name you specify.
+                                                   
+                                    </p>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     Make the build parameterized to accept these parameters (note that
+                                                     these are named to match up with the script that is called):
+                                                   
+                                    </p>
+                                    <div class="variablelist">
+                                       <dl class="variablelist">
+                                          <dt><span class="term">
+                                                                  <code class="literal">status</code>
+                                                                </span></dt>
+                                          <dd>
+                                             <p>
+                                                                    whether the changelist to be tested is shelved or submitted
+                                                                  
+                                             </p>
+                                          </dd>
+                                          <dt><span class="term">
+                                                                  <code class="literal">change</code>
+                                                                </span></dt>
+                                          <dd>
+                                             <p>
+                                                                    changelist # to run tests against
+                                                                  
+                                             </p>
+                                          </dd>
+                                          <dt><span class="term">
+                                                                  <code class="literal">review</code>
+                                                                </span></dt>
+                                          <dd>
+                                             <p>
+                                                                    the review's identifier
+                                                                  
+                                             </p>
+                                          </dd>
+                                          <dt><span class="term">
+                                                                  <code class="literal">pass</code>
+                                                                </span></dt>
+                                          <dd>
+                                             <p>
+                                                                    the URL to <span class="command"><strong>wget</strong></span> if the build succeeds
+                                                                  
+                                             </p>
+                                          </dd>
+                                          <dt><span class="term">
+                                                                  <code class="literal">fail</code>
+                                                                </span></dt>
+                                          <dd>
+                                             <p>
+                                                                    the URL to <span class="command"><strong>wget</strong></span> if the build fails
+                                                                  
+                                             </p>
+                                          </dd>
+                                       </dl>
+                                    </div>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     Select <code class="literal">Perforce Software</code> for the
+                                                     <span class="guilabel">Source Code Management</span> section.
+                                                   
+                                    </p>
+                                    <div class="important admonition">
+                                       <h3 class="title">Important</h3>
+                                       <p>
+                                                          You may see <code class="literal">Perforce</code> in the <span class="guilabel">Source
+                                                             Code Management</span> section. This represents an earlier
+                                                          community-provided Perforce plugin that does not include support
+                                                          for Swarm.
+                                                        
+                                       </p>
+                                    </div>
+                                 </li>
+                                 <li class="listitem">
+                                    <p>
+                                                     Setup credentials and workspace behavior as needed.
+                                                   
+                                    </p>
+                                    <p>
+                                                     See the
+                                                     <a class="link" href="https://github.com/jenkinsci/p4-plugin#credentials" target="_top">Credentials</a>
+                                                     and
+                                                     <a class="link" href="https://github.com/jenkinsci/p4-plugin#workspaces" target="_top">Workspaces</a>
+                                                     sections of
+                                                     <a class="link" href="https://github.com/jenkinsci/p4-plugin" target="_top">the
+                                                        p4-plugin documentation</a> for details.
+                                                   
+                                    </p>
+                                    <div class="important admonition">
+                                       <h3 class="title">Important</h3>
+                                       <p>
+                                                          The client workspace configured in Jenkins must have a view that
+                                                          includes the paths defined for that branch in Swarm.
+                                                        
+                                       </p>
+                                    </div>
+                                 </li>
+                              </ol>
+                           </div>
+                        </li>
+                        <li class="listitem" id="quickstart.integrate_test_suite.url">
+                           <p>
+                                        Configure your Swarm project to run automated tests with a URL
+                                        like this:
+                                      
+                           </p><pre class="programlisting">
+http://<em class="replaceable"><code>jenkins_host:8080</code></em>/job/{projectName}_{branchName}/review/build?status={status}&amp;review={review}&amp;change={change}&amp;pass={pass}&amp;fail={fail}
+</pre><div class="important admonition">
+                              <h3 class="title">Important</h3>
+                              <p>
+                                           For Jenkins, the job name needs to match the job identifier in the
+                                           URL. In the example above, this is the computed value of
+                                           <code class="literal">{projectName}_{branchName}</code>.
+                                         
+                              </p>
+                              <p>
+                                           If you prefer a different naming scheme in Jenkins, replace
+                                           <code class="literal">{projectName}_{branchName}</code> in the URL above with
+                                           the project name actually defined in Jenkins.
+                                         
+                              </p>
+                           </div>
+                           <div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                             If your build script has access to the results of test execution,
+                                             include a GET or POST parameter called <code class="literal">url</code> when
+                                             calling the <code class="literal">pass</code> or
+                                             <code class="literal">fail</code> URLs. Swarm uses the provided
+                                             <code class="literal">url</code> to link reviews to the test results.
+                                           
+                              </p>
+                           </div>
+                           <div class="important admonition">
+                              <h3 class="title">Important</h3>
+                              <p>
+                                             If security is enabled in Jenkins, the trigger URL needs to include
+                                             credentials. Follow these steps:
+                                           
+                              </p>
+                              <div class="orderedlist">
+                                 <ol class="orderedlist" type="a">
+                                    <li class="listitem">
+                                       <p>
+                                                          Create a Jenkins user that will trigger Swarm builds. For
+                                                          example <code class="literal">swarm</code>.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          Log into Jenkins as the new user.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          Click on the user's username in the Jenkins toolbar.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          Scroll down to <span class="guilabel">API Token</span>.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          Click <span class="guibutton">Show API Token...</span>.
+                                                        
+                                       </p>
+                                    </li>
+                                    <li class="listitem">
+                                       <p>
+                                                          Incorporate the value of the <span class="guilabel">API Token</span> into
+                                                          the Swarm trigger URL.
+                                                        
+                                       </p>
+                                       <p>
+                                                          For example, if the username is <code class="literal">swarm</code> and the
+                                                          <span class="guilabel">API Token</span> value is
+                                                          <code class="literal">832a5db7e5500c1288324c1441460610</code>, the Swarm
+                                                          trigger URL should be:
+                                                        
+                                       </p><pre class="programlisting">
+http://swarm:832a5db7e5500c1288324c1441460610@<em class="replaceable"><code>jenkins_host:8080</code></em>/job/{projectName}_{branchName}/review/build?cause=Automated%20test%20triggered%20for%20Swarm%20project%20{projectName},%20branch%20{branchName},%20review%20{review}&amp;status={status}&amp;review={review}&amp;change={change}&amp;pass={pass}&amp;fail={fail}
+</pre></li>
+                                 </ol>
+                              </div>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="quickstart.view_git_reviews.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">How do I see a list of Git-created reviews?</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="quickstart.review_deployment.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">How can I automatically deploy code within a review?</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

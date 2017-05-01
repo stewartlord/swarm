@@ -1,0 +1,340 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Membership // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.projects.html" title="Projects" />
+      <link rel="prev" href="projects.edit.html" title="Edit a project" />
+      <link rel="next" href="projects.remove.html" title="Remove a project" />
+      <meta name="Section-title" content="Membership" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="projects.membership">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Membership</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                   Membership in a Swarm project identifies users as belonging to the project,
+                      making them part of the team.
+                    
+               </p>
+               <p>
+                      The only notable differences between project members and non-members is that
+                      members receive <a class="link" href="basics.notifications.html" title="Notifications">notifications</a>
+                      when new code reviews are started, member avatars appear on the project's
+                      <span class="guibutton">Overview</span> page, and members can transition reviews to
+                      other states. Non-members can transition reviews they have authored.
+                    
+               </p>
+               <p>
+                      There are two ways to become a member of a project in Swarm:
+                    
+               </p>
+               <div class="orderedlist">
+                  <ol class="orderedlist" type="1">
+                     <li class="listitem">
+                        <p>
+                                   Add a project and make yourself a member.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Ask a member of an existing project to add you as a member.
+                                 
+                        </p>
+                        <div class="note admonition">
+                           <h3 class="title">Note</h3>
+                           <p>
+                                        If the project has any
+                                        <a class="link" href="projects.membership.html#projects.membership.owners" title="Owners">owners</a> specified,
+                                        you need to ask a project owner to add you as a member.
+                                      
+                           </p>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+               <div class="section" id="projects.membership.add">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Add a member</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           If you are an owner of a project, or a member of a project without
+                           specified owners:
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Visit the project page that needs the new member.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-settings.png" alt="Project Settings button" /></span></span>
+                              
+                                        Click <span class="guibutton">Settings</span> in the project's toolbar.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/dropdown-project_member-complete.png" alt="Auto-suggesting members" /></span></span>
+                              
+                                        The <span class="guilabel">Members</span> text field lets you specify a
+                                        Swarm project, Perforce group, or Perforce user to add to the members
+                                        for this project. The field auto-suggests project ids, group ids, and
+                                        userids by matching what you have typed so far against the list of
+                                        users in the Helix Versioning Engine.
+                                      
+                           </p>
+                           <p>
+                                        When you specify a project or group, all of the members of that
+                                        project or group become members of this project. Swarm does not
+                                        display all of the individual users, but it does provide a visual
+                                        separation: project or group names are displayed first, with a darker
+                                        blue background.
+                                      
+                           </p>
+                           <p>
+                                        <span class="inlinemediaobject"><img src="images/panel-project_members_with_group.png" alt="The project membership showing an included project" /></span>
+                                      
+                           </p>
+                           <p>
+                                        When you hover your mouse over a member project or group, a tooltip
+                                        appears displaying up to 100 of the userids of the project's or
+                                        group's users:
+                                      
+                           </p>
+                           <p>
+                                        <span class="inlinemediaobject"><img src="images/tooltip-project_member-project.png" alt="The tooltip showing the membership of an included project" /></span>
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-save.png" alt="Save button for Project configuration" /></span></span>
+                              
+                                        Click <span class="guibutton">Save</span>.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="section" id="projects.membership.remove">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Remove a member</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           If you are an owner of a project, or a member of a project without
+                           specified owners:
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Visit the project page that has a member you want to remove.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-settings.png" alt="Project Settings button" /></span></span>
+                              
+                                        Click <span class="guibutton">Settings</span> in the project's toolbar.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Known members of the project are displayed beneath the
+                                        <span class="guilabel">Members</span> text field, with a medium blue button
+                                        representing projects or groups, and a light blue button representing
+                                        individual users. Click the <span class="guibutton">X</span> next to the
+                                        project id, group id, or userid you want to remove.
+                                      
+                           </p>
+                           <p>
+                                        <span class="inlinemediaobject"><img src="images/panel-project_members_with_group.png" alt="The project membership showing an included project" /></span>
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/button-save.png" alt="Save button for Project configuration" /></span></span>
+                              
+                                        Click <span class="guibutton">Save</span>.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+                  <div class="caution admonition">
+                     <h3 class="title">Caution</h3>
+                     <p>
+                                You are able to remove your own membership or ownership. Doing so could
+                                prevent you from managing the project.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="projects.membership.owners">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Owners</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           A project <span class="emphasis"><em>owner</em></span> is a Perforce user that controls the
+                           configuration for a project. An owner does not need to be a member of a
+                           project, but once <span class="guilabel">Only Owners and Administrators can edit the
+                              project</span> has been set, only an owner or user with
+                           <span class="emphasis"><em>admin</em></span> privileges in the Helix Versioning Engine can
+                           edit any project settings.
+                         
+                  </p>
+               </div>
+               <div class="section" id="projects.membership.moderators">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Moderators</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           A project <span class="emphasis"><em>moderator</em></span> is a user assigned to moderate
+                           reviews for a specific branch associated with a project.
+                         
+                  </p>
+                  <p>
+                           When <span class="guilabel">Only Moderators can approve or reject reviews</span> is
+                           set for a project branch, changing the state of any review associated with
+                           the moderated branch is restricted as follows:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                    Only moderators can approve or reject the review. Moderators can also
+                                    transition a review to any other state.
+                                  
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                    The review's author, when she is not a moderator, can change the review's
+                                    state to <span class="guilabel">Needs Review</span>, <span class="guilabel">Needs
+                                       Revision</span>, <span class="guilabel">Archived</span>, and can attach
+                                    committed changelists.
+                                  
+                           </p>
+                           <p>
+                                    Normally, the review's author cannot change the review's state to
+                                    <span class="guilabel">Approved</span> or <span class="guilabel">Rejected</span> on
+                                    moderated branches. However, authors that are also moderators have
+                                    moderator privileges, and may approve or reject their own review.
+                                  
+                           </p>
+                           <p>
+                                    When <a class="link" href="admin.reviews.html#admin.reviews.disable_self_approve" title="Disable self-approval of reviews by authors"><code class="literal">disable_self_approve</code></a>
+                                    is enabled, authors who are moderators (or even users with
+                                    <span class="emphasis"><em>admin</em></span> privileges) cannot approve their own reviews.
+                                  
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                    Project members can change the review's state to <span class="guilabel">Needs
+                                       Review</span> or <span class="guilabel">Needs Revision</span>, and can attach
+                                    committed changelists. Project members cannot change the review's state to
+                                    <span class="guilabel">Approved</span>, <span class="guilabel">Rejected</span>, or
+                                    <span class="guilabel">Archived</span>.
+                                  
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                    Users that are not project members, moderators, or the review's author
+                                    cannot transition the review's state.
+                                  
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                    For the review's author and project members, if a review is not in one of
+                                    their permitted states, for example if the review's state is
+                                    <span class="guilabel">Rejected</span>, they cannot transition the review to
+                                    another state.
+                                  
+                           </p>
+                           <p>
+                                    These restrictions have no effect on who can start a review.
+                                  
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="projects.edit.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Edit a project</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="projects.remove.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Remove a project</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

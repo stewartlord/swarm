@@ -1,0 +1,362 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>OVA configuration // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.setup.html" title="Setting up" />
+      <link rel="prev" href="setup.packages.html" title="Swarm packages" />
+      <link rel="next" href="setup.installation.html" title="Initial manual installation" />
+      <meta name="Section-title" content="OVA configuration" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="setup.ova">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">OVA configuration</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      Swarm is available as an OVA, an open virtualization appliance that
+                      requires minimal configuration.
+                    
+               </p>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                         A <span class="emphasis"><em>Helix Versioning Engine</em></span> can refer to a Perforce server,
+                         proxy, broker, replica, edge server, commit server, or cluster/node. It
+                         does not refer to a <span class="emphasis"><em>service user</em></span>; service users are
+                         used to coordinate replication in a Helix Versioning Engine.
+                       
+                  </p>
+               </div>
+               <p>
+                      Use the OVA if you want to:
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   Simplify the installation and configuration steps
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Experiment with Swarm without using additional hardware
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Install Swarm without having a Linux-based server available
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                      To use the OVA, follow the instructions on this page and skip to the
+                      <a class="xref" href="setup.trigger_token.html" title="Establish trigger token">Establish trigger token</a> section.
+                    
+               </p>
+               <div class="orderedlist">
+                  <ol class="orderedlist" type="1">
+                     <li class="listitem">
+                        <p>
+                                   Download the 
+                                   <a class="link" href="https://www.perforce.com/downloads/swarm" target="_top">Swarm
+                                      OVA</a>.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Import the OVA into your virtualization environment. See
+                                   <a class="xref" href="setup.ova.html#setup.ova.vmware" title="VMWare OVA import">VMWare OVA import</a>, or
+                                   <a class="xref" href="setup.ova.html#setup.ova.virtualbox" title="Oracle VirtualBox import">Oracle VirtualBox import</a>.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Start the virtual machine; diagnostic and boot information appears.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Several configuration prompts appear in sequence:
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><span class="frame"><img src="images/screen-ova_config.png" alt="Configuring the OVA" /></span></span>
+                                 
+                        </p>
+                        <div class="orderedlist">
+                           <ol class="orderedlist" type="a">
+                              <li class="listitem">
+                                 <p>
+                                                Password for the root user
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Password for the system <span class="emphasis"><em>swarm</em></span> user
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Hostname for the virtual machine
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Helix Versioning Engine port (<code class="envar">P4PORT</code>)
+                                              
+                                 </p>
+                                 <div class="important admonition">
+                                    <h3 class="title">Important</h3>
+                                    <p>
+                                                     If your Helix Versioning Engine is deployed using the commit-edge
+                                                     architecture, ensure that Swarm's <code class="literal">port</code> value
+                                                     points to the commit server.
+                                                   
+                                    </p>
+                                    <p>
+                                                     For more information, see
+                                                     "<a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4dist/chapter.distributed.html" target="_top">Commit-edge Architecture</a>" in the
+                                                     <em class="citetitle"><a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4dist/index.html" target="_top">Perforce
+                                                           Server Administrator's Guide: Multi-site
+                                                           Deployment</a></em>.
+                                                   
+                                    </p>
+                                 </div>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Userid of a normal user in the Helix Versioning Engine with
+                                                <span class="emphasis"><em>admin</em></span> privileges
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Ticket, or password, of the <span class="emphasis"><em>admin-level</em></span>
+                                                Perforce user
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Mail relay host
+                                              
+                                 </p>
+                              </li>
+                           </ol>
+                        </div>
+                        <p>
+                                   Once the prompts have been answered successfully, the virtual machine
+                                   completes its configuration activities. When ready, a welcome screen is
+                                   displayed:
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><span class="frame"><img src="images/screen-ova_running.png" alt="OVA in operation" /></span></span>
+                                 
+                        </p>
+                        <p>
+                                   The welcome screen provides URLs to access Swarm, its documentation, and
+                                   the virtual machine management console.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Update the OVA with security updates and bug fixes:
+                                 
+                        </p>
+                        <div class="orderedlist">
+                           <ol class="orderedlist" type="a">
+                              <li class="listitem">
+                                 <p>
+                                                Use <span class="command"><strong>ssh</strong></span> to log into the OVA as the
+                                                <span class="emphasis"><em>root</em></span> user.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Enter the following commands to update the OVA's list of packages
+                                                and to apply any available upgrades.
+                                              
+                                 </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>apt-get update</strong></span>
+$ <span class="command"><strong>apt-get upgrade</strong></span>
+</pre><p>
+                                                See <a class="xref" href="admin.ova.html" title="OVA Management">OVA Management</a> for more details.
+                                              
+                                 </p>
+                              </li>
+                           </ol>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           After the OVA is configured and running, you can adjust the configuration
+                           by using <span class="command"><strong>ssh</strong></span> to connect to the virtual machine as the
+                           system <span class="emphasis"><em>swarm</em></span> user and editing the
+                           <a class="xref" href="setup.swarm.html" title="Swarm configuration">Swarm configuration</a> file
+                           <code class="filename">/opt/perforce/swarm/data/config.php</code>. Swarm's installation
+                           folder is <code class="filename">/opt/perforce/swarm/</code>.
+                         
+                  </p>
+               </div>
+               <p>
+                      The OVA setup is now complete. Continue with the steps listed in
+                      <a class="xref" href="setup.perforce.html" title="Perforce configuration for Swarm">Perforce configuration for Swarm</a> to complete the installation of Swarm.
+                    
+               </p>
+               <div class="section" id="setup.ova.vmware">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">VMWare OVA import</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           The Swarm OVA works with several
+                           <a class="link" href="https://www.vmware.com/" target="_top">VMWare</a> virtualization
+                           products, such as Player, Workstation, or Fusion.
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        In the VMWare product, select <span class="guimenuitem">File &gt;
+                                           Open</span>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Browse to the <code class="filename">swarm.ova</code> file and click
+                                        <span class="guibutton">Open</span>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Type a name for the virtual machine, such as
+                                        <span class="emphasis"><em>Swarm</em></span>, and click <span class="guibutton">Import</span>.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="section" id="setup.ova.virtualbox">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Oracle VirtualBox import</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           The Swarm OVA works with
+                           <a class="link" href="https://www.virtualbox.org/" target="_top">Oracle VirtualBox</a>,
+                           version 4.x+.
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        In VirtualBox, select <span class="guimenuitem">File &gt; Import
+                                           Appliance...</span>
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Click <span class="guibutton">Open Appliance</span>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Browse to the <code class="filename">swarm.ova</code> file and click
+                                        <span class="guibutton">Open</span>,
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Click <span class="guibutton">Continue</span> (might be <span class="guibutton">Next
+                                           &gt;</span> for some versions of VirtualBox)
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Click <span class="guibutton">Import</span>.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="setup.packages.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Swarm packages</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="setup.installation.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Initial manual installation</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

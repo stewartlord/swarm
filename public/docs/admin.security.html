@@ -1,0 +1,919 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Security // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.administration.html" title="Administration" />
+      <link rel="prev" href="admin.search.html" title="Search" />
+      <link rel="next" href="admin.short_links.html" title="Short links" />
+      <meta name="Section-title" content="Security" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="admin.security">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Security</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  There are many strategies for securing a Swarm installation. This section
+                  provides guidance on security features Swarm controls, and recommendations
+                      for several areas for the system hosting Swarm.
+                    
+               </p>
+               <div class="section" id="admin.security.require_login">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Require login</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="important admonition">
+                     <h3 class="title">Important</h3>
+                     <p>
+                                Prior to Swarm's 2016.1 release, <code class="literal">require_login</code>
+                                defaulted to <code class="literal">false</code>. For 2016.1 and later releases,
+                                the default is <code class="literal">true</code>.
+                              
+                     </p>
+                  </div>
+                  <p>
+                           By default, Swarm prevents anonymous users from viewing any Helix
+                           Versioning Engine resources; users must login to see commits, reviews,
+                           etc.
+                         
+                  </p>
+                  <p>
+                           Swarm can be configured to allow anonymous users to access any readable
+                           resources (creating or editing resources by anonymous users is not
+                           permitted). Add the following configuration block to the
+                           <code class="filename">data/config.php</code> file, at the same level as the
+                           <em class="parameter"><code>p4</code></em> entry:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'security' =&gt; array(
+        'require_login' =&gt; false, // defaults to true
+    ),
+</pre><p>
+                           There is one exception: the <code class="literal">/queue/worker</code> endpoint is
+                           available to any user.
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                <span class="emphasis"><em>service</em></span> and <span class="emphasis"><em>operator</em></span> users are
+                                not permitted to login. For more information on these user types, see
+                                the
+                                <em class="citetitle"><a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4sag/" target="_top">Helix
+                                      Versioning Engine Administrator Guide: Fundamentals</a></em>.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="admin.security.prevent_login">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Prevent login</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           When your Helix Versioning Engine has users that should not be able to log
+                           in to Swarm, for example <span class="emphasis"><em>service</em></span> users involved with
+                           Perforce replicas, the <em class="parameter"><code>prevent_login</code></em> configuration
+                           item can be used to prevent successful authentication.
+                         
+                  </p>
+                  <p>
+                           Add or update the following configuration block to the
+                           <code class="filename">data/config.php</code> file, at the same level as the
+                           <em class="parameter"><code>p4</code></em> entry:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'security' =&gt; array(
+        'prevent_login' =&gt; array(
+            'service_user1',
+            'service_user2',
+        ),
+    ),
+</pre><p>
+                           <em class="parameter"><code>prevent_login</code></em> defaults to
+                           <code class="literal">array()</code>, which means no users in your Helix Versioning
+                           Engine are prevented from logging into Swarm.
+                         
+                  </p>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information, see:
+                                <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4dist/chapter.replication.html#replication.serviceusers" target="_top">Helix
+                                   Versioning Engine Administrator Guide: Multi-Site Deployment: Service
+                                   users</a>.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="admin.security.sessions">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Sessions</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm manages logged-in sessions using cookies in the browser, and PHP
+                           session storage on the server. Swarm uses reasonable defaults for the
+                           cookie and session lifetimes (measured in seconds); when the lifetime is
+                           exceeded users need to login again. To specify session lifetimes, add the
+                           following configuration block to the <code class="filename">data/config.php</code>
+                           file, at the same level as the <em class="parameter"><code>p4</code></em> entry:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'session' =&gt; array(
+        'cookie_lifetime'             =&gt; 0, // 0=expire when browser closed
+        'gc_maxlifetime'              =&gt; 60*60*24*30, // 30 days
+        'remembered_cookie_lifetime'  =&gt; 60*60*24*30, // 30 days
+    ),
+</pre><div class="variablelist">
+                     <dl class="variablelist">
+                        <dt><span class="term">
+                                        <em class="parameter"><code>cookie_lifetime</code></em>
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Optional. Limits the lifetime of session cookies, when the
+                                          <span class="guilabel">Remember Me</span> checkbox on the
+                                          <a class="link" href="basics.login_logout.html#basics.login_logout.login" title="To log in">login dialog</a> is
+                                          unchecked. The default is <code class="literal">0</code>, which causes the
+                                          session cookie to expire when the user's browser is closed.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        <em class="parameter"><code>gc_maxlifetime</code></em>
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Optional. If a session is inactive for the specified number of
+                                          seconds, it is deleted and the user is logged out. The default is
+                                          <code class="literal">60*60*24*30</code> seconds (30 days). Note, by default
+                                          the user's Perforce ticket expires after 12 hours, which also causes
+                                          them to be logged out.
+                                        
+                           </p>
+                        </dd>
+                        <dt><span class="term">
+                                        <em class="parameter"><code>remembered_cookie_lifetime</code></em>
+                                      </span></dt>
+                        <dd>
+                           <p>
+                                          Optional. Limits the lifetime of session cookies when the
+                                          <span class="guilabel">Remember Me</span> checkbox on the
+                                          <a class="link" href="basics.login_logout.html#basics.login_logout.login" title="To log in">login dialog</a> is
+                                          checked. The default is <code class="literal">60*60*24*30</code> seconds (30
+                                          days).
+                                        
+                           </p>
+                        </dd>
+                     </dl>
+                  </div>
+               </div>
+               <div class="section" id="admin.security.x_frame_options">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">X-Frame-Options header</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           By default, Swarm emits a <code class="literal">X-Frame-Options</code> HTTP header
+                           set to <code class="literal">SAMEORIGIN</code>. This prevents embedding of the Swarm
+                           interface into other web pages, which avoids
+                           <span class="emphasis"><em>clickjacking</em></span> attacks.
+                         
+                  </p>
+                  <p>
+                           If your deployment of Swarm needs to be integrated into another web
+                           interface, you can adjust the <code class="literal">X-Frame-Options</code> header by
+                           adjusting the <code class="literal">x_frame_options</code> item within the
+                           <code class="literal">security</code> configuration block, found in the
+                           <code class="filename">data/config.php</code> file. For example:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'security' =&gt; array(
+        'x_frame_options' =&gt; <em class="replaceable"><code>value</code></em>,
+        ),
+    ),
+</pre><p>
+                           Where <em class="replaceable"><code>value</code></em> can be one of:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">'SAMEORIGIN'</code> - Swarm can only be displayed in a
+                                        frame hosted on the same domain.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">'DENY'</code> - Swarm cannot be displayed in a frame.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">'ALLOW-FROM <em class="replaceable"><code>URI</code></em>'</code> - Swarm
+                                        can only be displayed in a frame hosted on the specified
+                                      <em class="replaceable"><code>URI</code></em>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">false</code> - The <code class="literal">X-Frame-Options</code>
+                                        header is not emitted, so Swarm can be embedded without restriction.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information on the <code class="literal">X-Frame-Options</code> header,
+                                see
+                                <a class="link" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/X-Frame-Options" target="_top">this
+                                   Mozilla Developer Network article</a>.
+                     </p>
+                     <div class="literallayout">
+                        <p><br />
+                           
+                        </p>
+                     </div>
+                     <p>
+                                For more information on clickjacking attacks, see
+                                <a class="link" href="https://en.wikipedia.org/wiki/Clickjacking" target="_top">this
+                                   Wikipedia article</a>.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="admin.security.disable_commit">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Disable commit</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm provides the ability to commit reviews within the Swarm interface.
+                           You may want to disable this capability to prevent reviews from being
+                           committed by someone other than the review's author. When disabled, the
+                           <span class="guimenuitem">Approve and Commit</span> (and
+                           <span class="guimenuitem">Commit</span> if the review is already approved)
+                           option is removed from the list of
+                           <a class="link" href="code_reviews.states.html" title="States">states</a> available to a code
+                           review.
+                         
+                  </p>
+                  <p>
+                           To disable commits, set <em class="parameter"><code>disable_commit</code></em> to
+                           <code class="literal">true</code> within the <em class="parameter"><code>reviews</code></em> item in
+                           the <code class="filename">data/config.php</code> file. For example:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'reviews' =&gt; array(
+        'disable_commit' =&gt; true,
+        ),
+    ),
+</pre></div>
+               <div class="section" id="admin.security.restricted_changes">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Restricted Changes</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           The Helix Versioning Engine provides two changelist types:
+                           <code class="literal">public</code> (the default), and
+                           <code class="literal">restricted</code>. Swarm honors restricted changelists by
+                           preventing access to the changelist, and any associated comments or
+                           activity related to the changelist.
+                         
+                  </p>
+                  <p>
+                           If a user has <span class="emphasis"><em>list</em></span>-level privileges to at least one
+                           file in the changelist, Swarm allows the user to see the changelist and
+                           any of the files they have permission to see.
+                         
+                  </p>
+                  <p>
+                           To prevent unintended disclosures, email notifications for restricted
+                           changes are disabled by default. To enable email notifications for
+                           restricted changes, set <em class="parameter"><code>email_restricted_changes</code></em> to
+                           <code class="literal">true</code> within the <em class="parameter"><code>security</code></em> item in
+                           the <code class="filename">data/config.php</code> file. For example:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'security' =&gt; array(
+        'email_restricted_changes' =&gt; true,
+        ),
+    ),
+</pre><div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                When <em class="parameter"><code>email_restricted_changes</code></em> is set to
+                                <code class="literal">true</code>, email notifications for restricted changes are
+                                sent to all interested parties with no permissions screening. These
+                                notifications might disclose sensitive information.
+                              
+                     </p>
+                     <p>
+                                Swarm can only report on changes that the configured
+                                <span class="emphasis"><em>admin</em></span>-level user has access to. When using
+                                restricted changes, we advise that you grant the Swarm
+                                <span class="emphasis"><em>admin</em></span>-level user access to the restricted files and
+                                set
+                                <code class="literal"><a class="link" href="admin.security.html#admin.security.require_login" title="Require login">require_login</a>
+                                   = true</code> to avoid leaking information to unauthenticated users.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="admin.security.limit_project_add_admin">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Limit adding projects to administrators</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="important admonition">
+                     <h3 class="title">Important</h3>
+                     <p>
+                                For Swarm 2016.1, the configuration item
+                                <code class="literal">add_project_admin_only</code> was moved from the
+                                <code class="literal">security</code> block to the
+                                <a class="link" href="admin.projects.html#admin.projects.limit_project_add_admin" title="Limit adding projects to administrators">projects
+                                   block</a>, and the item was renamed to
+                                <code class="literal">add_admin_only</code>.  The functionality of this
+                                configuration item remains unchanged.
+                              
+                     </p>
+                     <p>
+                                If you do not update your <code class="filename">data/config.php</code>
+                                configuration file, the old configuration for restricting project
+                                creation to administrators continues to work.
+                              
+                     </p>
+                     <p>
+                                If you add the new configuration item <code class="literal">add_admin_only</code>
+                                to the <code class="literal">projects</code> block, it takes precedence over any
+                                remaining <code class="literal">add_project_admin_only</code> setting in the
+                                <code class="literal">security</code> block.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="admin.security.limit_project_add_group">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Limit adding projects to members of specific groups</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="important admonition">
+                     <h3 class="title">Important</h3>
+                     <p>
+                                For Swarm 2016.1, the configuration item
+                                <code class="literal">add_project_groups</code> was moved from the
+                                <code class="literal">security</code> block to the
+                                <a class="link" href="admin.projects.html#admin.projects.limit_project_add_group" title="Limit adding projects to members of specific groups">projects
+                                   block</a>, and the item was renamed to
+                                <code class="literal">add_groups_only</code>. The functionality of this
+                                configuration item remains unchanged.
+                              
+                     </p>
+                     <p>
+                                If you do not update your <code class="filename">data/config.php</code>
+                                configuration file, the old configuration for restricting project
+                                creation to specific groups continues to work.
+                              
+                     </p>
+                     <p>
+                                If you add the new configuration item <code class="literal">add_groups_only</code>
+                                to the <code class="literal">projects</code> block, it takes precedence over any
+                                remaining <code class="literal">add_project_groups</code> setting in the
+                                <code class="literal">security</code> block.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="admin.security.ip_protections">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">IP address-based protections emulation</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           A Helix Versioning Engine can be configured via
+                           <span class="emphasis"><em>protections</em></span> to restrict access to a depot in a
+                           variety of ways, including by IP address. As Swarm is a web application
+                           acting as a client to the Helix Versioning Engine, often with
+                           <span class="emphasis"><em>admin</em></span>-level privileges, Swarm needs to emulate IP
+                           address-based restrictions. It does so by checking the user's IP address
+                           and applying any necessary restrictions during operations such as browsing
+                           files, viewing file content, viewing and adding comments on files.
+                         
+                  </p>
+                  <p>
+                           Swarm also emulates proxy-based protections, in addition to regular
+                           IP-based protections emulation. However, Swarm does not detect whether it
+                           is connecting to a Perforce proxy or not; it merely attempts to emulate
+                           protections table entries that use proxy syntax.
+                         
+                  </p>
+                  <p>
+                           IP address-based protections emulation is enabled by default. Swarm
+                           performs somewhat faster without this emulation; if you do not require
+                           them for your Swarm installation these can be disabled by setting the
+                           configuration:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'security' =&gt; array(
+        'emulate_ip_protections' =&gt; false,
+    ),
+</pre><div class="section" id="admin.security.limitations">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Known limitations</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="itemizedlist">
+                        <ul class="itemizedlist" style="list-style-type: disc; ">
+                           <li class="listitem">
+                              <p>
+                                             Notification e-mails for reviews or commits include the list of
+                                             affected files. Swarm cannot reliably know the IP address used to
+                                             retrieve that e-mail, and makes no attempt to filter the files and
+                                             their depot paths nor any details included in the description.
+                                             However, when a user follows a link from the notification e-mail to
+                                             a restricted resource, that access is denied.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             Swarm filters comments from activity streams, but any comments
+                                             created prior to upgrading to the 2013.3 release cannot be filtered
+                                             and may leak sensitive information.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             Swarm displays a comment count in code review queues, code reviews,
+                                             jobs, and activity streams, but the count does not account for any
+                                             comments that may be hidden from the user due to association with
+                                             files the user is restricted from viewing.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             Should Swarm users connect to Swarm via a proxy or VPN, the
+                                             protections will generally use the IP address of the proxy/VPN.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             When the user's IP address and Swarm's IP address both have
+                                             restrictions applied, the user experiences the most constraining of
+                                             the two IP address-based restrictions; Swarm cannot bypass
+                                             restrictions applied to itself.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             Swarm performs a variety of operations with
+                                             <span class="emphasis"><em>admin</em></span>-level privileges, on behalf of a user.
+                                             Even if the Helix Versioning Engine has IP-based, or userid-based
+                                             protections, installed to prevent access to some or most of its
+                                             versioned data, Swarm typically does have access to this data.
+                                             Therefore, <span class="emphasis"><em>Swarm cannot guarantee that no information
+                                                   leakage will occur</em></span>, particularly when custom modules are
+                                             in use, or Swarm source has been customized.
+                                           
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="tip admonition">
+                        <h3 class="title">Tip</h3>
+                        <p>
+                                     For more information, see
+                                     <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4sag/chapter.security.html#security.authorizing" target="_top">Helix
+                                        Versioning Engine Administrator Guide: Fundamentals: Authorizing Access</a>.
+                                   
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <div class="section" id="admin.security.disable_system_info">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Disable system info</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm provides a <a class="xref" href="admin.system_information.html" title="System Information">System Information</a> page,
+                           available to users with <span class="emphasis"><em>admin</em></span> or
+                           <span class="emphasis"><em>super</em></span> privileges, which displays information about
+                           the Helix Versioning Engine that Swarm is configured to use, as well as
+                           PHP information and the Swarm log file.
+                         
+                  </p>
+                  <p>
+                           While this information can be invaluable when communicating with Perforce
+                           support engineers, you may wish to prevent disclosure of any system
+                           information. The <span class="guilabel">System Information</span> page can be
+                           disabled for all users by adding the following configuration block to the
+                           <code class="filename">data/config.php</code> file, at the same level as the
+                           <em class="parameter"><code>p4</code></em> entry:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'security' =&gt; array(
+        'disable_system_info' =&gt; true, // defaults to false
+    ),
+</pre><p>
+                           Once disabled, the <span class="guilabel">System Information</span> link disappears
+                           from the <a class="xref" href="basics.notable.html#basics.notable.about" title="About Swarm">About Swarm</a> dialog, and
+                           <code class="literal">403</code> errors are generated for any attempts to browse to
+                           the <span class="guilabel">System Information</span> page.
+                         
+                  </p>
+               </div>
+               <div class="section" id="admin.security.http_client_options">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">HTTP client options</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Swarm permits configuration of options that are passed through to the
+                           underlying Zend Framework 2's HTTP client. These options can be used to
+                           specify SSL certificate locations, request timeouts, and more, and can be
+                           specified globally or per host.
+                         
+                  </p>
+                  <p>
+                           Here is an example configuration:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'http_client_options' =&gt; array(
+        'timeout'       =&gt; 5,
+
+        // path to the SSL certificate directory
+        'sslcapath'     =&gt; '',
+
+        // the path to a PEM-encoded SSL certificate
+        'sslcert'       =&gt; '',
+
+        // the passphrase for the SSL certificate file
+        'sslpassphrase' =&gt; '',
+
+        // optional, per-host overrides;
+        // host as key, array of options as value
+        'hosts'     =&gt; array(
+            'jira.example.com'  =&gt; array(
+                'sslcapath'     =&gt; '/path/to/certs',
+                'sslcert'       =&gt; 'jira.pem',
+                'sslpassphrase' =&gt; 'keep my JIRA secure',
+                'timeout'       =&gt; 15,
+            ),
+        ),
+    ),
+</pre><p>
+                           See the
+                           <a class="link" href="http://framework.zend.com/manual/2.0/en/modules/zend.http.client.adapters.html#the-socket-adapter" target="_top">Zend
+                              Framework 2's Socket Adapter documentation</a> for more information.
+                         
+                  </p>
+                  <div class="warning admonition">
+                     <h3 class="title">Warning</h3>
+                     <p>
+                                While it is possible to use a self-signed SSL certificate, adding the
+                                configuration to do so disables certificate validity checks, making
+                                connections to the configured host less secure. <span class="bold"><strong>We
+                                      strongly recommend against using this configuration option</strong></span>.
+                              
+                     </p>
+                     <p>
+                                However, if you need to configure continuous integration, deployment, or
+                                JIRA connections and those connections must use a self-signed SSL
+                                certificate, set the <code class="literal">sslallowselfsigned</code> item to
+                                <code class="literal">true</code> for the specific host that needs it, as in the
+                                following example:
+                              
+                     </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'http_client_options' =&gt; array(
+        'hosts'     =&gt; array(
+            'jira.example.com'  =&gt; array(
+                'sslallowselfsigned'  =&gt; true,
+            ),
+        ),
+    ),
+</pre></div>
+               </div>
+               <div class="section" id="admin.security.strict_https">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Strict HTTPS</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           To improve the security when users work with Swarm, particularly if they
+                           need to do so outside of your network, Swarm provides a mechanism that
+                           tries to force web browsers to use <code class="literal">HTTPS</code>. When enabled,
+                           Swarm's behavior changes in the following ways:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">HTTP</code> requests to Swarm include a meta-refresh to
+                                        the <code class="literal">HTTPS</code> version. If a load balancer handles
+                                        encryption before requests reach Swarm, the meta-refresh should be
+                                        disabled. See
+                                        <a class="link" href="admin.security.html#admin.security.strict_https.redirect">below</a>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        A strict transport security header is included for all requests, which
+                                        pins the browser to using <code class="literal">HTTPS</code> for your Swarm
+                                        installation for 30 days.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        All qualified URLs that Swarm produces use <code class="literal">HTTPS</code>
+                                        for the scheme.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Cookies are flagged as <code class="literal">HTTPS</code>-only.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           Here is an example of how to enable strict <code class="literal">HTTPS</code>:
+                         
+                  </p><pre lang="php" class="programlisting">
+&lt;?php
+    // this block should be a peer of 'p4'
+    'security' =&gt; array(
+        'https_strict'          =&gt; true,
+        'https_strict_redirect' =&gt; true, // optional; set false to avoid meta-refresh
+        'https_port'            =&gt; null, // optional; specify if HTTPS is
+                                         // configured on a non-standard port
+    ),
+</pre><p id="admin.security.strict_https.redirect">
+                           When the <em class="parameter"><code>https_strict_redirect</code></em> item is set to
+                           <code class="literal">false</code>, Swarm does not add a meta-refresh for
+                           <code class="literal">HTTP</code> clients. This prevents an endless redirect when a
+                           load balancer in front of Swarm applies <code class="literal">HTTPS</code> to the
+                           client-to-load balancer connection, but not the load balancer-to-Swarm
+                           connection.
+                         
+                  </p>
+               </div>
+               <div class="section" id="admin.security.apache">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Apache security</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           There are several Apache configuration changes that can improve security
+                           for Swarm:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <span class="bold"><strong>Disable identification</strong></span>
+                                      
+                           </p>
+                           <p>
+                                        By default, each Apache response to a web request includes a list of
+                                        <span class="emphasis"><em>tokens</em></span> identifying Apache and its version, along
+                                        with any installed modules and their versions.  Also, Apache can add a
+                                        signature line to each response it generates that includes similar
+                                        information. By itself, this identification information is not a
+                                        security risk, but it helps would-be attackers select attacks that
+                                        could be successful.
+                                      
+                           </p>
+                           <p>
+                                        To disable Apache identification, add the following two lines to your
+                                        Apache configuration:
+                                      
+                           </p><pre lang="apache" class="programlisting">
+ServerSignature Off
+ServerTokens ProductOnly
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="bold"><strong>Disable TRACE requests</strong></span>
+                                      
+                           </p>
+                           <p>
+                                        <code class="literal">TRACE</code> requests cause Apache to respond with all of
+                                        the information it has received, which is useful in a debugging
+                                        environment. <code class="literal">TRACE</code> can be tricked into divulging
+                                        cookie information, which could compromise the credentials being used
+                                        to login to Swarm.
+                                      
+                           </p>
+                           <p>
+                                        To disable <code class="literal">TRACE</code> requests, add the following line
+                                        to your Apache configuration:
+                                      
+                           </p><pre lang="apache" class="programlisting">
+TraceEnable off
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="bold"><strong>Update SSL configuration</strong></span>
+                                      
+                           </p>
+                           <p>
+                                        Swarm works correctly with an SSL-enabled Apache. Several attacks on
+                                        common SSL configurations have been published recently. We recommend
+                                        that you update your Apache configuration with the following lines:
+                                      
+                           </p><pre lang="apache" class="programlisting">
+&lt;IfModule mod_ssl.c&gt;
+    SSLHonorCipherOrder On
+    SSLCipherSuite ECDHE-RSA-AES128-SHA256:AES128-GCM-SHA256:RC4:HIGH:!MD5:!aNULL:!EDH
+    SSLCompression Off
+&lt;/IfModule&gt;
+</pre></li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="section" id="admin.security.php">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">PHP security</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           There are several PHP configuration changes that can improve security for
+                           Swarm:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <span class="bold"><strong>Disable identification</strong></span>
+                                      
+                           </p>
+                           <p>
+                                        By default, PHP provides information to Apache that identifies that it
+                                        is participating in a web request, including its version.
+                                      
+                           </p>
+                           <p>
+                                        To disable PHP identification, edit your system's php.ini file and
+                                        change the line setting <em class="parameter"><code>expose_php</code></em> to:
+                                      
+                           </p><pre lang="ini" class="programlisting">
+expose_php = Off
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="bold"><strong>Remove scripts containing
+                                              <code class="methodname">phpinfo()</code></strong></span>
+                                      
+                           </p>
+                           <p>
+                                        During module development or other debugging, you may need to call
+                                        <code class="methodname">phpinfo()</code>, which displays PHP's active
+                                        configuration, compilation details, included modules and their
+                                        configuration. Typically, you would add a script to Swarm's public
+                                        directory containing:
+                                      
+                           </p><pre lang="php" class="programlisting">
+&lt;?php phpinfo() ?&gt;
+</pre><p>
+                                        Any such scripts should be removed from a production instance of
+                                        Swarm.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="admin.search.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Search</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="admin.short_links.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Short links</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

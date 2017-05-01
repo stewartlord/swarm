@@ -1,0 +1,57 @@
+/* Perforce Print Documentation Styles */
+/* vim: set ts=2 sw=2 tw=80 ai si: */
+
+/* body styling -------------------------------------------------------- */
+
+/* This is necessary to avoid print-preview from picking up pre-transition
+ * layout styling. Solution from:
+ * http://wisercoder.com/print-preview-significantly-different-inspector-chrome/
+ */
+* { transition: none !important; }
+
+#content {
+  left: 0 !important;
+  border-right: 0 none;
+}
+
+#content .container {
+  padding: 12px 48px 60px 48px;
+}
+
+/* Prevent Bootstrap styles from injecting URLs into print output */
+a[href]:after {
+  content: "";
+}
+
+/* hide various elements unnecessary for printing */
+
+#header { display: none; }
+#footer { display: none; }
+#nav    { display: none; }
+#search { display: none; }
+
+/* admonition fixes */
+
+div.admonition {
+  position: relative;
+  margin: 36px 0 10px 0;
+  border: 0 none;
+  border-top: 4px solid #ccc;
+  border-bottom: 1px dotted #ccc;
+  padding: 9px 12px;
+  background-color: #eee;
+  color: #000;
+  z-index: 10;
+  clear: both;
+}
+
+div.admonition h1,
+div.admonition h2,
+div.admonition h3 {
+  border: 1px solid #ccc;
+  border-bottom: 0 none;
+  border-radius: 0;
+  margin: -28px 0 0 1px;
+  width: auto;
+  padding: 0px 8px;
+}

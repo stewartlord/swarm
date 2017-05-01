@@ -1,0 +1,90 @@
+<?php
+$this->headTitle()->set('Changes');
+if ($path) {
+    $this->headTitle()->append($path);
+}
+?>
+
+<h1 class="changes-title">
+    <?php echo $this->te('Changes')?>
+</h1>
+
+<?php echo $this->breadcrumbs($path, 'changes') ?>
+
+<table class="table table-compact change-history <?php echo $remote ? 'remote' : '' ?>"
+    data-project-id="<?php echo $project ? $this->escapeHtmlAttr($project->getId()) : '' ?>">
+    <thead>
+        <tr>
+            <th class="change"><?php echo $this->te('Change')?></th>
+            <th class="user"><?php echo $this->te('User')?></th>
+            <th class="description"><?php echo $this->te('Description')?></th>
+            <th class="time"><?php echo $this->te($status === 'shelved' ? 'Created' : 'Committed')?></th>
+            <?php if ($reviews !== false): ?>
+                <th class="review-status center"
+                    title="<?php echo $this->te('Review State') ?>"
+                    aria-label="<?php echo $this->te('Review State') ?>">
+                    <i class="swarm-icon icon-review-approved"></i>
+                </th>
+                <th class="review-link"></th>
+            <?php endif; ?>
+        </tr>
+    </thead>
+    <?php
+    foreach($changes as $change):
+        $changeId = $change->getId();
+        $time     = date('c', $change->getTime());
+        $url      = $this->url('change', array('change' => $changeId));
+        $review   = isset($reviews[$changeId]) ? $reviews[$changeId] : null;
+    ?>
+        <tr id="<?php echo $this->escapeHtmlAttr($changeId); ?>">
+            <td class="change">
+                <a href="<?php echo $url ?>">
+                    <?php echo $this->escapeHtml($changeId) ?>
+                </a>
+            </td>
+            <td class="user">
+                <?php echo $this->userLink($change->getUser()) ?>
+            </td>
+            <td class="description">
+                <?php echo $this->preformat($change->getDescription()) ?>
+            </td>
+            <td class="time">
+                <span class="timeago" title="<?php echo $this->escapeHtmlAttr($time) ?>"></span>
+            </td>
+            <?php if ($reviews !== false): ?>
+                <td class="review-status"><?php if ($review): ?>
+                    <i class="swarm-icon icon-review-<?php echo $review ? $review->getState() : ''; ?>"
+                       title="<?php echo $review ? $review->getStateLabel() : ''; ?>"></i>
+                <?php endif; ?></td>
+                <td class="review-link">
+                    <?php if ($review): ?>
+                        <a href="<?php echo $this->url('review', array('review' => $review->getId())) ?>"
+                           class="btn btn-success btn-small">
+                            <span class="text"><?php echo $this->te("View Review")?></span>
+                        </a>
+                    <?php else: ?>
+                        <a href="#" class="privileged btn btn-small <?php echo $change->isRemoteEdgeShelf() ? 'disabled' : '' ?>"
+                            <?php echo !$change->isRemoteEdgeShelf()
+                                ? 'onclick="return swarm.review.add(this, ' . (int) $changeId . ');"'
+                                : '' ?>>
+                            <span class="text"><?php echo $this->te("Request Review")?></span>
+                        </a>
+                    <?php endif; ?>
+                </td>
+            <?php endif; ?>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
+<script type="text/javascript">
+    $(function(){
+        $('.timeago').timeago();
+        $('.change-history .description').expander({slicePoint: 90});
+
+        $(window).scroll(function() {
+            if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
+                swarm.changes.load(<?php echo json_encode($path) ?>);
+            }
+        });
+    });
+</script>

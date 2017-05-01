@@ -1,0 +1,543 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Files // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.basics.html" title="Basics" />
+      <link rel="prev" href="basics.activity_streams.html" title="Activity streams" />
+      <link rel="next" href="basics.commits.html" title="Commits" />
+      <meta name="Section-title" content="Files" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="basics.files">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Files</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The Helix Versioning Engine's primary task is to version files, so Swarm
+                      makes it easy to browse the <a class="glossterm" href="glossary.html#Depot"><em class="glossterm">depot</em></a>.
+                      Start browsing by clicking the <span class="guibutton">Files</span> link in the top
+                      toolbar.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="frame"><img src="images/page-files.png" alt="The File Browser" /></span></span>
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-breadcrumbs.png" alt="breadcrumbs" /></span></span>
+                                 
+                        </p>
+                        <p>
+                                   Swarm displays a list of breadcrumb links to help you quickly navigate
+                                   to higher level directories quickly.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/icon-folder.png" alt="folder icon" /></span></span>
+                                 
+                        </p>
+                        <p>
+                                   Links with folder icons represent directories of files within the depot.
+                                   Click a directory link to display the contents of that directory.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/icon-folder-parent.png" alt="parent folder icon" /></span></span>
+                                 
+                        </p>
+                        <p>
+                                   Click the <span class="guibutton">..</span> link with the up-arrow icon, when it
+                                   appears, to navigate to the current directory's parent.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/icon-file.png" alt="file icon" /></span></span>
+                                 
+                        </p>
+                        <p>
+                                   Links with dog-eared page icons represent individual files within the
+                                   depot. See <a class="link" href="basics.files.html#basics.files.display" title="File display">below</a> for more
+                                   information.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/tabs-history-files.png" alt="History tab" /></span></span>
+                                 
+                        </p>
+                        <p>
+                                   Click the <span class="guibutton">History</span> tab to display the list of
+                                   changes made to files in the current directory, or any directories it
+                                   contains. See <a class="xref" href="basics.commits.html#basics.history">Commits</a> for more information.
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                      <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-folder_link.png" alt="a linked folder" /></span></span>
+                    
+               </p>
+               <p>
+                      Swarm creates links for files and directories wherever they appear in the
+                      Swarm UI.
+                    
+               </p>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           Directories that start with a period, for example
+                           <code class="filename">.git-fusion</code>, are sorted to appear at the end of the
+                           list of directories. The <span class="guibutton">..</span> link, when it appears,
+                           always appears first.
+                         
+                  </p>
+                  <p>
+                           Similarly, files that start with a period, for example
+                           <code class="filename">.htaccess</code>, are sorted to appear at the end of the
+                           list of files.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.files.zip">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Downloading files as ZIP archive</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/button-download_zip.png" alt="The Downloads.zip button" /></span></span>
+                     
+                           Swarm can provide a ZIP archive for a file or folder within the Helix
+                           Versioning Engine. This makes it easy to get a copy of files without
+                           having to setup a client.
+                         
+                  </p>
+                  <p>
+                           When you click the <span class="guibutton">Download .zip</span> button, Swarm
+                           performs the following steps:
+                         
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-zip-initializing.png" alt="Initializing a ZIP archive" /></span></span>
+                              
+                                        scan the selected file/folder, to determine if you have permission to
+                                        access the contents (according to the Helix Versioning Engine
+                                        protections), and if the file/folder is small enough to be processed
+                                        by Swarm.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-zip-syncing.png" alt="Syncing files for compression" /></span></span>
+                              
+                                        sync the file/folder contents to the Swarm server from the Helix
+                                        Versioning Engine.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-zip-compressing.png" alt="Creating the ZIP archive by compressing the file content" /></span></span>
+                              
+                                        create the ZIP archive by compressing the file content.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-zip-downloading.png" alt="Downloading the ZIP archive" /></span></span>
+                              
+                                        start a download of the generated ZIP archive.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+                  <p>
+                           You might not see all of the above steps; Swarm caches the resulting ZIP
+                           archives so that repeated requests to the same file/folder can skip the
+                           sync/compress steps whenever possible.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-zip-error.png" alt="An error was encountered while preparing the ZIP archive" /></span></span>
+                     
+                           If an error occurs while scanning, syncing, or compressing, Swarm
+                           indicates the error.
+                         
+                  </p>
+                  <p>
+                           For information on the configuration for ZIP archives, see
+                           <a class="xref" href="admin.archives.html" title="Archives configuration">Archives configuration</a>.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.files.browse_deleted">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Browsing deleted files and folders</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/button-show_deleted_files.png" alt="The Show Deleted Files button" /></span></span>
+                         
+                  </p>
+                  <p>
+                           When the <span class="guibutton">Show Deleted Files</span> button is clicked,
+                           Swarm toggles the inclusion of deleted folders and files in the file
+                           display.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-deleted_folder_and_file.png" alt="A file listing with a deleted folder and file." /></span></span>
+                         
+                  </p>
+                  <p>
+                           Deleted folders and files are presented slightly muted compared to
+                           non-deleted entries.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.files.display">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">File display</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           When Swarm is asked to display a file, if the file is a type that Swarm
+                           can display, Swarm presents the file's contents. Clicking the
+                           <span class="guibutton">Open</span> button displays the file content with no
+                           surrounding page markup. Clicking the <span class="guibutton">Download</span>
+                           button causes the file to be downloaded.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-file_versions.png" alt="Version 2 of logo-lg.png" /></span></span>
+                         
+                  </p>
+                  <p>
+                           Along with the file's name, Swarm displays the version number for the
+                           currently displayed file. For example, this heading indicates that version
+                           <code class="literal">2</code> of <code class="filename">logo-lg.png</code> is being
+                           displayed. Every version of a file is available on the
+                           <a class="xref" href="basics.commits.html#basics.history">Commits</a> tab.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-file_versions-deleted.png" alt="A deleted version number" /></span></span>
+                         
+                  </p>
+                  <p>
+                           If the version of a file being previewed has been deleted, the
+                           version number appears in red:
+                         
+                  </p>
+                  <div class="section" id="basics.files.text-files">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Text Files</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                Swarm displays the contents of text files (include the Perforce
+                                filetypes <code class="literal">unicode</code> and <code class="literal">UTF16</code>) with
+                                line numbers. When possible, syntax highlighting is applied to make
+                                identification of various elements within the file easier.
+                              
+                     </p>
+                     <div class="tip admonition">
+                        <h3 class="title">Tip</h3>
+                        <p>
+                                     For more information on Perforce filetypes, see
+                                     <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/cmdref/o.ftypes.html#1040647" target="_top">Perforce
+                                        Command Reference: File Types</a>
+                                   
+                        </p>
+                     </div>
+                     <p>
+                                <span class="inlinemediaobject"><span class="frame"><img src="images/page-file-display.png" alt="a displayed text file" /></span></span>
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="thumb"><img src="images/button-blame.png" alt="The Blame button" /></span></span>
+                              
+                     </p>
+                     <p>
+                                Click <span class="guibutton">Blame</span> to add a column to the display that
+                                identifies the userid responsible for each line of the file.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="frame"><img src="images/page-file-display-blame.png" alt="A displayed text file with blame" /></span></span>
+                              
+                     </p>
+                     <p>
+                                Each userid presented is a link that, when clicked, displays the
+                                changelist that provided the associated text. Muted userids indicate
+                                that the associated text is from the same changelist as the line above.
+                                For example, the userid <span class="emphasis"><em>gnicol</em></span> is responsible for
+                                lines 1 through 9 in the screenshot above.
+                              
+                     </p>
+                     <p>
+                                When you hover your pointer over a userid in the blame column, a tooltip
+                                appears displaying the associated changelist description.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><img src="images/thumb-blame-changelist.png" alt="The changelist associated with the current line" /></span>
+                              
+                     </p>
+                     <p>
+                                When there are no lines displayed, for example when you are viewing
+                                empty or shelved files, the <span class="guibutton">Blame</span> button is
+                                disabled.
+                              
+                     </p>
+                  </div>
+                  <div class="section" id="basics.files.images">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Images</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                Swarm displays web-safe images.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="frame"><img src="images/page-file-display-image.png" alt="a displayed image" /></span></span>
+                              
+                     </p>
+                     <p>
+                                The checkerboard background in this example is not part of the
+                                logo; it helps identify where transparency exists.
+                              
+                     </p>
+                     <p>
+                                Many browsers can display <code class="literal">SVG</code> images with no
+                                additional plugins, so Swarm attempts to display <code class="literal">SVG</code>
+                                images rather than displaying the image's definition. When you use a
+                                browser that cannot natively display <code class="literal">SVG</code> images, you
+                                see the <span class="emphasis"><em>broken image</em></span> icon.
+                              
+                     </p>
+                     <p>
+                                When <code class="literal">imagick</code> (an optional module that integrates
+                                ImageMagick into PHP) is installed, Swarm can also display the following
+                                image formats: <a class="glossterm" href="glossary.html#BMP"><em class="glossterm"><code class="literal">BMP</code></em></a>,
+                                <a class="glossterm" href="glossary.html#EPS"><em class="glossterm"><code class="literal">EPS</code></em></a>,
+                                <a class="glossterm" href="glossary.html#PSD"><em class="glossterm"><code class="literal">PSD</code></em></a>,
+                                <a class="glossterm" href="glossary.html#TGA"><em class="glossterm"><code class="literal">TGA</code></em></a>,
+                                <a class="glossterm" href="glossary.html#TIFF"><em class="glossterm"><code class="literal">TIFF</code></em></a>.
+                              
+                     </p>
+                  </div>
+                  <div class="section" id="basics.files.3d">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">3D models</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                Swarm 2014.1 includes support for displaying select 3D model file types
+                                in the browser:
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="frame"><img src="images/panel-3d_model.png" alt="a 3D model rendered in Swarm" /></span></span>
+                              
+                     </p>
+                     <p>
+                                Supported file types include:
+                              
+                     </p>
+                     <div class="itemizedlist">
+                        <ul class="itemizedlist" style="list-style-type: disc; ">
+                           <li class="listitem">
+                              <p>
+                                             <span class="bold"><strong>DAE</strong></span> - including any referenced
+                                             web-safe texture images.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             <span class="bold"><strong>STL</strong></span> - both binary and ASCII versions
+                                             of the format.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             <span class="bold"><strong>OBJ</strong></span> - including any referenced
+                                             <code class="literal">MTL</code> files, and web-safe texture images.
+                                           
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <p>
+                                When Swarm can display a 3D model, it renders a generic grid
+                                <span class="emphasis"><em>stage</em></span> and places the model in the center, scaled to
+                                make viewing straightforward. A toggle control appears in the top right:
+                                when enabled, you can control the view with the mouse, and when not
+                                enabled, permits auto-rotation to occur (when possible).
+                              
+                     </p>
+                     <div class="orderedlist">
+                        <ol class="orderedlist" type="1">
+                           <li class="listitem">
+                              <p>
+                                             Click and hold the <span class="bold"><strong>left mouse
+                                                   button</strong></span> to begin rotating the view. Drag
+                                             while holding the left mouse button to rotate the view.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             Click and hold the <span class="bold"><strong>right mouse
+                                                   button</strong></span> to begin panning the view. Drag while holding the
+                                             right mouse button to pan the view.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             Roll the <span class="bold"><strong>mouse wheel</strong></span> up or down to
+                                             adjust the magnification of the view.
+                                           
+                              </p>
+                           </li>
+                        </ol>
+                     </div>
+                     <p>
+                                When possible, a second control appears allowing you to toggle between
+                                showing the model with surfaces, or just showing the model's wireframe.
+                              
+                     </p>
+                     <div class="note admonition">
+                        <h3 class="title">Note</h3>
+                        <p>
+                                     For systems with hardware acceleration, if your browser supports WebGL
+                                     and hardware acceleration is enabled, Swarm renders the model and
+                                     enables auto-rotation.
+                                   
+                        </p>
+                        <p>
+                                     For systems without hardware acceleration or WebGL, but your browser
+                                     supports HTML5 canvas elements and JavaScript TypedArrays, Swarm
+                                     renders the model but auto-rotation is disabled. Rendering is likely
+                                     to be slow and rendering quality is likely to be low.
+                                   
+                        </p>
+                        <p>
+                                     For browsers without HTML5 canvas elements and JavaScript TypedArrays,
+                                     no rendering is attempted; instead, users see a message indicating
+                                     that the browser is not supported.
+                                   
+                        </p>
+                     </div>
+                  </div>
+                  <div class="section" id="basics.files.other-file-types">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Other file types</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                It is possible to view other file types in Swarm, through the addition
+                                of additional modules, or by installing
+                                <a class="xref" href="integrations.libreoffice.html" title="LibreOffice">LibreOffice</a> on the Swarm host.
+                              
+                     </p>
+                     <p>
+                                When the file is a type that Swarm cannot display, Swarm presents the
+                                file's <a class="link" href="basics.commits.html#basics.history">history</a>, along with the
+                                <span class="guibutton">Download</span> button.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="frame"><img src="images/page-file-no_display.png" alt="a file that cannot be displayed" /></span></span>
+                              
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="basics.activity_streams.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Activity streams</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="basics.commits.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Commits</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>PHP configuration // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.setup.html" title="Setting up" />
+      <link rel="prev" href="setup.apache.html" title="Apache configuration" />
+      <link rel="next" href="setup.swarm.html" title="Swarm configuration" />
+      <meta name="Section-title" content="PHP configuration" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="setup.php">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">PHP configuration</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      PHP can vary between OS distributions; see the documentation specific to
+                      your installation of PHP.
+                    
+               </p>
+               <div class="orderedlist" id="setup.php.ini">
+                  <ol class="orderedlist" type="1">
+                     <li class="listitem">
+                        <p>
+                                   First determine which <code class="filename">php.ini</code> file is in use by the
+                                   PHP Apache module.  Note that it may not necessarily be the same
+                                   <code class="filename">php.ini</code> file that is in use when calling PHP from
+                                   the command line (running <span class="command"><strong>php --ini</strong></span> from the command
+                                   line reports this).
+                                 
+                        </p>
+                        <p>
+                                   If you're having trouble determining which <code class="filename">php.ini</code>
+                                   the PHP Apache module is using, create a PHP file that can be served
+                                   through Apache with the following contents:
+                                 
+                        </p><pre lang="php" class="programlisting">
+&lt;?php phpinfo();?&gt;
+</pre><p>
+                                   Point your browser to this file and look for this table row in the
+                                   resulting table:
+                                 
+                        </p><pre lang="bash" class="programlisting">
+Loaded Configuration File
+</pre></li>
+                     <li class="listitem">
+                        <p>
+                                   Ensure that <code class="literal">date.timezone</code> is set correctly for your
+                                   system.
+                                 
+                        </p>
+                        <p>
+                                   Some distributions do not make a default timezone available to PHP, so
+                                   the best practice to set the timezone for PHP explicitly. See the
+                                   <a class="link" href="https://secure.php.net/manual/en/timezones.php" target="_top">list of
+                                      supported timezones</a>.
+                                 
+                        </p>
+                        <p>
+                                   An example <code class="literal">date.timezone</code> setting in
+                                   <code class="filename">php.ini</code>:
+                                 
+                        </p><pre lang="ini" class="programlisting">
+date.timezone = America/Vancouver
+</pre></li>
+                     <li class="listitem">
+                        <p>
+                                   Verify that the iconv, json, and session extensions are present.
+                                 
+                        </p>
+                        <p>
+                                   They are usually enabled by default, although you may have to install
+                                   packages for them through your OS distribution. Verify they are present
+                                   by searching for their respective names in the
+                                   <code class="filename">phpinfo</code> output above.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Enable P4PHP, the Perforce extension for PHP:
+                                 
+                        </p>
+                        <p>
+                                   For Swarm to communicate with a Helix Versioning Engine, it needs the
+                                   P4PHP extension. Swarm comes with a number of variants of the P4PHP
+                                   binary, for Linux platforms (32- and 64-bit) and Mac OS X (Darwin), and
+                                   for PHP 5.3, 5.4, and 5.5.
+                                 
+                        </p>
+                        <div class="note admonition">
+                           <h3 class="title">Note</h3>
+                           <p>
+                                        For Linux, the default variants are compiled with glibc 2.11. We have
+                                        also included PHP 5.3 variants compiled with glibc 2.3.3 to support
+                                        those customers on older distributions, such as Red Hat Enterprise
+                                        Linux 5.9.
+                                      
+                           </p>
+                        </div>
+                        <p>
+                                   To enable P4PHP, edit the web server's <code class="filename">php.ini</code> file
+                                   and add the following line:
+                                 
+                        </p><pre lang="ini" class="programlisting">
+extension=/path/to/swarm/p4-bin/bin.<em class="replaceable"><code>&lt;platform&gt;</code></em>/perforce-<em class="replaceable"><code>&lt;variant&gt;</code></em>.so
+</pre><p>
+                                   Example 1: for a 64-bit Linux system running PHP 5.4:
+                                 
+                        </p><pre lang="ini" class="programlisting">
+extension=/path/to/swarm/p4-bin/bin.linux26x86_64/perforce-php54.so
+</pre><p>
+                                   Example 2: for a 32-bit Linux system running PHP 5.3 with glibc older
+                                   than 2.11:
+                                 
+                        </p><pre lang="ini" class="programlisting">
+extension=/path/to/swarm/p4-bin/bin.linux26x86/perforce-php53-glibc2.3.3.so
+</pre><p>
+                                   Alternatively, copy the extension file to the default location for PHP
+                                   extensions, and then just add this line instead:
+                                 
+                        </p><pre lang="ini" class="programlisting">
+extension=perforce-<em class="replaceable"><code>&lt;variant&gt;</code></em>.so
+</pre></li>
+                     <li class="listitem">
+                        <p>
+                                   Restart Apache for the changes to become active.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   To verify that P4PHP is active, navigate to the
+                                   <code class="filename">phpinfo</code> file you
+                                   <a class="link" href="setup.php.html#setup.php.ini">created above</a>. You should
+                                   then see a <code class="literal">perforce</code> section (search for "Perforce
+                                   Module"). It should report that the module is enabled and display the
+                                   version information.
+                                 
+                        </p>
+                     </li>
+                  </ol>
+               </div>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           Be aware that any operating system upgrades on the machine hosting Swarm
+                           may involve updates to PHP. If this occurs, the
+                           <code class="filename">php.ini</code> needs to be updated to point to the correct
+                           <em class="replaceable"><code>variant</code></em> of P4PHP to match the version of PHP
+                           that the upgraded operating system is using.
+                         
+                  </p>
+               </div>
+               <div class="section" id="setup.php.apc">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Alternative PHP Cache (APC) extension for PHP</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           APC is a free, open, and robust framework for caching and optimizing PHP
+                           intermediate code. Enabling APC improves Swarm performance by caching
+                           Swarm's compiled bytecode.
+                         
+                  </p>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information, see:
+                     </p>
+                     <div class="literallayout">
+                        <p><br />
+                           
+                        </p>
+                     </div>
+                     <p><a class="link" href="https://secure.php.net/apc" target="_top">https://secure.php.net/apc</a></p>
+                     <div class="literallayout">
+                        <p><br />
+                           
+                        </p>
+                     </div>
+                     <p><a class="link" href="https://pecl.php.net/package/APC" target="_top">https://pecl.php.net/package/APC</a>
+                              
+                     </p>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        We recommend that you install APC from your OS distribution, via
+                                        <span class="command"><strong>apt-get</strong></span>, <span class="command"><strong>yum</strong></span>, etc. If your
+                                        distribution does not offer the APC package for PHP, do so via
+                                        <a class="glossterm" href="glossary.html#PECL"><em class="glossterm">PECL</em></a> (although you may have to
+                                        resolve system dependencies):
+                                      
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo pecl install apc</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                        Verify that APC is enabled in your PHP Apache module's
+                                        <code class="filename">php.ini</code> file (as determined in the section
+                                        above for P4PHP). You may need to add the following line:
+                                      
+                           </p><pre lang="ini" class="programlisting">
+extension=apc.so
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                        Restart Apache for the changes to become active.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        To verify that APC is active, navigate to the
+                                        <code class="filename">phpinfo</code> file you
+                                        <a class="link" href="setup.php.html#setup.php.ini">created above</a>. You should
+                                        then see an <code class="literal">apc</code> section (you may have to search for
+                                        "APC Support"). It should report its version information and a table
+                                        for its directives.
+                                      
+                           </p>
+                           <p>
+                                        We currently do not have any specific recommendations for which APC
+                                        directives to set.
+                                      
+                           </p>
+                           <div class="warning admonition">
+                              <h3 class="title">Warning</h3>
+                              <p>
+                                             Once you have completed installing and enabling P4PHP and APC, we
+                                             recommend that you remove the <code class="filename">phpinfo</code> file you
+                                             created to avoid disclosing information about your installation.
+                                           
+                              </p>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="section" id="setup.php.zendopcache">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Zend OPCache extension for PHP</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Zend OPCache, like APC, improves PHP performance by storing compiled PHP
+                           code into a cache, removing the need for PHP to load and parse scripts on
+                           each request.
+                         
+                  </p>
+                  <p>
+                           Zend OPCache is bundled with PHP 5.5.x, and is recommended for use instead
+                           of APC. For PHP versions 5.3 and 5.4, Zend OPCache is not bundled, but is
+                           available via <a class="glossterm" href="glossary.html#PECL"><em class="glossterm">PECL</em></a>.
+                         
+                  </p>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information, see:
+                     </p>
+                     <div class="literallayout">
+                        <p><br />
+                           
+                        </p>
+                     </div>
+                     <p><a class="link" href="https://secure.php.net/opcache" target="_top">https://secure.php.net/opcache</a></p>
+                     <div class="literallayout">
+                        <p><br />
+                           
+                        </p>
+                     </div>
+                     <p><a class="link" href="https://pecl.php.net/package/ZendOpcache" target="_top">https://pecl.php.net/package/ZendOpcache</a>
+                              
+                     </p>
+                  </div>
+                  <div class="section" id="setup.php.zendopcache.install">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Install Zend OPCache</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="orderedlist">
+                        <ol class="orderedlist" type="1">
+                           <li class="listitem">
+                              <p>
+                                             We recommend that you install Zend OPCache from your OS
+                                             distribution, via <span class="command"><strong>apt-get</strong></span>,
+                                             <span class="command"><strong>yum</strong></span>, etc. If your distribution does not offer the
+                                             Zend OPCache package for PHP, do so via
+                                             <a class="glossterm" href="glossary.html#PECL"><em class="glossterm">PECL</em></a> (although you may have to
+                                             resolve system dependencies):
+                                           
+                              </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo pecl install zendopcache</strong></span>
+</pre></li>
+                           <li class="listitem">
+                              <p>
+                                             Verify that Zend OPCache is enabled in your PHP Apache module's
+                                             <code class="filename">php.ini</code> file (as determined in the section
+                                             above for P4PHP). You may need to add the following line:
+                                           
+                              </p><pre lang="ini" class="programlisting">
+zend_extension=/path/to/opcache.so
+</pre></li>
+                           <li class="listitem">
+                              <p>
+                                             Restart Apache for the changes to become active.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             To verify that Zend OPCache is active, navigate to the
+                                             <code class="filename">phpinfo</code> file you
+                                             <a class="link" href="setup.php.html#setup.php.ini">created above</a>. You should
+                                             then see a <code class="literal">Zend OPcache</code> section. It should report
+                                             its version information and a table for its directives.
+                                           
+                              </p>
+                              <p>
+                                             We currently do not have any specific recommendations for which Zend
+                                             OPCache directives to set.
+                                           
+                              </p>
+                              <div class="warning admonition">
+                                 <h3 class="title">Warning</h3>
+                                 <p>
+                                                  Once you have completed installing and enabling P4PHP and Zend
+                                                  OPCache, we recommend that you remove the
+                                                  <code class="filename">phpinfo</code> file you created to avoid disclosing
+                                                  information about your installation.
+                                                
+                                 </p>
+                              </div>
+                           </li>
+                        </ol>
+                     </div>
+                  </div>
+                  <div class="section" id="setup.php.zendopcache.enable">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Enable Zend OPCache</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                For PHP 5.5+, while Zend OPCache is included, it may not be enabled. If
+                                you choose to use it, you may need to add the following line to your PHP
+                                Apache module's <code class="filename">php.ini</code> file:
+                              
+                     </p><pre lang="ini" class="programlisting">
+opcache.enable = 1
+</pre><p>
+                                If you have edited <code class="filename">php.ini</code>, ensure that you restart
+                                Apache for the changes to become active.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="setup.php.imagick">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">ImageMagick (imagick) extension for PHP</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Imagick is a PHP extension that integrates the ImageMagick graphics
+                           library's API for the creation and manipulation of images. Enabling
+                           Imagick improves Swarm's ability to preview graphics formats that web
+                           browsers typically cannot display.
+                         
+                  </p>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information, see:
+                     </p>
+                     <div class="literallayout">
+                        <p><br />
+                           
+                        </p>
+                     </div>
+                     <p><a class="link" href="https://secure.php.net/imagick" target="_top">https://secure.php.net/imagick</a></p>
+                     <div class="literallayout">
+                        <p><br />
+                           
+                        </p>
+                     </div>
+                     <p><a class="link" href="https://pecl.php.net/package/imagick" target="_top">https://pecl.php.net/package/imagick</a>
+                              
+                     </p>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        We recommend that you install Imagick from your OS distribution, via
+                                        <span class="command"><strong>apt-get</strong></span>, <span class="command"><strong>yum</strong></span>, etc. If your
+                                        distribution does not offer the imagick package for PHP, do so via
+                                        PECL (although you may have to resolve system dependencies):
+                                      
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo pecl install imagick</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                        Verify that imagick is enabled in your PHP Apache module's
+                                        <code class="filename">php.ini</code> file (as determined in the section above
+                                        for P4PHP). You may need to add the following line:
+                                      
+                           </p><pre lang="ini" class="programlisting">
+extension=imagick.so
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                        Restart Apache for the changes to become active.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        To verify that imagick is active, navigate to the
+                                        <code class="filename">phpinfo</code> file you
+                                        <a class="link" href="setup.php.html#setup.php.ini">created above</a>. You should
+                                        then see an <code class="literal">imagick</code> section. It should report its
+                                        version information and a table for its directives, supported image
+                                        file formats, and more.
+                                      
+                           </p>
+                           <div class="warning admonition">
+                              <h3 class="title">Warning</h3>
+                              <p>
+                                             Once you have completed installing and enabling P4PHP and imagick,
+                                             we recommend that you remove the <code class="filename">phpinfo</code> file
+                                             you created to avoid disclosing information about your installation.
+                                           
+                              </p>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="setup.apache.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Apache configuration</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="setup.swarm.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Swarm configuration</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

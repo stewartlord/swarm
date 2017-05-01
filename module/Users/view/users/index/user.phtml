@@ -1,0 +1,93 @@
+<?php
+$this->headTitle()->set($user->getId())->setTranslatorEnabled(false);
+$this->bodyClass()->append('login-reload');
+?>
+
+<div class="row-fluid">
+    <div class="span3 profile-sidebar user-sidebar">
+        <div class="profile-info">
+            <div class="title pad2 padw3">
+                <h4><?php echo $this->escapeHtml($user->getId()) ?></h4>
+            </div>
+            <div class="body">
+                <div class="pad2" title="<?php echo $this->escapeHtmlAttr($user->getFullName()) ?>">
+                    <?php echo $this->avatar($user, '256', false, 'img-rounded') ?>
+                </div>
+                <?php if (!$isCurrentUser) : ?>
+                    <div class="buttons privileged pad2">
+                        <button type="button" class="btn btn-primary btn-block <?php echo $userFollows ? 'following' : '' ?>"
+                                onclick="swarm.user.follow('user', '<?php echo $this->escapeJs($user->getId()) ?>', this);">
+                            <?php echo $this->te($userFollows ? 'Unfollow' : 'Follow') ?>
+                        </button>
+                    </div>
+                <?php endif; ?>
+                <div class="metrics pad2">
+                    <ul class="force-wrap clearfix">
+                        <li class="followers pull-left border-box pad2 padw0"><span class="count"><?php echo count($followers) ?></span><br><?php echo $this->te('Followers') ?></li>
+                        <li class="following pull-left border-box pad2 padw0"><span class="count"><?php echo count($following) ?></span><br><?php echo $this->te('Following') ?></li>
+                        <li class="projects pull-left border-box pad2 padw0"><span class="count"><?php echo count($projects) ?></span><br><?php echo $this->te('Projects') ?></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="followers profile-block <?php echo !$followers ? 'hidden' : '' ?>">
+            <div class="title pad1 padw0"><?php echo $this->te('Followers') ?></div>
+            <?php echo $this->avatars($followers, 5) ?>
+        </div>
+        <?php if ($following) : ?>
+        <div class="following profile-block">
+            <div class="title pad1 padw0"><?php echo $this->te('Following') ?></div>
+            <?php echo $this->avatars($following, 5); ?>
+        </div>
+        <?php endif; ?>
+        <?php if ($projects->count()): ?>
+        <div class="projects profile-block">
+            <div class="title pad1 padw0"><?php echo $this->te('Projects') ?></div>
+            <ul>
+            <?php
+                foreach ($projects as $project) {
+                    echo '<li><a href="' . $this->url('project', array('project' => $project->getId())) . '">'
+                        . $this->escapeHtml($project->getName())
+                        . '</a></li>';
+                }
+            ?>
+            </ul>
+        </div>
+        <?php endif; ?>
+    </div>
+    <div class="span9 profile-body user-body">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#activity" data-toggle="tab">
+                    <i class="icon-list"></i> <?php echo $this->te('Activity')?>
+                </a>
+            </li>
+            <li>
+                <a href="#shelves" data-toggle="tab">
+                    <i class="icon-th-list"></i> <?php echo $this->te('Shelves')?>
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="activity">
+                <?php echo $this->activity('user-' . $user->getId()); ?>
+            </div>
+            <div class="tab-pane fade" id="shelves"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        swarm.changes.init(
+            null,
+            '#shelves',
+            {
+                user:           <?php echo json_encode($user->getId()); ?>,
+                status:         'shelved',
+                includeReviews: true
+            }
+        );
+    });
+</script>

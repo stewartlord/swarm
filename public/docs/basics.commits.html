@@ -1,0 +1,213 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Commits // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.basics.html" title="Basics" />
+      <link rel="prev" href="basics.files.html" title="Files" />
+      <link rel="next" href="basics.jobs.html" title="Jobs" />
+      <meta name="Section-title" content="Commits" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="basics.commits">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Commits</h2>
+                     </div>
+                  </div>
+               </div>
+               <p id="basics.history">
+                  Whenever a new version of a file is checked into the Helix Versioning
+                      Engine, a commit record is created. Begin browsing the history of commits by
+                      clicking the <span class="guibutton">Commits</span> link in the main toolbar.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="frame"><img src="images/page-commits.png" alt="The Commits page" /></span></span>
+                    
+               </p>
+               <p>
+                      When you are viewing a particular file or directory, clicking the
+                      <span class="guibutton">Commits</span> tab displays the commits for that location in
+                      the depot.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="frame"><img src="images/page-commits-location.png" alt="The Commits page for a specific depot location" /></span></span>
+                    
+               </p>
+               <div class="section" id="basics.commits.range">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Range filter</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           <span class="inlinemediaobject"><span class="popup"><img src="images/dropdown-history_range.png" alt="The Range field's syntax summary dropdown." /></span></span>
+                     
+                           The <span class="guilabel">Range</span> field lets you filter the list of changes
+                           for the depot path being viewed. When you click the
+                           <span class="guilabel">Range</span> field, a dropdown syntax guide appears
+                           providing sample commit filtering expressions.
+                         
+                  </p>
+                  <p>
+                           The expressions that can be used within the <span class="guilabel">Range</span>
+                           field include:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">@0,@now</code> (the default): displays all commits
+                                        for the current depot path.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">@80,@90</code>: displays all changes between 80 and 90.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">@80</code>: displays all changes up to change 80.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">@=80</code>: displays only change 80. Change 80 might not
+                                        involve the current depot path, so there may be no commits to
+                                        display.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">@<em class="replaceable"><code>label-name</code></em></code>: any changes
+                                        represented by label <em class="replaceable"><code>label-name</code></em>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">@2014/11/30</code>: displays all changes up to November
+                                        30, 2014.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        <code class="literal">@2014/11/30,@now</code>: displays all changes from
+                                        November 30, 2014 to now.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="section" id="basics.commits.file">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">File Commits</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           A file's commit history presents each version of a file that the Helix
+                           Versioning Engine knows about, including the change number, userid, change
+                           description, time ago, along with <span class="guibutton">Open</span> and
+                           <span class="guibutton">Download</span> buttons.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/page-file-history.png" alt="The Commits page for a file" /></span></span>
+                         
+                  </p>
+                  <p>
+                           Swarm also displays <span class="emphasis"><em>contributing commits</em></span> when
+                           available, such as when a file has been renamed, or integrated from another
+                           location in the Helix Versioning Engine.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/icon-trashcan.png" alt="The trashcan icon represents a deleted version" /></span></span>
+                         
+                  </p>
+                  <p>
+                           If a commit represents a deleted revision, the <span class="guibutton">Open</span>
+                           and <span class="guibutton">Download</span> links are replaced with a trashcan
+                           icon to indicate that this version is no longer available.
+                         
+                  </p>
+               </div>
+               <div class="section" id="basics.commits.remote-depot-commits">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Remote depot commits</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           When your Helix Versioning Engine has a
+                           <a class="glossterm" href="glossary.html#Remote_Depot"><em class="glossterm">remote depot</em></a> configured, you
+                           can browse the contents of the remote depot, but remote depots do not
+                           share their commit history. If you attempt to view the commits of a file
+                           provided by a remote depot, Swarm displays:
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><img src="images/page-remote_depot.png" /></span>
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="basics.files.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Files</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="basics.jobs.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Jobs</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

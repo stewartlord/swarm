@@ -1,0 +1,188 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Review workflow // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.code_reviews.html" title="Code reviews" />
+      <link rel="prev" href="code_reviews.responsibility.html" title="Responsibility" />
+      <link rel="next" href="code_reviews.states.html" title="States" />
+      <meta name="Section-title" content="Review workflow" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="code_reviews.workflow">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Review workflow</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  There are many possible code review workflows. The section describes two
+                      typical scenarios for a code review that Swarm can handle.
+                    
+               </p>
+               <div class="section" id="code_reviews.workflow.other_reviewer">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Another developer reviews your code</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        You request a code review with a shelved change.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Another developer, Bill, sees the email notification from Swarm,
+                                        clicks the review link in the email, and begins looking at the diffs
+                                        in the files belonging to the review. Curious about an implementation
+                                        detail, Bill clicks the line he's curious about and adds his query in
+                                        a Swarm comment.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        You receive an email notification regarding Bill's query. His query
+                                        prompts you to clarify the code, say by renaming some variables and
+                                        adding some better descriptive text in the surrounding code comments.
+                                        You then update the review with your changes.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Bill sees the email notification that you have updated the review. He
+                                        checks out the change, likes what he sees, and marks the review
+                                        <span class="guilabel">Approved</span>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        You see the email notification that Bill has approved your review, so
+                                        you commit your code.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+               <div class="section" id="code_reviews.workflow.you_review">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">You review another developer's code</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Another developer, Charlie, requests a code review with a shelved
+                                        change.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        You receive an email notification from Swarm, click the review link in
+                                        the email, and begin looking at the diffs in the files belong to the
+                                        review. You don't like what you see, as Charlie has tried to fix a bug
+                                        using a technique you have already tried previously and know to be
+                                        incorrect. You add comments to the code that needs attention, flag
+                                        your comments as <a class="link" href="basics.comments.html#basics.comments.tasks" title="Tasks">tasks</a>,
+                                        and mark the review <span class="guilabel">Needs Revision</span>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Charlie receives an email notification regarding your review, but
+                                        disagrees with you, and adds his own comments justifying his
+                                        implementation.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        You receive an email notification regarding Charlie's comment. The
+                                        technique is somewhat complicated, so rather than attempt to describe
+                                        how it is incorrect, you unshelve the review's code to your own
+                                        workspace, change Charlie's code, and shelve your changes. Swarm
+                                        updates the review with your new code.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Charlie receives an email notification regarding your updates to the
+                                        review. He's still unconvinced, but he unshelves your changes to try
+                                        them in his local workspace. He finds that your implementation works
+                                        better, but sees a couple of areas where there could be improvements.
+                                        He reshelves his latest work to update the review.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        You receive an email notification regarding Charlie's updates, check
+                                        out his changes, and realize that Charlie's work is now moot because
+                                        the customer has revised his plans. You add a comment to the review
+                                        reporting that fact, and <span class="guilabel">Reject</span> the review.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="code_reviews.responsibility.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Responsibility</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="code_reviews.states.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">States</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

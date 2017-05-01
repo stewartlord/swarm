@@ -1,0 +1,116 @@
+<div class="toolbar">
+    <div class="btn-group group-radio" data-filter-key="project">
+        <button type="button" class="btn btn-project dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            title="<?php echo $this->te($project ? 'Branch' : 'Project') ?>">
+         <i class="<?php echo $project ? 'icon-branch' : 'icon-project'?> swarm-icon"></i>
+         <span class="text"><?php echo $this->te('All')?></span> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-label="<?php echo $this->te($project ? 'Branch' : 'Project') ?>">
+            <li><a href="#" class="btn-filter default" data-filter-value=""><?php echo $this->te('All') ?></a></li>
+            <?php
+                foreach ($projects as $value => $option) {
+                    echo '<li><a href="#" class="btn-filter" data-filter-value="'
+                         . $this->escapeHtmlAttr($value) . '">' . $this->escapeHtml($option) . '</a></li>';
+                }
+            ?>
+        </ul>
+    </div>
+    <div class="btn-group btn-my-reviews group-radio privileged">
+        <button type="button" title="<?php echo $this->te('My Reviews')?>" class="btn dropdown-toggle"
+                aria-label="<?php echo $this->te('My Reviews')?>"
+                data-filter-value="<?php echo $this->escapeHtmlAttr($this->user()->getId()); ?>" data-toggle="dropdown">
+            <i class="icon-user"></i>
+            <span class="text"><?php echo $this->te('All')?></span> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-label="<?php echo $this->te('My Reviews') ?>">
+            <li>
+                <a href="#" class="btn-filter default" data-short-label="All"><?php echo $this->te('All Reviews') ?></a>
+            </li>
+            <li>
+                <a  href="#" class="btn-filter" data-filter-key="author"
+                    data-filter-value="<?php echo $this->escapeHtmlAttr($this->user()->getId()); ?>"
+                    data-short-label="<?php echo $this->te("Author") ?>">
+                        <?php echo $this->te("Reviews I've Authored") ?>
+                </a>
+            </li>
+            <li>
+                <a  href="#" class="btn-filter" data-filter-key="participants"
+                    data-filter-value="<?php echo $this->escapeHtmlAttr($this->user()->getId()); ?>"
+                    data-short-label="<?php echo $this->te("Participant") ?>">
+                        <?php echo $this->te("Reviews I'm Participating In") ?>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <?php if ($this->type === 'opened'): ?>
+    <div class="btn-group group-radio" data-filter-key="hasReviewers">
+        <button type="button" title="<?php echo $this->te('Has Reviewers') ?>" aria-label="<?php echo $this->te('Has Reviewers') ?>" class="btn btn-filter" data-filter-value="1">
+            <i class="swarm-icon icon-reviewer"></i>
+        </button>
+        <button type="button" title="<?php echo $this->te('No Reviewers'); ?>" aria-label="<?php echo $this->te('No Reviewers') ?>" class="btn btn-filter" data-filter-value="0">
+            <i class="swarm-icon icon-no-reviewer"></i>
+        </button>
+    </div>
+    <div class="btn-group group-radio" data-filter-key="state">
+        <button type="button" title="<?php echo $this->te('Needs Review') ?>" aria-label="<?php echo $this->te('Needs Review') ?>" class="btn btn-filter" data-filter-value="needsReview">
+            <i class="swarm-icon icon-review-needsReview"></i>
+        </button>
+        <button type="button" title="<?php echo $this->te('Needs Revision') ?>" aria-label="<?php echo $this->te('Needs Revision') ?>" class="btn btn-filter" data-filter-value="needsRevision">
+            <i class="swarm-icon icon-review-needsRevision"></i>
+        </button>
+        <button type="button" title="<?php echo $this->te('Approved') ?>" aria-label="<?php echo $this->te('Approved') ?>" class="btn btn-filter" data-filter-value="approved:isPending">
+            <i class="swarm-icon icon-review-approved"></i>
+        </button>
+    </div>
+    <?php elseif ($this->type === 'closed'): ?>
+    <div class="btn-group group-radio" data-filter-key="state">
+        <button type="button" title="<?php echo $this->te('Approved') ?>" aria-label="<?php echo $this->te('Approved') ?>" class="btn btn-filter" data-filter-value="approved:notPending">
+            <i class="swarm-icon icon-review-approved"></i>
+        </button>
+        <button type="button" title="<?php echo $this->te('Rejected') ?>" aria-label="<?php echo $this->te('Rejected') ?>" class="btn btn-filter" data-filter-value="rejected">
+            <i class="swarm-icon icon-review-rejected"></i>
+        </button>
+        <button type="button" title="<?php echo $this->te('Archived') ?>" aria-label="<?php echo $this->te('Archived') ?>" class="btn btn-filter" data-filter-value="archived">
+            <i class="swarm-icon icon-review-archived"></i>
+        </button>
+    </div>
+    <?php endif; ?>
+    <div class="btn-group group-radio" data-filter-key="passesTests">
+        <button type="button" title="<?php echo $this->te('Tests Pass') ?>" aria-label="<?php echo $this->te('Tests Pass') ?>" class="btn btn-filter" data-filter-value="true">
+            <i class="icon-check"></i>
+        </button>
+        <button type="button" title="<?php echo $this->te('Tests Fail') ?>" aria-label="<?php echo $this->te('Tests Fail') ?>" class="btn btn-filter" data-filter-value="false">
+            <i class="icon-warning-sign"></i>
+        </button>
+    </div>
+    <div class="btn-group pull-right">
+        <div class="input-prepend search">
+            <span class="add-on"><i class="icon-search"></i></span>
+            <input class="span2" type="text" placeholder="<?php echo $this->te('Search') ?>">
+        </div>
+    </div>
+</div>
+
+<table class="table reviews-table">
+    <thead>
+        <tr>
+            <th class="id"><?php echo $this->te('ID') ?></th>
+            <th class="author center" title="<?php echo $this->te('Author') ?>" aria-label="<?php echo $this->te('Author') ?>"><i class="icon-user"></i></th>
+            <th class="description"><?php echo $this->te('Description') ?></th>
+            <th class="project-branch"><?php echo $this->te($project ? 'Branch' : 'Project'); ?></th>
+            <th class="created"><?php echo $this->te('Created') ?></th>
+            <th class="workflow center" title="<?php echo $this->te('State') ?>" aria-label="<?php echo $this->te('State') ?>"><i class="swarm-icon icon-review-approved"></i></th>
+            <th class="test-status center" title="<?php echo $this->te('Test Status') ?>" aria-label="<?php echo $this->te('Test Status') ?>"><i class="icon-check"></i></th>
+            <th class="comments center" title="<?php echo $this->te('Comments') ?>" aria-label="<?php echo $this->te('Comments') ?>"><i class="icon-comment"></i></th>
+            <th class="votes center" title="<?php echo $this->te('Votes') ?>" aria-label="<?php echo $this->te('Votes') ?>"><i class="icon-chevron-up"></i>/<i class="icon-chevron-down"></i></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+    // supply the current user id to the 'participants' and 'author' filter values after login
+    $(document).on('swarm-login', function(e) {
+        $('.reviews .toolbar .btn-my-reviews a:not(.default)').data('filter-value', e.user.id);
+    });
+</script>

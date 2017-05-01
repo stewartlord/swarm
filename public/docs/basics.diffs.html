@@ -1,0 +1,348 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Diffs // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.basics.html" title="Basics" />
+      <link rel="prev" href="basics.changelists.html" title="Changelists" />
+      <link rel="next" href="basics.comments.html" title="Comments" />
+      <meta name="Section-title" content="Diffs" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="basics.diffs">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Diffs</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      When you view a changelist or code review, the associated files are
+                      presented as <span class="emphasis"><em>diffs</em></span>, short for differences,
+                      showing you how they have changed.
+                    
+               </p>
+               <div class="mediaobject"><span class="frame"><img src="images/panel-diffs.png" alt="initial Diff display" /></span></div>
+               <p>
+                      <span class="inlinemediaobject"><span class="thumb"><img src="images/buttons-diff-global.png" alt="Diff buttons for all files" /></span></span>
+                  
+                      The first row of buttons above the files allow you to (left to right):
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   Toggle the display of comments
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Show all diffs as inline
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Show all diffs as side-by-side
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Collapse all files
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Expand all files
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                      Each file is presented with an icon indicating whether the file was:
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="inline"><img src="images/icon-add.png" alt="File Added icon" /></span></span>
+                                   
+                                   Added/branched/imported
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="inline"><img src="images/icon-edit.png" alt="File Edited/Integrated icon" /></span></span>
+                                   
+                                   Edited/integrated
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="inline"><img src="images/icon-delete.png" alt="File Deleted icon" /></span></span>
+                                   
+                                   Deleted
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                      <span class="inlinemediaobject"><span class="thumb"><img src="images/buttons-diff-local.png" alt="Diff buttons for a single file" /></span></span>
+                    
+               </p>
+               <p>
+                      The file's presentation can be controlled with (left to right):
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   <span class="guibutton">Show In-line</span> button, which highlights line
+                                   additions, modifications, and removals in a single pane.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="guibutton">Show Side-by-Side</span> button, which highlights
+                                   additions, modifications, and removals in two panes, with the older
+                                   version of the file on the left, and the newer version on the right.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="popup"><img src="images/panel-diff-2up-whitespace.png" alt="Show Whitespace enabled" /></span></span><span class="guibutton">Show Whitespace</span> button, which
+                                   makes whitespace characters more visible; spaces show up as dots, and
+                                   tabs show up as arrows that point to a bar.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="guibutton">Ignore Whitespace</span> button, which toggles the
+                                   highlighting of whitespace changes in a file, making it easier to
+                                   identify non-formatting changes.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="guibutton">Show Full Context</span> button toggles between
+                                   displaying only the portions of the file that have changed and the full
+                                   file (edited and integrated files only).
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="guibutton">Show File</span> button, displayed only for edited or
+                                   integrated files, opens a new browser tab/window display the full file
+                                   (where possible), provide access to its history, and a button to
+                                   download the file.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="guibutton">Mark as Read</span> button, displayed only for code
+                                   reviews, helps you (and others) keep track of which files have been
+                                   reviewed. This is particularly useful when a code review consists of
+                                   many files.
+                                 
+                        </p>
+                        <p>
+                                   When clicked, the button's colors invert and the associated file is
+                                   visually muted, to make it easy to distinguish read files from unread
+                                   files:
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/panel-diffs-marked_read.png" alt="A file marked as read." /></span>
+                                 
+                        </p>
+                        <p>
+                                   If a file has been marked as read, click the button a second time to
+                                   reset the status to unread.
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                      <span class="inlinemediaobject"><span class="thumb"><img src="images/icon-comments_exist.png" alt="The Comments Exist icon" /></span></span>
+                    
+               </p>
+               <p>
+                      If the file has comments associated, its entry shows a <span class="emphasis"><em>comments
+                            exist</em></span> icon.
+                    
+               </p>
+               <div class="section" id="basics.diffs.view">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Viewing a diff</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           When you view a diff, the changes are highlighted:
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/panel-diff-2up.png" alt="Side-by-Side Diff with an add, edit, and delete" /></span></span>
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        Red indicates lines that have been removed
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Blue indicates lines that have been modified
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Green indicates lines that have been added
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           The diff presentation displays a concise view of where changes are made
+                           within a file, showing the changed lines and only a few lines before and
+                           after each revision. Sometimes, this concise view is insufficient to
+                           understand the context of the change. The <span class="guibutton">Show Full
+                              Context</span> displays the entire file, but this can be too much
+                           detail.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="thumb"><img src="images/panel-diff-more_context.png" alt="The &#34;Show More Context&#34; row." /></span></span>
+                     
+                           When there are more lines in a file, either above or below the currently
+                           displayed diff, a <span class="guibutton">Show More Context</span> row appears.
+                         
+                  </p>
+                  <p>
+                           Clicking this row attempts to display 10 additional lines adjacent to the
+                           row (which may appear between two modifications), allowing up to 20 lines
+                           of additional context to be displayed. The row disappears when no
+                           additional content is available.
+                         
+                  </p>
+                  <p>
+                           Comments may be presented within the body of a file and appear immediately
+                           below the line the commenter targeted for comment. See <a class="xref" href="basics.comments.html" title="Comments">Comments</a> for more details.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/panel-diff-2up-comment.png" alt="Side-by-Side Diff with a comment displayed" /></span></span>
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                <span class="inlinemediaobject"><span class="thumb"><img src="images/icon-comments_exist-here.png" alt="The Comment Exists Here icon" /></span></span>
+                        
+                                The <span class="emphasis"><em>comment(s) exist here</em></span> icon appears in the line
+                                number column whenever comments exist. This is useful when the comment
+                                display is toggled off.
+                              
+                     </p>
+                  </div>
+                  <p>
+                           When viewing a diff in-line, the line numbers for the old version are
+                           first, and the line numbers for the new version are second, followed by
+                           the file content. Some users find this view easier to use when locating an
+                           area that has changed, but then switch to side-by-side view to help them
+                           understand the change better. Swarm maintains the scroll position; you do
+                           not lose your place in the file after toggling the diff view.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/panel-diff-1up.png" alt="Inline Diff" /></span></span>
+                         
+                  </p>
+                  <div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                Press <span class="keycap"><strong>n</strong></span> on your keyboard to scroll to the next changed
+                                area within a file. Press <span class="keycap"><strong>p</strong></span> to scroll to the previous
+                                change.
+                              
+                     </p>
+                  </div>
+                  <p>
+                           When a diff contains multiple files, the changes may be taller than your
+                           browser window. Swarm keeps the per-file toolbar in view for each file as
+                           you scroll, so that you can continue to identify the file at the top of
+                           the screen and control its presentation.
+                         
+                  </p>
+                  <p>
+                           <span class="inlinemediaobject"><img src="images/page-diff_with_affix.png" alt="The per-file toolbars stay in view as you scroll" /></span>
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="basics.changelists.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Changelists</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="basics.comments.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Comments</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

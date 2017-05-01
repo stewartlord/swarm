@@ -1,0 +1,215 @@
+<div class="comments-wrapper variable">
+    <?php
+    $userId = $this->user()->getId();
+    if (count($comments)):
+    ?>
+    <table class="table opened-comments comments-table">
+        <tbody>
+        <?php
+        foreach ($comments as $comment):
+            $user        = $comment->get('user');
+            $context     = $comment->getFileContext();
+            $jsonContext = json_encode($context);
+            $closedClass = in_array('closed', $comment->getFlags()) ? 'closed' : '';
+            $idClass     = $comment->getId() ? 'c' . $this->escapeHtmlAttr($comment->getId()) : 'readonly';
+        ?>
+            <tr class="<?php echo $idClass ?> row-main <?php echo $closedClass ?>"
+                data-body="<?php echo $this->escapeHtmlAttr($comment->get('body')) ?>"
+                data-context="<?php echo $this->escapeHtmlAttr($jsonContext) ?>"
+                data-task-transitions="<?php echo $this->escapeHtmlAttr(json_encode($comment->getTaskTransitions())) ?>"
+                data-task-state="<?php echo $this->escapeHtmlAttr($comment->getTaskState()) ?>">
+                <td rowspan="2" class="avatar">
+                    <?php echo $this->avatar($user, 64, $comment->isValidUser()) ?>
+                </td>
+                <td>
+                    <div class="comment-controls pull-right">
+                        <button type="button" class="privileged bare btn-close" aria-label="<?php echo $this->te('Archive')?>" title data-original-title="<?php echo $this->te('Archive')?>"><i
+                            class="closed icon-share-alt"></i><i
+                            class="opened swarm-icon icon-archive"></i>
+                        </button><div class="task-state btn-group"></div>
+                    </div>
+                    <?php if ($context['content']): ?>
+                    <div class="monospace content-context border-box">
+                        <?php
+                        foreach ($context['content'] as $line) {
+                            $class = 'content-line-value'
+                                   . ($line[0] === '+' ? ' content-line-add'    : '')
+                                   . ($line[0] === '-' ? ' content-line-delete' : '');
+                            echo '<div class="' . $class . '">' . $this->escapeHtml($line) . '</div>';
+                        }
+                        ?>
+                    </div>
+                    <?php endif; ?>
+                    <div class="comment-text-wrapper">
+                        <?php
+                        echo $this->userLink($user, true);
+
+                        if ($context['file']) {
+                            echo '<span class="context"> (' . $this->te('on') . ' <a href="#'
+                               . $this->escapeUrl($context['md5']) . ',c' . $this->escapeUrl($comment->getId()) . '">'
+                               . $this->decodeFilespec($context['name'])
+                               . ($context['line'] ? ', ' . $this->te('line') . ' ' . $this->escapeUrl($context['line']) : '' )
+                               . '</a>)</span>';
+                        }
+                        ?>
+                        <span class="comment-body"><?php echo $this->preformat($comment->get('body')) ?></span>
+                    </div>
+                    <div class="comment-attachments">
+                        <?php
+                        foreach ($comment->getAttachments() as $attachmentId):
+                            if (!isset($attachments[$attachmentId])) {
+                                continue;
+                            }
+
+                            $attachment = $attachments[$attachmentId];
+                        ?>
+                            <div class="attachment"
+                                 data-attachment="<?php echo $this->escapeHtmlAttr(json_encode($attachment->get())) ?>">
+                            <?php if ($attachment->isWebSafeImage()): ?>
+                                    <img src="<?php
+                                    echo $this->url(
+                                        'attachments',
+                                        array(
+                                            'attachment' => $attachmentId,
+                                            'filename'   => $attachment->get('name')
+                                        )
+                                    ) ?>" class="embedded-attachment">
+                                <?php endif; ?>
+                                    <div><small>
+                                        <a href="<?php
+                                            echo $this->url(
+                                                'attachments',
+                                                array(
+                                                    'attachment' => $attachmentId,
+                                                    'filename'   => $attachment->get('name')
+                                                )
+                                            );
+                                        ?>">
+                                            <i class="icon-file"></i><?php
+                                                echo $this->escapeHtml($attachment->get('name'))
+                                            ?>
+                                        </a>
+                                        (<?php echo $this->fileSize($attachment->get('size')) ?>)
+                                    </small></div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </td>
+            </tr>
+            <tr class="<?php echo $idClass ?>-append row-append <?php echo $closedClass ?>">
+                <td class="comment-footer">
+                    <?php if ($comment->get('time')): ?>
+                        <span class="timeago" title="<?php
+                            echo $this->escapeHtmlAttr(date('c', $comment->get('time')))
+                        ?>"></span>
+                    <?php endif; ?>
+                    <?php if ($comment->get('edited')) {
+                        echo '(<span title="'
+                           . $this->escapeHtmlAttr(date('c', $comment->get('edited')))
+                           . '">' . $this->te('edited') . '</span>)';
+                    } ?>
+                    <?php if ($comment->get('user') === $this->user()->getId()): ?>
+                        <span class="divider padw1">&middot;</span>
+                        <a href="#" class="edit-comment"><?php echo $this->te('Edit') ?></a>
+                    <?php endif; ?>
+                    <?php
+                    $likes     = $comment->getLikes();
+                    $hasLikes  = count($likes);
+                    $userLikes = in_array($userId, $likes, true);
+                    $likeClass = 'likes' . ($hasLikes ? ' has-likes' : '') . ($userLikes ? ' user-likes' : '');
+                    $likeIcon  = $userLikes ? 'swarm-icon icon-heart-red' : 'icon-heart';
+                    echo '<span class="' . $likeClass . '">'
+                       .   '<span class="divider padw1">&middot;</span>'
+                       .   '<span class="likes-counter" title="' . $this->escapeHtmlAttr(implode(', ', $likes)) . '">' . count($likes) . '</span>'
+                       .   '<a href="#" title="' . $this->t($userLikes ? 'Unlike' : 'Like') . '"><i class="' . $likeIcon . '"></i></a>'
+                       . '</span>';
+                    ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php endif; ?>
+
+    <div class="comment-add">
+        <?php if ($userId): ?>
+        <table class="table clearfix">
+            <tbody>
+                <tr>
+                    <td class="avatar">
+                        <?php echo $this->avatar($userId, 64) ?>
+                    </td>
+                    <td class="comment-form">
+                        <form method="post" onsubmit="swarm.comments.add(this); return false;" data-max-size="<?php echo $maxSize ?>">
+                            <input type="hidden" name="topic"
+                                   value="<?php echo $this->escapeHtmlAttr($topic) ?>">
+                            <input type="hidden" name="user"
+                                   value="<?php echo $this->escapeHtmlAttr($userId) ?>">
+                            <input type="hidden" name="context">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <div class="textarea-wrapper <?php echo $canAttach ? 'can-attach' : '' ?>" data-upload-url="<?php echo $this->escapeHtmlAttr($this->url('add-attachment')) ?>">
+                                        <textarea class="border-box pad2"
+                                                  name="body" placeholder="<?php echo $this->te('Add a comment')?>" rows="5" required></textarea>
+                                        <div class="textarea-footer">
+                                            <div class="drop-controls"></div>
+                                            <div class="textarea-tips muted clearfix">
+                                                <?php if (!empty($canAttach)): ?>
+                                                    <span class="pull-left drop-note"><?php echo $this->te('Drop files here to attach them')?></span>
+                                                <?php endif; ?>
+                                                <span class="pull-right">
+                                                    <a href="http://www.emoji-cheat-sheet.com" tabindex="-1" target="_blank">
+                                                        <?php echo $this->te('Emoji codes are supported')?>
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group buttons form-inline">
+                                <div class="controls">
+                                    <button type="submit" class="btn btn-primary">
+                                        <?php echo $this->te('Post')?>
+                                    </button>
+                                    <?php if (strpos($topic, 'reviews/') === 0):
+                                        $delayedComments = $this->user()->getConfig()->getDelayedComments($topic);
+                                        $delayedCount    = count($delayedComments);
+                                    ?>
+                                    <label class="checkbox delay-notifications">
+                                        <input type="checkbox" name="delayNotification" value="true"
+                                            <?php echo $delayedCount ? ' checked' : '' ?>>
+                                            <?php echo $this->te('Delay Notification') ?>
+                                            <?php echo $delayedCount ? '<span class="badge delayed-comments-counter">' . $delayedCount . '</span>' : '' ?>
+                                    </label>
+                                    <?php endif; ?>
+                                    <label class="checkbox flag-task">
+                                        <input type="checkbox" name="taskState" value="open"> <?php echo $this->te('Flag as Task')?>
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <?php else: ?>
+        <div class="comment-form-link clearfix">
+            <div class="avatar pull-left">
+                <?php echo $this->avatar(null, 64, false, 'avatar-anonymous') ?>
+            </div>
+            <div>
+                <a href="<?php echo $this->url('login') ?>" class="login" onclick="swarm.user.login(); return false;">
+                    <?php echo $this->te('Log in to comment')?>
+                </a>
+            </div>
+        </div>
+        <?php endif; ?>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('.comments-wrapper .timeago').timeago();
+    });
+</script>
+

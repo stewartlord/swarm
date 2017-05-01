@@ -1,0 +1,19 @@
+<?php
+$this->headTitle()->set($group->getConfig()->getName())->setTranslatorEnabled(false);
+$this->bodyClass()->append('login-reload');
+echo $this->groupToolbar($group);
+?>
+
+<div class="row-fluid">
+    <?php echo $this->groupSidebar($group) ?>
+    <div class="span9 profile-body">
+        <?php echo $this->activity('group-' . $group->getId()) ?>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        // truncate the description
+        $('.group-sidebar .description').expander({slicePoint: 250});
+    });
+</script>

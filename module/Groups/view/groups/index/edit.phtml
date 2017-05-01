@@ -1,0 +1,114 @@
+<?php
+$isEdit = $mode === 'edit';
+$title  = $isEdit ? 'Group Settings' : 'Add Group';
+$this->headTitle()->set($title);
+
+$canDelete = $this->permissions()->isOne(array('super', 'owner' => $group));
+$baseUrl   = $this->escapeFullUrl($this->basePath());
+
+// scope name editing restrictions to edit mode only
+$canEditName = !$isEdit || $canEditName;
+
+// when editing, we like to show the toolbar and sidebar
+if ($isEdit) {
+     echo $this->groupToolbar($group);
+     echo '<div class="row-fluid">';
+     echo $this->groupSidebar($group);
+}
+?>
+<div class="group-edit <?php echo $isEdit ? 'span9' : '' ?>">
+    <h1><?php echo $this->te($title) ?></h1>
+    <form method="post" class="form-horizontal form">
+        <div class="control-group">
+            <label class="control-label" for="name"><?php echo $this->te('Name')?></label>
+            <div class="controls">
+                <input class="input-xlarge" type="text" name="name" id="name"
+                       value="<?php echo $this->escapeHtmlAttr($group->getConfig()->getName()) ?>"
+                       placeholder="<?php echo $this->te('Name')?>" required
+                       <?php echo $canEditName ? '' : 'disabled' ?>>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="description"><?php echo $this->te('Description')?></label>
+            <div class="controls">
+                <textarea class="input-xxlarge" rows="10" name="description" id="description"
+                    placeholder="<?php echo $this->te('Description')?>"><?php
+                    echo $this->escapeHtmlAttr($group->getConfig()->getDescription())
+                ?></textarea>
+            </div>
+        </div>
+        <div class="control-group control-group-owners">
+            <label class="control-label" for="owners"><?php echo $this->te('Owners')?></label>
+            <div class="controls">
+                <div class="input-prepend" clear="both">
+                    <span class="add-on"><i class="icon-user"></i></span>
+                    <input type="text" class="input-xlarge" id="owners" data-items="100"
+                        data-selected="<?php echo $this->escapeHtmlAttr(json_encode($group->getOwners())) ?>"
+                        placeholder="<?php echo $this->te('Add an Owner')?>">
+                </div>
+            </div>
+            <div class="controls owners-list"></div>
+        </div>
+        <div class="control-group control-group-members">
+            <label class="control-label" for="members"><?php echo $this->te('Members')?></label>
+            <div class="controls">
+                <div class="input-prepend" clear="both">
+                    <span class="add-on"><i class="icon-user"></i></span>
+                    <input type="text" class="input-xlarge" id="members" data-items="100"
+                        data-selected="<?php echo $this->escapeHtmlAttr(json_encode($group->getUsers())) ?>"
+                        data-selected-groups="<?php echo $this->escapeHtmlAttr(json_encode($group->getSubgroups())) ?>"
+                        placeholder="<?php echo $this->te('Add a User or Subgroup')?>">
+                </div>
+            </div>
+            <div class="controls members-list"></div>
+        </div>
+        <div class="control-group email-flags">
+            <label class="control-label" for="email-flag-controls"><?php echo $this->te('Email Notifications')?></label>
+            <div class="controls">
+                <label class="checkbox" for="emailReviews">
+                    <?php $emailReviews = $group->getConfig()->getEmailFlag('reviews') ?>
+                    <input type="hidden" name="emailFlags[reviews]" value="0" />
+                    <input type="checkbox" name="emailFlags[reviews]" id="emailReviews" value="1"
+                        <?php echo ($emailReviews || $mode === 'add') ? 'checked' : '' ?>>
+                    <?php echo $this->te('Email members when a new review is requested')?>
+                </label>
+                <label class="checkbox" for="emailCommits">
+                    <?php $emailCommits = $group->getConfig()->getEmailFlag('commits') ?>
+                    <input type="hidden" name="emailFlags[commits]" value="0" />
+                    <input type="checkbox" name="emailFlags[commits]" id="emailCommits" value="1"
+                        <?php echo ($emailCommits) ? 'checked' : '' ?>>
+                    <?php echo $this->te('Email members when a change is committed')?>
+                </label>
+                <div class="help-block"><?php echo $this->te('Users may still receive emails if: the change/review impacts projects,
+                    they authored the review, or a change review daemon is installed.')?>
+                    <a href="<?php echo $baseUrl ?>/docs/basics.notifications.html#basics.notifications.commit" target="_blank">
+                        <?php echo $this->te('See help for more details.')?>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="control-group group-buttons">
+            <div class="controls">
+                <button type="submit" class="btn btn-mlarge btn-primary"><?php echo $this->te('Save')?></button>
+                <button type="button" class="btn btn-mlarge" onclick="window.history.back(); return false;"><?php echo $this->te('Cancel')?></button>
+                <?php if ($isEdit && $canDelete): ?>
+                <button type="button" class="btn btn-mlarge btn-danger btn-delete"><?php echo $this->te('Delete')?></button>
+                <?php endif; ?>
+            </div>
+        </div>
+    </form>
+<?php
+$actionUrl = $isEdit
+    ? '/group/edit/' . $this->escapeUrl($group->getId())
+    : '/group/add';
+?>
+    <script type="text/javascript">
+        swarm.group.initEdit(
+            '.group-edit',
+            '<?php echo $this->escapeJs($actionUrl) ?>',
+            '<?php echo $group->getId() ?>'
+        );
+    </script>
+</div>
+
+<?php echo $isEdit ? '</div>' : '' ?>

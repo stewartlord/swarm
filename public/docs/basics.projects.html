@@ -1,0 +1,269 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Projects // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.basics.html" title="Basics" />
+      <link rel="prev" href="basics.groups.html" title="Groups" />
+      <link rel="next" href="basics.notifications.html" title="Notifications" />
+      <meta name="Section-title" content="Projects" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="basics.projects">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Projects</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      A Swarm project is a group of Perforce
+                      <a class="link" href="basics.users.html" title="Users">users</a> who are working together on a
+                      specific codebase. A project's definition includes one or more
+                      <a class="glossterm" href="glossary.html#branch"><em class="glossterm">branches</em></a> of code, and optionally a
+                      <a class="glossterm" href="glossary.html#job"><em class="glossterm">job</em></a> filter,
+                      <a class="link" href="quickstart.integrate_test_suite.html" title="How can I integrate my test suite to inform review acceptance or rejection?">automated test
+                         integration</a>, or
+                      <a class="link" href="quickstart.review_deployment.html" title="How can I automatically deploy code within a review?">automated deployment</a>.
+                      This section provides an introduction to the interactions users have with
+                      projects. See the <a class="xref" href="chapter.projects.html" title="Projects">“Projects”</a> chapter for details on
+                      managing projects.
+                    
+               </p>
+               <p>
+                      Projects are listed on the Swarm home page. Anonymous users see a list of
+                      all projects:
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><img src="images/panel-all_projects.png" alt="The All Projects panel" /></span>
+                    
+               </p>
+               <p>
+                      Logged-in users can choose to display all projects or just the
+                      projects in which they are a member:
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="clear block"><img src="images/dropdown-projects-my_projects.png" alt="Projects drop-down menu" /></span></span>
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="clear block"><img src="images/panel-my_projects.png" alt="The Projects panel" /></span></span>
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="thumb"><img src="images/thumb-project_count-tooltip.png" alt="The project count tooltip." /></span></span>
+                  
+                      The head icon with following number represents how many members and
+                      followers exist for each project. Hover your mouse over the project
+                      count to display a tooltip with the number of members and followers.
+                    
+               </p>
+               <div class="section" id="basics.projects.view">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Viewing a project</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           View a project by clicking on its project name or branch identifier in an
+                           <a class="link" href="basics.activity_streams.html" title="Activity streams">activity stream</a>, or by
+                           visiting the URL:
+                         
+                  </p><pre class="programlisting">
+https://<em class="replaceable"><code>myswarm.url</code></em>/<b><em class="replaceable"><code>projects</code></em></b>/<em class="replaceable"><code>project-name</code></em>
+</pre><p>
+                           <span class="inlinemediaobject"><span class="frame"><img src="images/page-project.png" alt="The Project page" /></span></span>
+                         
+                  </p>
+                  <p>
+                           A project's <span class="guibutton">Overview</span> page provides the following
+                           information:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        A description of the project
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        A list of members
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        A list of the project's followers
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        A list of the branches defined for the project
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        The project's activity stream
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="section" id="basics.projects.reviews">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Reviews</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                The project's <span class="guibutton">Reviews</span> tab shows a list of code
+                                reviews specific to the project.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="frame"><img src="images/page-project_reviews.png" alt="The project's review queue." /></span></span>
+                              
+                     </p>
+                     <p>
+                                For more details on browsing, filtering, and searching reviews,
+                                see <a class="xref" href="code_reviews.queues.html" title="Review queues">Review queues</a>.
+                              
+                     </p>
+                  </div>
+                  <div class="section" id="basics.projects.files">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Files</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                <span class="inlinemediaobject"><span class="thumb"><img src="images/icon-branch.png" alt="The branch icon" /></span></span>
+                        
+                                The project's <span class="guibutton">Files</span> tab shows a list of the
+                                project's files, starting with a folder view representing each branch.
+                                Branches are designated with the <span class="emphasis"><em>branch</em></span> icon.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="frame"><img src="images/page-project_files.png" alt="The initial files listing for a project." /></span></span>
+                              
+                     </p>
+                     <p>
+                                The project's <span class="emphasis"><em>main</em></span> branch, identified by using a
+                                name such as <span class="emphasis"><em>main</em></span>, <span class="emphasis"><em>mainline</em></span>,
+                                <span class="emphasis"><em>master</em></span>, <span class="emphasis"><em>trunk</em></span>, is sorted to
+                                the top of the list of branches and appears in bold. The list of names
+                                can be configured; see <a class="xref" href="admin.mainline.html" title="Mainline branch identification">Mainline branch identification</a> for details.
+                              
+                     </p>
+                     <p>
+                                For more information on browsing files, see
+                                <a class="xref" href="basics.files.html" title="Files">Files</a>.
+                              
+                     </p>
+                  </div>
+                  <div class="section" id="basics.projects.commits">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Commits</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                The project's <span class="guibutton">Commits</span> tab shows a list of changes
+                                made to the project.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="frame"><img src="images/page-project_commits.png" alt="The project's commits." /></span></span>
+                              
+                     </p>
+                     <p>
+                                For more details on history browsing, see
+                                <a class="xref" href="basics.commits.html#basics.history">Commits</a>.
+                              
+                     </p>
+                  </div>
+                  <div class="section" id="basics.projects.jobs">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Jobs</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                The project's <span class="guibutton">Jobs</span> tab shows a list of jobs
+                                associated with the project. This only works properly when the project
+                                configuration includes a <span class="emphasis"><em>job filter</em></span>. See
+                                <a class="xref" href="projects.add.html" title="Add a project">Add a project</a> for details.
+                              
+                     </p>
+                     <p>
+                                <span class="inlinemediaobject"><span class="frame"><img src="images/page-project_jobs.png" alt="The project's jobs." /></span></span>
+                              
+                     </p>
+                     <p>
+                                For more details on browsing and searching jobs, see
+                                <a class="xref" href="basics.jobs.html" title="Jobs">Jobs</a>.
+                              
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="basics.groups.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Groups</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="basics.notifications.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Notifications</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

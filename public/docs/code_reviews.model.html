@@ -1,0 +1,287 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Models // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.code_reviews.html" title="Code reviews" />
+      <link rel="prev" href="chapter.code_reviews.html" title="Code reviews" />
+      <link rel="next" href="code_reviews.queues.html" title="Review queues" />
+      <meta name="Section-title" content="Models" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="code_reviews.model">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Models</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  There are three code review models: pre-commit, post-commit, and the Git
+                      Fusion model. Which model you use for code reviews with Swarm is up to you.
+                    
+               </p>
+               <div class="section" id="code_reviews.model.precommit">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Pre-commit model</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           The pre-commit model is possible due to the Helix Versioning Engine's
+                           <span class="emphasis"><em>shelving</em></span> feature. Shelving enables you to temporarily
+                           make copies of your files available to other users without committing the
+                           changes into the depot. Shelving can be a very handy way for developers to
+                           create a backup, or to handle local workspace changes that might otherwise
+                           lose work in progress, without having to commit code that might
+                           destabilize a codebase.
+                         
+                  </p>
+                  <p>
+                           Swarm uses the shelving feature in the Helix Versioning Engine to manage
+                           code reviews. Shelving allows reviewers to easily acquire a copy of the
+                           code to be reviewed, and allows updates to the reviewed code prior to
+                           submission.
+                         
+                  </p>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information on shelving, see:
+                                <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/p4guide/04_files.html#1072439" target="_top">P4
+                                   User's Guide: Shelving work in progress</a>.
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="code_reviews.model.postcommit">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Post-commit model</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           The post-commit model can be used if your team's development processes
+                           preclude the use of shelving. Code must be committed to the Helix
+                           Versioning Engine before code review can begin, which reduces the
+                           opportunity to fix problems before, for example, a continuous integration
+                           system notices problems. However, code reviews can be started for any
+                           existing code regardless of how long it has been committed.
+                         
+                  </p>
+               </div>
+               <div class="section" id="code_reviews.model.git_fusion">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Git Fusion model</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           Perforce Git Fusion provides repo management for Git repositories, and
+                           provides workflows that enable Git and Perforce users to collaborate on
+                           the same projects using their preferred tools.
+                         
+                  </p>
+                  <p>
+                           The Git Fusion model is similar to the pre-commit model; changes in your
+                           local repo can be pushed for review to a named Perforce branch in the
+                           Git fusion repo configuration, making your proposed changes available so
+                           that others can review and comment on them prior to committing them to
+                           the target branch. Git Fusion and Swarm work together to create a review
+                           branch and container for the pre-commit collaboration. 
+                         
+                  </p>
+                  <p>
+                           The Git Fusion model has several limitations that you should be aware of:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        The target branch for Git Fusion-created reviews must be a fully
+                                        populated branch, and must be listed in the repo-specific Git Fusion
+                                        configuration.
+                                      
+                           </p>
+                           <p>
+                                        See
+                                        <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/git-fusion/chapter_dyn_ngj_3l.html" target="_top">"Setting
+                                           up Repos"</a> in the
+                                        <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/git-fusion/" target="_top">Git
+                                           Fusion Guide</a> for details on
+                                        <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/git-fusion/chapter_dyn_ngj_3l.html#section_kkz_gqv_rl" target="_top">converting
+                                           a lightweight branch into a fully populated Perforce branch</a>.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Reviews created with Git Fusion can only be updated from Git Fusion.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        You cannot clean up history and then push your changes to the same
+                                        review. If you perform a Git rebase, you should push your changes as a
+                                        new review.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        A Git Fusion review does not currently display the individual task
+                                        branch commits that make up the review. Only the merged commit diffs
+                                        are shown.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information on Git Fusion, see the
+                                <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/git-fusion/" target="_top">Git Fusion Guide</a>
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="code_reviews.internal_representation">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Internal representation</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           A code review consists of one or more shelved changelists that
+                           Swarm manages. A shelved changelist is a pending changelist that has a
+                           snapshot of its files on a <span class="emphasis"><em>shelf</em></span> associated with the
+                           changelist.
+                         
+                  </p>
+                  <p>
+                           When a review is started, Swarm creates a new changelist that becomes the
+                           review changelist. What happens afterwards varies:
+                         
+                  </p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: disc; ">
+                        <li class="listitem">
+                           <p>
+                                        If the review contains uncommitted work (the pre-commit model), Swarm
+                                        copies the shelved files from the user's changelist that initiated the
+                                        review into the review's changelist.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Any time that a user's changelist associated with the review has its
+                                        shelved files updated, Swarm copies the shelved files into its review
+                                        changelist and creates an <span class="emphasis"><em>archive</em></span> changelist. An
+                                        archive changelist is no different from any other pending changelist
+                                        with shelved files, but it allows Swarm to provide versioning and
+                                        diffs within a review.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        If the head version of a review is committed (the post-commit model),
+                                        the review's changelist is emptied of files.
+                                      
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>
+                           The review's changelist is never actually committed; this allows the
+                           review to be opened later with additional shelved changes.
+                         
+                  </p>
+                  <div class="important admonition">
+                     <h3 class="title">Important</h3>
+                     <p>
+                                <span class="bold"><strong>Swarm's managed review changelists should only be
+                                      deleted if you are uninstalling Swarm.</strong></span>
+                              
+                     </p>
+                     <p>
+                                Swarm's review changelists maintain the history of a review and all of
+                                its feedback. The deletion of a Swarm shelved changelist causes
+                                instability and potentially data loss, and represents a scenario that
+                                can be very challenging to recover from, even with the engagement of
+                                Perforce consultants.
+                              
+                     </p>
+                     <p>
+                                You can display a list of all of the Swarm-managed changelists using the
+                                <span class="command"><strong>p4 changelists</strong></span> command:
+                              
+                     </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>p4 changelists -u <em class="replaceable"><code>swarm</code></em></strong></span>
+Change 1212285 on 2015/07/31 by swarm@swarm-96017af4-5615-9819-7af1-6fc1fa537214 *pending* 'Add requirements and instructio'
+Change 1212284 on 2015/07/31 by swarm@swarm-96017af4-5615-9819-7af1-6fc1fa537214 *pending* 'Add requirements and instructio'
+...
+</pre><p>
+                                Note: <em class="replaceable"><code>swarm</code></em> is the userid with
+                                <span class="emphasis"><em>admin</em></span>-level privileges within the Helix Versioning
+                                Engine that Swarm is <a class="link" href="setup.swarm.html" title="Swarm configuration">configured to
+                                   use</a>.
+                              
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="chapter.code_reviews.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Code reviews</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="code_reviews.queues.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Review queues</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

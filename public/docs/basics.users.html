@@ -1,0 +1,154 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Users // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.basics.html" title="Basics" />
+      <link rel="prev" href="basics.comments.html" title="Comments" />
+      <link rel="next" href="basics.groups.html" title="Groups" />
+      <meta name="Section-title" content="Users" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="basics.users">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Users</h2>
+                     </div>
+                  </div>
+               </div>
+               <p class="popup">
+                      <span class="inlinemediaobject"><span class="popup"><img src="images/dropdown-userid-open-profile.png" alt="Selecting Profile on userid drop-down menu" /></span></span>
+                  
+                  Swarm's users are based on the users configured in the Helix Versioning
+                  Engine. Display your own user profile when you are logged in by clicking on
+                      your userid at the top-right of the main toolbar and selecting
+                      <span class="guimenuitem">Profile</span>.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="frame"><img src="images/page-user.png" alt="The User page" /></span></span>
+                    
+               </p>
+               <p>
+                      The user profile page displays your
+                      <a class="link" href="basics.notable.html#basics.notable.avatars" title="Avatars">avatar</a>, the list of users
+                      following your activity, the users or
+                      <a class="link" href="basics.projects.html" title="Projects">projects</a> that you are following, and
+                      the list of projects of which you are a member. An
+                      <a class="link" href="basics.activity_streams.html" title="Activity streams">activity stream</a> for events
+                      you have created is also presented.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="thumb"><img src="images/button-shelves.png" alt="The Shelves tab" /></span></span>
+                  
+                      Click the <span class="guilabel">Shelves</span> tab to display a list of the user's
+                      shelved changelists:
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="frame"><img src="images/page-user-shelves.png" alt="The User page" /></span></span>
+                    
+               </p>
+               <p>
+                      A <span class="emphasis"><em>shelved</em></span> changelist is a pending changelist that has a
+                      copy of one or more files from within the changelist stored on the server.
+                      Shelved files are not versioned: if you update the shelved files, the update
+                      replaces any existing files on the changelist's shelf.
+                    
+               </p>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           Swarm can use multiple shelved changes to record the history of reviews.
+                           See <a class="xref" href="code_reviews.model.html#code_reviews.internal_representation" title="Internal representation">Internal representation</a> for details.
+                         
+                  </p>
+               </div>
+               <p>
+                      Swarm uses shelved changelists as the basis of its code review feature.
+                      However, not all shelved changelists are reviews. Users may shelve files for
+                      other reasons, including ensuring that the Helix Versioning Engine has a
+                      copy of work in progress, or as a way to move temporary work from one
+                      workspace to another.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="thumb"><img src="images/button-request_review-shelf.png" alt="The Request Review button for a shelved changelist" /></span></span>
+                  
+                      Click the <span class="guibutton">Request Review</span> to start a Swarm review for
+                      any shelved changelist that is not already involved in a review.
+                    
+               </p>
+               <p>
+                      <span class="inlinemediaobject"><span class="thumb"><img src="images/button-view_review.png" alt="The Request Review button for a shelved changelist" /></span></span>
+                  
+                      Click the <span class="guibutton">View Review</span> to view the Swarm review
+                      associated with shelved changelists when a review has already started.
+                    
+               </p>
+               <div class="section" id="basics.users.view">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Viewing users</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           View the profile pages of other users displayed anywhere by Swarm by
+                           clicking on their avatar or userid, or by visiting the URL:
+                         
+                  </p><pre class="programlisting">
+https://<em class="replaceable"><code>myswarm.url</code></em>/<b><em class="replaceable"><code>users</code></em></b>/<em class="replaceable"><code>userid</code></em>
+</pre><div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                Currently, Swarm does not provide an overall list of users.
+                              
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="basics.comments.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Comments</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="basics.groups.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Groups</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

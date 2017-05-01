@@ -1,0 +1,974 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Upgrading Swarm // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.setup.html" title="Setting up" />
+      <link rel="prev" href="setup.worker.html" title="Set up a recurring task to spawn workers" />
+      <link rel="next" href="chapter.basics.html" title="Basics" />
+      <meta name="Section-title" content="Upgrading Swarm" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="setup.upgrade">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Upgrading Swarm</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The section covers upgrading specific Swarm releases to a newer release. If
+                      you are not already running Swarm, none of these instructions apply to you.
+                      Instead, see the <a class="link" href="chapter.setup.html" title="Setting up">Swarm installation
+                         instructions</a>.
+                    
+               </p>
+               <p>
+                      As there may be version specific upgrade requirements, each of the upgrades
+                      available are from one point release to the next.
+                    
+               </p>
+               <p>
+                      If you have installed Swarm via packages, see the
+                      <a class="link" href="setup.packages.html#setup.packages.updating" title="Updating">package update instructions</a>.
+                    
+               </p>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           The instructions below can be applied to an OVA. The OVA's
+                           <code class="literal">SWARM_ROOT</code>, the folder where Swarm is installed, is
+                           <code class="filename">/opt/perforce/swarm</code>.
+                         
+                  </p>
+                  <p>
+                           However, we recommend downloading the new OVA and then following the
+                           <a class="link" href="setup.ova.html" title="OVA configuration">OVA setup steps</a>. This provides you with
+                           an upgraded Swarm plus an updated web hosting environment within the OVA,
+                           which can include distribution, web server, PHP, and security updates.
+                         
+                  </p>
+                  <p>
+                           If you have customized the original OVA's Swarm configuration, copy
+                           <code class="filename">/opt/perforce/swarm/data/config.php</code> to the same path
+                           in the new OVA.
+                         
+                  </p>
+                  <p>
+                           Copy all token files in
+                           <code class="filename">/opt/perforce/swarm/data/queue/tokens/</code> to the same
+                           path in the new OVA.
+                         
+                  </p>
+                  <p>
+                           If you are running the Swarm 2014.2 OVA, or newer, Swarm was installed
+                           using system packages and can be upgraded by following the
+                           <a class="link" href="setup.packages.html#setup.packages.updating" title="Updating">package update instructions</a>.
+                         
+                  </p>
+               </div>
+               <p>
+                      The following process attempts to minimize downtime, but a short period of
+                      downtime for Swarm users is unavoidable. There should be no downtime for
+                      your Helix Versioning Engine. After a successful upgrade, all Swarm users
+                      are logged out.
+                    
+               </p>
+               <p>
+                      If you are using Swarm in a production environment, we encourage you to test
+                      this upgrade process in a non-production environment first.
+                    
+               </p>
+               <div class="warning admonition">
+                  <h3 class="title">Warning</h3>
+                  <p>
+                           <a class="glossterm" href="glossary.html#P4PHP"><em class="glossterm">P4PHP</em></a> should be upgraded to the
+                           version included in the new Swarm release.  If you have already configured
+                           PHP to use the Swarm-provided P4PHP (<a class="link" href="setup.php.html" title="PHP configuration">as
+                              recommended</a>), this happens automatically. If you have manually
+                           installed P4PHP in some other fashion, upgrade P4PHP before you perform
+                           any of the upgrade steps below. See <a class="xref" href="setup.php.html" title="PHP configuration">PHP configuration</a> for
+                           details.
+                         
+                  </p>
+               </div>
+               <p>
+                      If you have not already done so, download the Swarm TAR option: <a href="http://www.perforce.com/downloads/swarm" class="btn btn-primary"><i class="glyphicon glyphicon-download glyphicon-white"></i> Download Swarm</a>
+                    
+               </p>
+               <p>
+                      The steps in the following sub-sections describe how to upgrade Swarm using
+                      the provided archive file. <code class="literal">SWARM_ROOT</code> refers to the
+                      current Swarm installation.
+                    
+               </p>
+               <p>
+                      The following version-specific upgrades are described:
+                    
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">
+                        <p>
+                                   <a class="link" href="setup.upgrade.html#setup.upgrade.2015.4" title="Upgrade Swarm 2015.4 to 2016.1">2015.4 to 2016.1</a>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <a class="link" href="setup.upgrade.html#setup.upgrade.2015.3" title="Upgrade Swarm 2015.3 to 2015.4">2015.3 to 2015.4</a>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <a class="link" href="setup.upgrade.html#setup.upgrade.2015.2" title="Upgrade Swarm 2015.2 to 2015.3">2015.2 to 2015.3</a>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <a class="link" href="setup.upgrade.html#setup.upgrade.2015.1" title="Upgrade Swarm 2015.1 to 2015.2">2015.1 to 2015.2</a>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <a class="link" href="setup.upgrade.html#setup.upgrade.2014.4" title="Upgrade Swarm 2014.4 to 2015.1">2014.4 to 2015.1</a>
+                                 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <div class="section" id="setup.upgrade.2015.4">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Upgrade Swarm 2015.4 to 2016.1</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                         This section covers the steps to upgrade from Swarm's 2015.4 release to the
+                         2016.1 release.
+                       
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                      Expand the new <code class="filename">swarm.tgz</code>:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>tar -zxf swarm.tgz</strong></span>
+</pre><p>
+                                      The contents of <code class="filename">swarm.tgz</code> are expanded into a
+                                      top-level folder named
+                                      <code class="filename">swarm-<em class="replaceable"><code>version</code></em></code>, where
+                                      <em class="replaceable"><code>version</code></em> corresponds to the version
+                                      downloaded. This directory is identified as <code class="literal">SWARM_NEW</code>
+                                      below.
+                                    
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Move <code class="literal">SWARM_NEW</code> to be a peer of
+                                      <code class="literal">SWARM_ROOT</code>:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>mv SWARM_NEW SWARM_ROOT/../</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the <code class="filename">data/config.php</code> file from the old Swarm to
+                                      the new Swarm:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>cp -p SWARM_ROOT/data/config.php SWARM_NEW/data/</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Create the queue token directory:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>mkdir SWARM_NEW/data/queue</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the existing trigger token(s):
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo cp -pR SWARM_ROOT/data/queue/tokens SWARM_NEW/data/queue/</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Assign correct ownership to the new Swarm's data directory:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo chown -R <em class="replaceable"><code>www-data</code></em> SWARM_NEW/data</strong></span>
+</pre><div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                           The <em class="replaceable"><code>www-data</code></em> user above is an example of
+                                           what the web server user name might be, and can vary based on
+                                           distribution or customization. For example, the user is typically
+                                           <code class="literal">apache</code> for Red Hat/Fedora/CentOS,
+                                           <code class="literal">www-data</code> for Debian/Ubuntu,
+                                           <code class="literal">wwwrun</code> for SuSE, <code class="literal">_www</code> for Mac
+                                           OSX.
+                                         
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the new Swarm trigger script to your Perforce server machine. The
+                                      trigger script is
+                                      <code class="filename">SWARM_NEW/p4-bin/scripts/swarm-trigger.pl</code>, and
+                                      requires installation of Perl 5.08+ (use the latest available) on the
+                                      Perforce server machine.
+                                    
+                           </p>
+                           <div class="warning admonition">
+                              <h3 class="title">Warning</h3>
+                              <p>
+                                           Do not overwrite any existing trigger script at this time. Give the
+                                           script a new name, for example:
+                                           <code class="filename">swarm-trigger-new.pl</code>.
+                                         
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Configure the Swarm trigger script by creating, in the same directory on
+                                      the Perforce server machine, <code class="filename">swarm-trigger.conf</code>. It
+                                      should contain:
+                                    
+                           </p><pre lang="ini" class="programlisting">
+# SWARM_HOST (required)
+# Hostname of your Swarm instance, with leading "http://" or "https://".
+SWARM_HOST="<em class="replaceable"><code>http://my-swarm-host</code></em>"
+
+# SWARM_TOKEN (required)
+# The token used when talking to Swarm to offer some security. To obtain the
+# value, log in to Swarm as a super user and select 'About Swarm' to see the
+# token value.
+SWARM_TOKEN="<em class="replaceable"><code>MY-UUID-STYLE-TOKEN</code></em>"
+
+# ADMIN_USER (optional)
+# For enforcing reviewed changes, optionally specify the normal Perforce user
+# with admin privileges (to read keys); if not set, will use whatever Perforce
+# user is set in environment.
+ADMIN_USER=
+
+# ADMIN_TICKET_FILE (optional)
+# For enforcing reviewed changes, optionally specify the location of the
+# p4tickets file if different from the default ($HOME/.p4tickets).
+# Ensure this user is a member of a group with an 'unlimited' or very long
+# timeout; then, manually login as this user from the Perforce server machine to
+# set the ticket.
+ADMIN_TICKET_FILE=
+</pre><p>
+                                      Fill in the required <code class="literal">SWARM_HOST</code> and
+                                      <code class="literal">SWARM_TOKEN</code> variables with the configuration from any
+                                      previous Swarm trigger script, typically
+                                      <code class="filename">swarm-trigger.sh</code>.
+                                    
+                           </p>
+                           <div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                           If you already have a <code class="filename">swarm-trigger.conf</code> file,
+                                           no additional configuration is required.
+                                         
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      For Linux systems, ensure that the script is executable:
+                                    
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>sudo chmod +x swarm-trigger-new.pl</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Rename the new trigger script:
+                                    
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>mv swarm-trigger-new.pl swarm-trigger.pl</strong></span>
+</pre><p>
+                                      On Windows:
+                                    
+                           </p><pre class="programlisting">
+C:\&gt; <span class="command"><strong>ren swarm-trigger-new.pl swarm-trigger.pl</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      As a Perforce user with <span class="emphasis"><em>super</em></span> privileges, update
+                                      the Perforce trigger table by running <span class="command"><strong>p4 triggers</strong></span>
+                                      command and replacing any <code class="literal">swarm.*</code> lines with the
+                                      output from running:
+                                    
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>./swarm-trigger.pl -o</strong></span>
+</pre><p>
+                                      On Windows:
+                                    
+                           </p><pre class="programlisting">
+C:\&gt; <span class="command"><strong><em class="replaceable"><code>path/to/</code></em>perl swarm-trigger.pl -o</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Replace the old Swarm with the new Swarm.
+                                      <span class="bold"><strong>Downtime occurs in this step.</strong></span>
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo apache2ctl stop; mv SWARM_ROOT to SWARM.old; mv SWARM_NEW SWARM_ROOT; sudo apache2ctl start</strong></span>
+</pre></li>
+                     </ol>
+                  </div>
+                  <p>
+                         All done!
+                       
+                  </p>
+               </div>
+               <div class="section" id="setup.upgrade.2015.3">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Upgrade Swarm 2015.3 to 2015.4</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                         This section covers the steps to upgrade from Swarm's 2015.3 release to the
+                         2015.4 release.
+                       
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                      Expand the new <code class="filename">swarm.tgz</code>:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>tar -zxf swarm.tgz</strong></span>
+</pre><p>
+                                      The contents of <code class="filename">swarm.tgz</code> are expanded into a
+                                      top-level folder named
+                                      <code class="filename">swarm-<em class="replaceable"><code>version</code></em></code>, where
+                                      <em class="replaceable"><code>version</code></em> corresponds to the version
+                                      downloaded. This directory is identified as <code class="literal">SWARM_NEW</code>
+                                      below.
+                                    
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Move <code class="literal">SWARM_NEW</code> to be a peer of
+                                      <code class="literal">SWARM_ROOT</code>:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>mv SWARM_NEW SWARM_ROOT/../</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the <code class="filename">data/config.php</code> file from the old Swarm to
+                                      the new Swarm:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>cp -p SWARM_ROOT/data/config.php SWARM_NEW/data/</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Create the queue token directory:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>mkdir SWARM_NEW/data/queue</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the existing trigger token(s):
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo cp -pR SWARM_ROOT/data/queue/tokens SWARM_NEW/data/queue/</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Assign correct ownership to the new Swarm's data directory:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo chown -R <em class="replaceable"><code>www-data</code></em> SWARM_NEW/data</strong></span>
+</pre><div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                           The <em class="replaceable"><code>www-data</code></em> user above is an example of
+                                           what the web server user name might be, and can vary based on
+                                           distribution or customization. For example, the user is typically
+                                           <code class="literal">apache</code> for Red Hat/Fedora/CentOS,
+                                           <code class="literal">www-data</code> for Debian/Ubuntu,
+                                           <code class="literal">wwwrun</code> for SuSE, <code class="literal">_www</code> for Mac
+                                           OSX.
+                                         
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the new Swarm trigger script to your Perforce server machine. The
+                                      trigger script is
+                                      <code class="filename">SWARM_NEW/p4-bin/scripts/swarm-trigger.pl</code>, and
+                                      requires installation of Perl 5.08+ (use the latest available) on the
+                                      Perforce server machine.
+                                    
+                           </p>
+                           <div class="warning admonition">
+                              <h3 class="title">Warning</h3>
+                              <p>
+                                           Do not overwrite any existing trigger script at this time. Give the
+                                           script a new name, for example:
+                                           <code class="filename">swarm-trigger-new.pl</code>.
+                                         
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Configure the Swarm trigger script by creating, in the same directory on
+                                      the Perforce server machine, <code class="filename">swarm-trigger.conf</code>. It
+                                      should contain:
+                                    
+                           </p><pre lang="ini" class="programlisting">
+# SWARM_HOST (required)
+# Hostname of your Swarm instance, with leading "http://" or "https://".
+SWARM_HOST="<em class="replaceable"><code>http://my-swarm-host</code></em>"
+
+# SWARM_TOKEN (required)
+# The token used when talking to Swarm to offer some security. To obtain the
+# value, log in to Swarm as a super user and select 'About Swarm' to see the
+# token value.
+SWARM_TOKEN="<em class="replaceable"><code>MY-UUID-STYLE-TOKEN</code></em>"
+
+# ADMIN_USER (optional)
+# For enforcing reviewed changes, optionally specify the normal Perforce user
+# with admin privileges (to read keys); if not set, will use whatever Perforce
+# user is set in environment.
+ADMIN_USER=
+
+# ADMIN_TICKET_FILE (optional)
+# For enforcing reviewed changes, optionally specify the location of the
+# p4tickets file if different from the default ($HOME/.p4tickets).
+# Ensure this user is a member of a group with an 'unlimited' or very long
+# timeout; then, manually login as this user from the Perforce server machine to
+# set the ticket.
+ADMIN_TICKET_FILE=
+</pre><p>
+                                      Fill in the required <code class="literal">SWARM_HOST</code> and
+                                      <code class="literal">SWARM_TOKEN</code> variables with the configuration from any
+                                      previous Swarm trigger script, typically
+                                      <code class="filename">swarm-trigger.sh</code>.
+                                    
+                           </p>
+                           <div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                           If you already have a <code class="filename">swarm-trigger.conf</code> file,
+                                           no additional configuration is required.
+                                         
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      For Linux systems, ensure that the script is executable:
+                                    
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>sudo chmod +x swarm-trigger-new.pl</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Rename the new trigger script:
+                                    
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>mv swarm-trigger-new.pl swarm-trigger.pl</strong></span>
+</pre><p>
+                                      On Windows:
+                                    
+                           </p><pre class="programlisting">
+C:\&gt; <span class="command"><strong>ren swarm-trigger-new.pl swarm-trigger.pl</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      As a Perforce user with <span class="emphasis"><em>super</em></span> privileges, update
+                                      the Perforce trigger table by running <span class="command"><strong>p4 triggers</strong></span>
+                                      command and replacing any <code class="literal">swarm.*</code> lines with the
+                                      output from running:
+                                    
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>./swarm-trigger.pl -o</strong></span>
+</pre><p>
+                                      On Windows:
+                                    
+                           </p><pre class="programlisting">
+C:\&gt; <span class="command"><strong><em class="replaceable"><code>path/to/</code></em>perl swarm-trigger.pl -o</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Replace the old Swarm with the new Swarm.
+                                      <span class="bold"><strong>Downtime occurs in this step.</strong></span>
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo apache2ctl stop; mv SWARM_ROOT to SWARM.old; mv SWARM_NEW SWARM_ROOT; sudo apache2ctl start</strong></span>
+</pre></li>
+                     </ol>
+                  </div>
+                  <p>
+                         All done!
+                       
+                  </p>
+               </div>
+               <div class="section" id="setup.upgrade.2015.2">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Upgrade Swarm 2015.2 to 2015.3</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                         This section covers the steps to upgrade from Swarm's 2015.2 release to the
+                         2015.3 release. 
+                       
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                      Expand the new <code class="filename">swarm.tgz</code>:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>tar -zxf swarm.tgz</strong></span>
+</pre><p>
+                                      The contents of <code class="filename">swarm.tgz</code> are expanded into a
+                                      top-level folder named
+                                      <code class="filename">swarm-<em class="replaceable"><code>version</code></em></code>, where
+                                      <em class="replaceable"><code>version</code></em> corresponds to the version
+                                      downloaded. This directory is identified as <code class="literal">SWARM_NEW</code>
+                                      below.
+                                    
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Move <code class="literal">SWARM_NEW</code> to be a peer of
+                                      <code class="literal">SWARM_ROOT</code>:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>mv SWARM_NEW SWARM_ROOT/../</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the <code class="filename">data/config.php</code> file from the old Swarm to
+                                      the new Swarm:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>cp -p SWARM_ROOT/data/config.php SWARM_NEW/data/</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Create the queue token directory:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>mkdir SWARM_NEW/data/queue</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the existing trigger token(s):
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo cp -pR SWARM_ROOT/data/queue/tokens SWARM_NEW/data/queue/</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Assign correct ownership to the new Swarm's data directory:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo chown -R <em class="replaceable"><code>www-data</code></em> SWARM_NEW/data</strong></span>
+</pre><div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                           The <em class="replaceable"><code>www-data</code></em> user above is an example of
+                                           what the web server user name might be, and can vary based on
+                                           distribution or customization. For example, the user is typically
+                                           <code class="literal">apache</code> for Red Hat/Fedora/CentOS,
+                                           <code class="literal">www-data</code> for Debian/Ubuntu,
+                                           <code class="literal">wwwrun</code> for SuSE, <code class="literal">_www</code> for Mac
+                                           OSX.
+                                         
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the new Swarm trigger script to your Perforce server machine. The
+                                      trigger script is
+                                      <code class="filename">SWARM_NEW/p4-bin/scripts/swarm-trigger.pl</code>, and
+                                      requires installation of Perl 5.08+ (use the latest available) on the
+                                      Perforce server machine.
+                                    
+                           </p>
+                           <div class="warning admonition">
+                              <h3 class="title">Warning</h3>
+                              <p>
+                                           Do not overwrite any existing trigger script at this time. Give the
+                                           script a new name, for example:
+                                           <code class="filename">swarm-trigger-new.pl</code>.
+                                         
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Configure the Swarm trigger script by creating, in the same directory on
+                                      the Perforce server machine, <code class="filename">swarm-trigger.conf</code>. It
+                                      should contain:
+                                    
+                           </p><pre lang="ini" class="programlisting">
+# SWARM_HOST (required)
+# Hostname of your Swarm instance, with leading "http://" or "https://".
+SWARM_HOST="<em class="replaceable"><code>http://my-swarm-host</code></em>"
+
+# SWARM_TOKEN (required)
+# The token used when talking to Swarm to offer some security. To obtain the
+# value, log in to Swarm as a super user and select 'About Swarm' to see the
+# token value.
+SWARM_TOKEN="<em class="replaceable"><code>MY-UUID-STYLE-TOKEN</code></em>"
+
+# ADMIN_USER (optional)
+# For enforcing reviewed changes, optionally specify the normal Perforce user
+# with admin privileges (to read keys); if not set, will use whatever Perforce
+# user is set in environment.
+ADMIN_USER=
+
+# ADMIN_TICKET_FILE (optional)
+# For enforcing reviewed changes, optionally specify the location of the
+# p4tickets file if different from the default ($HOME/.p4tickets).
+# Ensure this user is a member of a group with an 'unlimited' or very long
+# timeout; then, manually login as this user from the Perforce server machine to
+# set the ticket.
+ADMIN_TICKET_FILE=
+</pre><p>
+                                      Fill in the required <code class="literal">SWARM_HOST</code> and
+                                      <code class="literal">SWARM_TOKEN</code> variables with the configuration from any
+                                      previous Swarm trigger script, typically
+                                      <code class="filename">swarm-trigger.sh</code>.
+                                    
+                           </p>
+                           <div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                           If you already have a <code class="filename">swarm-trigger.conf</code> file,
+                                           no additional configuration is required.
+                                         
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      For Linux systems, ensure that the script is executable:
+                                    
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>sudo chmod +x swarm-trigger-new.pl</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Rename the new trigger script:
+                                    
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>mv swarm-trigger-new.pl swarm-trigger.pl</strong></span>
+</pre><p>
+                                      On Windows:
+                                    
+                           </p><pre class="programlisting">
+C:\&gt; <span class="command"><strong>ren swarm-trigger-new.pl swarm-trigger.pl</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      As a Perforce user with <span class="emphasis"><em>super</em></span> privileges, update
+                                      the Perforce trigger table by running <span class="command"><strong>p4 triggers</strong></span>
+                                      command and replacing any <code class="literal">swarm.*</code> lines with the
+                                      output from running:
+                                    
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>./swarm-trigger.pl -o</strong></span>
+</pre><p>
+                                      On Windows:
+                                    
+                           </p><pre class="programlisting">
+C:\&gt; <span class="command"><strong><em class="replaceable"><code>path/to/</code></em>perl swarm-trigger.pl -o</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Replace the old Swarm with the new Swarm.
+                                      <span class="bold"><strong>Downtime occurs in this step.</strong></span>
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo apache2ctl stop; mv SWARM_ROOT to SWARM.old; mv SWARM_NEW SWARM_ROOT; sudo apache2ctl start</strong></span>
+</pre></li>
+                     </ol>
+                  </div>
+                  <p>
+                         All done!
+                       
+                  </p>
+               </div>
+               <div class="section" id="setup.upgrade.2015.1">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Upgrade Swarm 2015.1 to 2015.2</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                         This section covers the steps to upgrade from Swarm's 2015.1 release to the
+                         2015.2 release.
+                       
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                      Expand the new <code class="filename">swarm.tgz</code>:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>tar -zxf swarm.tgz</strong></span>
+</pre><p>
+                                      The contents of <code class="filename">swarm.tgz</code> are expanded into a
+                                      top-level folder named
+                                      <code class="filename">swarm-<em class="replaceable"><code>version</code></em></code>, where
+                                      <em class="replaceable"><code>version</code></em> corresponds to the version
+                                      downloaded. This directory is identified as <code class="literal">SWARM_NEW</code>
+                                      below.
+                                    
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Move <code class="literal">SWARM_NEW</code> to be a peer of
+                                      <code class="literal">SWARM_ROOT</code>:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>mv SWARM_NEW SWARM_ROOT/../</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the <code class="filename">data/config.php</code> file from the old Swarm to
+                                      the new Swarm:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>cp -p SWARM_ROOT/data/config.php SWARM_NEW/data/</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Create the queue token directory:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>mkdir SWARM_NEW/data/queue</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the existing trigger token(s):
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo cp -pR SWARM_ROOT/data/queue/tokens SWARM_NEW/data/queue/</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Assign correct ownership to the new Swarm's data directory:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo chown -R <em class="replaceable"><code>www-data</code></em> SWARM_NEW/data</strong></span>
+</pre><div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                           The <em class="replaceable"><code>www-data</code></em> user above is an example of
+                                           what the web server user name might be, and can vary based on
+                                           distribution or customization. For example, the user is typically
+                                           <code class="literal">apache</code> for Red Hat/Fedora/CentOS,
+                                           <code class="literal">www-data</code> for Debian/Ubuntu,
+                                           <code class="literal">wwwrun</code> for SuSE, <code class="literal">_www</code> for Mac
+                                           OSX.
+                                         
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Replace the old Swarm with the new Swarm.
+                                      <span class="bold"><strong>Downtime occurs in this step.</strong></span>
+                                    
+                           </p><pre lang="bash" class="programlisting">
+sudo apache2ctl stop; mv SWARM_ROOT to SWARM.old; mv SWARM_NEW SWARM_ROOT; sudo apache2ctl start
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      If your Swarm is not hosted on Windows, update the trigger entries in
+                                      the Helix Versioning Engine.
+                                    
+                           </p>
+                           <p>
+                                      Swarm 2015.2 includes a new trigger script written in Perl.
+                                      See <a class="xref" href="setup.perforce.html#setup.perforce.triggers.linux" title="Setup Swarm triggers with a Linux-hosted Helix Versioning Engine">Setup Swarm triggers with a Linux-hosted Helix Versioning Engine</a> for details.
+                                    
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+                  <p>
+                         All done!
+                       
+                  </p>
+               </div>
+               <div class="section" id="setup.upgrade.2014.4">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Upgrade Swarm 2014.4 to 2015.1</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                         This section covers the steps to upgrade from Swarm's 2014.4 release to the
+                         2015.1 release.
+                       
+                  </p>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                      Expand the new <code class="filename">swarm.tgz</code>:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>tar -zxf swarm.tgz</strong></span>
+</pre><p>
+                                      The contents of <code class="filename">swarm.tgz</code> are expanded into a
+                                      top-level folder named
+                                      <code class="filename">swarm-<em class="replaceable"><code>version</code></em></code>, where
+                                      <em class="replaceable"><code>version</code></em> corresponds to the version
+                                      downloaded. This directory is identified as <code class="literal">SWARM_NEW</code>
+                                      below.
+                                    
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Move <code class="literal">SWARM_NEW</code> to be a peer of
+                                      <code class="literal">SWARM_ROOT</code>:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>mv SWARM_NEW SWARM_ROOT/../</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the <code class="filename">data/config.php</code> file from the old Swarm to
+                                      the new Swarm:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>cp -p SWARM_ROOT/data/config.php SWARM_NEW/data/</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Create the queue token directory:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>mkdir SWARM_NEW/data/queue</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Copy the existing trigger token(s):
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo cp -pR SWARM_ROOT/data/queue/tokens SWARM_NEW/data/queue/</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                      Assign correct ownership to the new Swarm's data directory:
+                                    
+                           </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo chown -R <em class="replaceable"><code>www-data</code></em> SWARM_NEW/data</strong></span>
+</pre><div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                           The <em class="replaceable"><code>www-data</code></em> user above is an example of
+                                           what the web server user name might be, and can vary based on
+                                           distribution or customization. For example, the user is typically
+                                           <code class="literal">apache</code> for Red Hat/Fedora/CentOS,
+                                           <code class="literal">www-data</code> for Debian/Ubuntu,
+                                           <code class="literal">wwwrun</code> for SuSE, <code class="literal">_www</code> for Mac
+                                           OSX.
+                                         
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                      Replace the old Swarm with the new Swarm.
+                                      <span class="bold"><strong>Downtime occurs in this step.</strong></span>
+                                    
+                           </p><pre lang="bash" class="programlisting">
+sudo apache2ctl stop; mv SWARM_ROOT to SWARM.old; mv SWARM_NEW SWARM_ROOT; sudo apache2ctl start
+</pre></li>
+                     </ol>
+                  </div>
+                  <p>
+                         All done!
+                       
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="setup.worker.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Set up a recurring task to spawn workers</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="chapter.basics.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Basics</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

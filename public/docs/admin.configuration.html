@@ -1,0 +1,232 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Configuration overview // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.administration.html" title="Administration" />
+      <link rel="prev" href="admin.commit_timeout.html" title="Commit timeout" />
+      <link rel="next" href="admin.email.html" title="Email configuration" />
+      <meta name="Section-title" content="Configuration overview" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="admin.configuration">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Configuration overview</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      This section provides an overview of all the possible configuration blocks
+                      in the <code class="filename">data/config.php</code> file. Click on any underlined
+                      item to see a detailed description.
+                    
+               </p>
+               <div class="warning admonition">
+                  <h3 class="title">Warning</h3>
+                  <p>
+                           While the syntax of this example is correct, it includes configuration
+                           values that <span class="bold"><strong>cannot work</strong></span>. Ensure that
+                           you adjust the configuration appropriately for your Swarm installation
+                           before using this example in testing or production.
+                         
+                  </p>
+               </div><pre lang="php" class="programlisting">
+&lt;?php
+    return array(
+        '<a class="link" href="admin.exclude_users.html" title="Excluding Users from Activity Streams">activity</a>' =&gt; array(
+            'ignored_users' =&gt; array(
+                'git-fusion-user',
+                'p4dtguser',
+                'system',
+            ),
+        ),
+        '<a class="link" href="admin.archives.html" title="Archives configuration">archives</a>' =&gt; array(
+            'max_input_size'    =&gt; 512 * 1024 * 1024, // 512M (in bytes)
+            'archive_timeout'   =&gt; 1800,              // 30 minutes
+            'compression_level' =&gt; 1,                 // 0-9
+            'cache_lifetime'    =&gt; 60 * 60 * 24,      // 1 day
+        ),
+        '<a class="link" href="admin.comment_attachments.html" title="Comment attachments">attachments</a>' =&gt; array(
+            'max_file_size'  =&gt; <em class="replaceable"><code>0</code></em>, // the maximum file size to accept in bytes
+        ),
+        '<a class="link" href="admin.avatars.html" title="Avatars">avatars</a>' =&gt; array(
+            'http_url'  =&gt; 'http://www.gravatar.com/avatar/{hash}?s={size}&amp;d={default}',
+            'https_url' =&gt; 'https://secure.gravatar.com/avatar/{hash}?s={size}&amp;d={default}',
+        ),
+        '<a class="link" href="admin.comment_attachments.html" title="Comment attachments">depot_storage</a>' =&gt; array(
+            'base_path'  =&gt; '//<em class="replaceable"><code>depot_name</code></em>',
+        ),
+        '<a class="link" href="admin.environment.html" title="Environment">environment</a>' =&gt; array(
+            'mode'      =&gt; 'production',
+            'hostname'  =&gt; 'myswarm.hostname',
+        ),
+        '<a class="link" href="admin.security.html#admin.security.http_client_options" title="HTTP client options">http_client_options</a>'   =&gt; array(
+            'timeout'   =&gt; 5,
+            'hosts'     =&gt; array(),
+        ),
+        '<a class="link" href="integrations.jira.html" title="JIRA">jira</a>' =&gt; array(
+            'host'      =&gt; '',
+            'user'      =&gt; '',
+            'password'  =&gt; '',
+            'job_field' =&gt; '',
+        ),
+        '<a class="link" href="admin.logging.html" title="Logging">log</a>' =&gt; array(
+            'priority'  =&gt; 5,
+        ),
+        '<a class="link" href="admin.email.html" title="Email configuration">mail</a>' =&gt; array(
+            // 'recipients' =&gt; array('user@my.domain'),
+            'transport' =&gt; array(
+                'host' =&gt; 'my.mx.host',
+            ),
+        ),
+        '<a class="link" href="admin.notifications.html" title="Notifications">notifications</a>' =&gt; array(
+            'honor_p4_reviews'      =&gt; false,
+            'opt_in_review_path'    =&gt; '//depot/swarm',
+            'disable_change_emails' =&gt; false,
+        ),
+        '<a class="link" href="setup.swarm.html" title="Swarm configuration">p4</a>' =&gt; array(
+            'port'      =&gt; 'my-helix-versioning-engine:1666',
+            'user'      =&gt; 'admin_userid',
+            'password'  =&gt; 'admin user ticket or password',
+            '<a class="link" href="admin.logging.html#admin.logging.performance" title="Performance logging">slow_command_logging</a>' =&gt; array(
+                3,
+                10 =&gt; array('print', 'shelve', 'submit', 'sync', 'unshelve'),
+            ),
+            '<a class="link" href="admin.changelist_files.html" title="Changelist files limit">max_changelist_files</a>' =&gt; 5000,
+            '<a class="link" href="admin.client_integration.html" title="Client integration">auto_register_url</a>'    =&gt; true,
+        ),
+        'projects' =&gt; array(
+            '<a class="link" href="admin.mainline.html" title="Mainline branch identification">mainlines</a>' =&gt; array(
+                'main', 'mainline', 'master', 'trunk',
+            ),
+            '<a class="link" href="admin.projects.html#admin.projects.limit_project_add_admin" title="Limit adding projects to administrators">add_admin_only</a>'           =&gt; false,
+            '<a class="link" href="admin.projects.html#admin.projects.limit_project_add_group" title="Limit adding projects to members of specific groups">add_groups_only</a>'          =&gt; array(),
+            '<a class="link" href="admin.projects.html" title="Projects">edit_name_admin_only</a>'     =&gt; false,
+            '<a class="link" href="admin.projects.html" title="Projects">edit_branches_admin_only</a>' =&gt; false,
+        ),
+        '<a class="link" href="admin.workers.html" title="Workers">queue</a>'  =&gt; array(
+            'workers'             =&gt; 3,    // defaults to 3
+            'worker_lifetime'     =&gt; 595,  // defaults to 10 minutes (less 5 seconds)
+            'worker_task_timeout' =&gt; 1800, // defaults to 30 minutes
+            'worker_memory_limit' =&gt; '1G', // defaults to 1 gigabyte
+        ),
+        '<a class="link" href="admin.review_keyword.html" title="Review keyword">reviews</a>' =&gt; array(
+            'patterns' =&gt; array(
+                // #review or #review-1234 with surrounding whitespace/eol
+                'octothorpe'      =&gt; array(
+                    'regex'  =&gt; '/(?P&lt;pre&gt;\s+|^)'
+                             .  '\#(?P&lt;keyword&gt;review)(?:-(?P&lt;id&gt;[0-9]+))?'
+                             .  '(?P&lt;post&gt;\s+|$)/i',
+                    'spec'   =&gt; '%pre%#%keyword%-%id%%post%',
+                    'insert' =&gt; "%description%\n\n#review-%id%",
+                    'strip'  =&gt; '/^\s*\#review(-[0-9]+)?(\s+|$)'
+                             .  '|(\s+|^)\#review(-[0-9]+)?\s*$/i',
+                ),
+
+                // [review] or [review-1234] at start
+                'leading-square'  =&gt; array(
+                    'regex' =&gt; '/^(?P&lt;pre&gt;\s*)'
+                            .  '\[(?P&lt;keyword&gt;review)(?:-(?P&lt;id&gt;[0-9]+))?\]'
+                            .  '(?P&lt;post&gt;\s*)/i',
+                    'spec'  =&gt; '%pre%[%keyword%-%id%]%post%',
+                ),
+
+                // [review] or [review-1234] at end
+                'trailing-square' =&gt; array(
+                    'regex' =&gt; '/(?P&lt;pre&gt;\s*)'
+                            .  '\[(?P&lt;keyword&gt;review)(?:-(?P&lt;id&gt;[0-9]+))?\]'
+                            .  '(?P&lt;post&gt;\s*)?$/i',
+                    'spec'  =&gt; '%pre%[%keyword%-%id%]%post%',
+                ),
+            ),
+            '<a class="link" href="admin.commit_timeout.html" title="Commit timeout">commit_timeout</a>'       =&gt; 1800, // 30 minutes
+            '<a class="link" href="admin.security.html#admin.security.disable_commit" title="Disable commit">disable_commit</a>'       =&gt; true,
+            '<a class="link" href="admin.reviews.html#admin.reviews.disable_self_approve" title="Disable self-approval of reviews by authors">disable_self_approve</a>' =&gt; false,
+            '<a class="link" href="admin.commit_credit.html" title="Commit credit">commit_credit_author</a>' =&gt; true,
+            '<a class="link" href="admin.ignored_users.html" title="Ignored users for reviews">ignored_users</a>'        =&gt; array(),
+            '<a class="link" href="admin.unapprove_modified.html" title="Unapprove modified reviews">unapprove_modified</a>'   =&gt; true,
+        ),
+        '<a class="link" href="admin.search.html" title="Search">search</a>' =&gt; array(
+            'maxlocktime'     =&gt; 5000, // 5 seconds, in milliseconds
+            'p4_search_host'  =&gt; '',   // optional URL to Helix Search Tool
+        ),
+        '<a class="link" href="admin.security.html" title="Security">security</a>'  =&gt; array(
+            '<a class="link" href="admin.security.html#admin.security.disable_system_info" title="Disable system info">disable_system_info</a>'      =&gt; false,
+            '<a class="link" href="admin.security.html#admin.security.restricted_changes" title="Restricted Changes">email_restricted_changes</a>' =&gt; false,
+            '<a class="link" href="admin.security.html#admin.security.ip_protections" title="IP address-based protections emulation">emulate_ip_protections</a>'   =&gt; true,
+            '<a class="link" href="admin.security.html#admin.security.strict_https" title="Strict HTTPS">https_port</a>'               =&gt; null,
+            '<a class="link" href="admin.security.html#admin.security.strict_https" title="Strict HTTPS">https_strict</a>'             =&gt; false,
+            '<a class="link" href="admin.security.html#admin.security.strict_https" title="Strict HTTPS">https_strict_redirect</a>'    =&gt; true,
+            '<a class="link" href="admin.security.html#admin.security.prevent_login" title="Prevent login">prevent_login</a>'            =&gt; array(),
+            '<a class="link" href="admin.security.html#admin.security.require_login" title="Require login">require_login</a>'            =&gt; true,
+        ),
+        '<a class="link" href="admin.security.html#admin.security.sessions" title="Sessions">session</a>'  =&gt; array(
+            'cookie_lifetime'             =&gt; 0, // 0=expire when browser closed
+            'gc_maxlifetime'              =&gt; 60*60*24*30, // 30 days
+            'remembered_cookie_lifetime'  =&gt; 60*60*24*30, // 30 days
+        ),
+        '<a class="link" href="admin.short_links.html" title="Short links">short_links</a>' =&gt; array(
+            'hostname'  =&gt; '<em class="replaceable"><code>myho.st</code></em>',
+        ),
+        '<a class="link" href="admin.logging.html#admin.logging.performance" title="Performance logging">xhprof</a>' =&gt; array(
+            'slow_time'      =&gt; 3,
+            'ignored_routes' =&gt; array('download', 'imagick', 'libreoffice', 'worker'),
+        ),
+    );
+</pre><div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           The Swarm configuration file does not include PHP's standard closing tag
+                           (<code class="literal">?&gt;</code>). This is intentional as it prevents
+                           unintentional whitespace from being introduced into Swarm's output, which
+                           would interfere with Swarm's ability to control HTTP headers. Debugging
+                           problems that result from unintentional whitespace can be challenging,
+                           since the resulting behavior and error messages often appear to be
+                           misleading.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="admin.commit_timeout.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Commit timeout</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="admin.email.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Email configuration</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

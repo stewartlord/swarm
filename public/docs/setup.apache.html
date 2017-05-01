@@ -1,0 +1,402 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Apache configuration // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.setup.html" title="Setting up" />
+      <link rel="prev" href="setup.installation.html" title="Initial manual installation" />
+      <link rel="next" href="setup.php.html" title="PHP configuration" />
+      <meta name="Section-title" content="Apache configuration" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="setup.apache">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Apache configuration</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The configuration of the Apache HTTP Server (Apache) can vary between OS
+                  distributions; see the documentation specific to your installation of
+                    Apache. For example, on Mac OS X, you may have to enable Web Sharing within
+                      the Sharing control panel in System Preferences.
+                    
+               </p>
+               <div class="procedure">
+                  <ol class="procedure" type="1">
+                     <li class="step">
+                        <p>
+                                   Locate your system's Apache configuration.
+                                 
+                        </p>
+                        <p>
+                                   Common configuration directories include:
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: disc; ">
+                              <li class="listitem">
+                                 <p>
+                                                <code class="filename">/etc/httpd/conf/</code>
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                <code class="filename">/etc/apache2/</code>
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                <code class="filename">/Applications/XAMPP/etc/</code>
+                                              
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <p>
+                                   Within the configuration path, the main Apache configuration file is
+                                   usually named one of the following:
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: disc; ">
+                              <li class="listitem">
+                                 <p>
+                                                <code class="filename">httpd.conf</code>
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                <code class="filename">apache2.conf</code>
+                                              
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <div class="tip admonition">
+                           <h3 class="title">Tip</h3>
+                           <p>
+                                        A longer discussion on the possible locations and names of Apache
+                                        configuration files is available here:
+                                        
+                           </p>
+                           <div class="literallayout">
+                              <p><br />
+                                 
+                              </p>
+                           </div>
+                           <p>
+                                        <a class="link" href="https://wiki.apache.org/httpd/DistrosDefaultLayout" target="_top">https://wiki.apache.org/httpd/DistrosDefaultLayout</a>
+                                      
+                           </p>
+                        </div>
+                     </li>
+                     <li class="step">
+                        <p>
+                                   Set up an Apache virtual host (<span class="emphasis"><em>vhost</em></span>) for your
+                                   installation.
+                                 
+                        </p>
+                        <p>
+                                   If your Apache configuration directory contains the directories 
+                                   <code class="filename">sites-available</code> and
+                                   <code class="filename">sites-enabled</code>:
+                                 
+                        </p>
+                        <div class="orderedlist">
+                           <ol class="orderedlist" type="1">
+                              <li class="listitem">
+                                 <p>
+                                                Copy the appropriate virtual host definition below into the file
+                                                <code class="filename">sites-available/swarm</code>.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Enable the Swarm virtual host definition.
+                                              
+                                 </p><pre class="programlisting">
+$ <span class="command"><strong>sudo a2ensite swarm</strong></span>
+</pre></li>
+                           </ol>
+                        </div>
+                        <p>
+                                   Otherwise, copy the appropriate virtual host definition below into the
+                                   bottom of the main Apache configuration file,
+                                   <code class="filename">httpd.conf</code> or <code class="filename">apache2.conf</code>.
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: disc; ">
+                              <li class="listitem">
+                                 <p>
+                                                Virtual host definition example for Apache 2.2:
+                                              
+                                 </p><pre lang="apache" class="programlisting">
+&lt;VirtualHost *:80&gt;
+    ServerName <em class="replaceable"><code>myswarm</code></em>
+    ServerAlias <em class="replaceable"><code>myswarm.machine.domain.com</code></em>
+    ErrorLog "<em class="replaceable"><code>/path/to/apache/logs</code></em>/<em class="replaceable"><code>myswarm</code></em>.error_log"
+    CustomLog "<em class="replaceable"><code>/path/to/apache/logs</code></em>/<em class="replaceable"><code>myswarm</code></em>.access_log" common
+    DocumentRoot "<em class="replaceable"><code>/path/to/swarm</code></em>/public"
+    &lt;Directory "<em class="replaceable"><code>/path/to/swarm</code></em>/public"&gt;
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre></li>
+                              <li class="listitem">
+                                 <p>
+                                                Virtual host definition example for Apache 2.4:
+                                              
+                                 </p><pre lang="apache" class="programlisting">
+&lt;VirtualHost *:80&gt;
+    ServerName <em class="replaceable"><code>myswarm</code></em>
+    ServerAlias <em class="replaceable"><code>myswarm.machine.domain.com</code></em>
+    ErrorLog "<em class="replaceable"><code>/path/to/apache/logs</code></em>/<em class="replaceable"><code>myswarm</code></em>.error_log"
+    CustomLog "<em class="replaceable"><code>/path/to/apache/logs</code></em>/<em class="replaceable"><code>myswarm</code></em>.access_log" common
+    DocumentRoot "<em class="replaceable"><code>/path/to/swarm</code></em>/public"
+    &lt;Directory "<em class="replaceable"><code>/path/to/swarm</code></em>/public"&gt;
+        AllowOverride All
+        Require all granted
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre></li>
+                           </ul>
+                        </div>
+                        <div class="tip admonition">
+                           <h3 class="title">Tip</h3>
+                           <p>
+                                        See Apache's virtual host documentation for details:
+                                        
+                           </p>
+                           <div class="literallayout">
+                              <p><br />
+                                 
+                              </p>
+                           </div>
+                           <p>
+                                        <a class="link" href="https://httpd.apache.org/docs/2.2/vhosts/" target="_top">https://httpd.apache.org/docs/2.2/vhosts/</a>
+                                        
+                           </p>
+                           <div class="literallayout">
+                              <p><br />
+                                 
+                              </p>
+                           </div>
+                           <p>
+                                        <a class="link" href="https://httpd.apache.org/docs/2.4/vhosts/" target="_top">https://httpd.apache.org/docs/2.4/vhosts/</a>
+                                      
+                           </p>
+                        </div>
+                     </li>
+                     <li class="step">
+                        <p>
+                                   Customize the virtual host definition.
+                                 
+                        </p>
+                        <div class="orderedlist">
+                           <ol class="orderedlist" type="1">
+                              <li class="listitem">
+                                 <p>
+                                                Replace <em class="replaceable"><code>myswarm</code></em> with the name of the
+                                                subdomain hosting swarm. Many administrators choose
+                                                <code class="literal">swarm</code>.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Replace <em class="replaceable"><code>myswarm.machine.domain.com</code></em> with
+                                                the hostname for Swarm on your network. This may require adjusting
+                                                the DNS configuration on your network.
+                                              
+                                 </p>
+                                 <p>
+                                                Note the string <em class="replaceable"><code>myswarm</code></em>: this should
+                                                match the subdomain name and prefix for the log files, to help
+                                                coordinate the active host with the log files for that host. Doing
+                                                this is particularly useful when your Apache server hosts multiple
+                                                instances of Swarm.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Replace <em class="replaceable"><code>/path/to/apache/logs</code></em> with the
+                                                path where your Apache stores its log files. Apache's log files are
+                                                typically named <code class="filename">access_log</code> and
+                                                <code class="filename">error_log</code>.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Replace <em class="replaceable"><code>/path/to/swarm</code></em> with the path to
+                                                the Swarm directory.
+                                              
+                                 </p>
+                              </li>
+                           </ol>
+                        </div>
+                     </li>
+                     <li class="step">
+                        <p>
+                                   Verify that the correct Apache modules are enabled.
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: disc; ">
+                              <li class="listitem">
+                                 <p>
+                                                To query whether the PHP and Rewrite modules are active, use
+                                                the apachectl utility to list all of the active modules (this
+                                                may be named apache2ctl on your system):
+                                              
+                                 </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>apachectl -t -D DUMP_MODULES</strong></span>
+</pre></li>
+                              <li class="listitem">
+                                 <p>
+                                                Simply look for <code class="literal">php5_module</code> and
+                                                <code class="literal">rewrite_module</code> in the output. If you see them,
+                                                skip ahead to <a class="link" href="setup.apache.html#setup.apache.restart" title="Step 5">step
+                                                   5</a>.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                If your distribution ships with the Apache utility, a2enmod, use
+                                                this to enable the PHP and Rewrite modules:
+                                              
+                                 </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo a2enmod php5 rewrite</strong></span>
+</pre></li>
+                              <li class="listitem">
+                                 <p>
+                                                Without the a2enmod utility, edit the Apache configuration file by
+                                                hand. Locate your Apache configuration file for modules and either
+                                                uncomment or add the following lines:
+                                              
+                                 </p><pre lang="apache" class="programlisting">
+LoadModule  php5_module     libexec/apache2/libphp5.so
+LoadModule  rewrite_module  libexec/apache2/mod_rewrite.so
+</pre></li>
+                              <li class="listitem">
+                                 <p>
+                                                Note that your Apache installation may have different paths for the
+                                                location of its modules (the .so files).
+                                              
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                     <li class="step" id="setup.apache.restart">
+                        <p>
+                                   Restart your web server.
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: disc; ">
+                              <li class="listitem">
+                                 <p>
+                                                To ensure that the Apache configuration changes you made become
+                                                active, restart the web server.
+                                              
+                                 </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>sudo apachectl restart</strong></span>
+</pre></li>
+                              <li class="listitem">
+                                 <p>
+                                                Query Apache's active virtual hosts and modules to confirm your
+                                                changes are in effect:
+                                              
+                                 </p><pre lang="bash" class="programlisting">
+$ <span class="command"><strong>apachectl -t -D DUMP_VHOSTS</strong></span>
+$ <span class="command"><strong>apachectl -t -D DUMP_MODULES</strong></span>
+</pre></li>
+                           </ul>
+                        </div>
+                        <div class="important admonition">
+                           <h3 class="title">Important</h3>
+                           <p>
+                                        Apache must be configured to use the <code class="literal">prefork</code>
+                                        <em class="glossterm">MPM</em>, because P4PHP does not support threaded
+                                        operation.
+                                      
+                           </p>
+                           <p>
+                                        The <code class="literal">prefork</code> <em class="glossterm">MPM</em> is the
+                                        default for Linux and OSX Apache installations, so you may not have to
+                                        do anything.
+                                      
+                           </p>
+                           <p>
+                                        For more information on Apache MPMs and configuration, see:
+                                      
+                           </p>
+                           <p>
+                                        <a class="link" href="https://httpd.apache.org/docs/2.2/mpm.html" target="_top">https://httpd.apache.org/docs/2.2/mpm.html</a></p>
+                           <div class="literallayout">
+                              <p><br />
+                                     
+                              </p>
+                           </div>
+                           <p><a class="link" href="https://httpd.apache.org/docs/2.4/mpm.html" target="_top">https://httpd.apache.org/docs/2.4/mpm.html</a>
+                                      
+                           </p>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="setup.installation.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Initial manual installation</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="setup.php.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">PHP configuration</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

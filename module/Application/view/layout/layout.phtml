@@ -1,0 +1,81 @@
+<?php echo $this->doctype() ?>
+
+<html lang="en">
+    <head>
+        <?php
+        $services       = $this->getHelperPluginManager()->getServiceLocator();
+        $translator     = $services->get('translator');
+        $locale         = $translator->getLocale();
+        $fallbackLocale = $translator->getFallbackLocale();
+
+        // meta tags
+        echo $this->headMeta()
+                  ->appendHttpEquiv('content-type', 'text/html; charset=utf-8')
+                  ->appendHttpEquiv('X-UA-Compatible', 'IE=Edge')
+                  ->appendName('viewport', 'width=device-width, initial-scale=1.0');
+
+        // output title
+        $this->headTitle()
+             ->setSeparator(' - ')
+             ->prepend('Swarm');
+        echo $this->headTitle();
+
+        // we extend the head link and head script helpers to add in our default css/scripts automatically
+        // we will also include anything under public/custom/*.(js|css) or public/custom/*/*.(js|css)
+
+        // link tags (icons, stylesheets)
+        $this->headLink(array('rel' => 'shortcut icon',    'href' => $this->basePath() . '/favicon.ico?v3'));
+        echo $this->headLink();
+
+        // javascript
+        $initTranslator = 'swarm.translator.init(' . json_encode($locale) . ', ' . json_encode($fallbackLocale) . ');';
+        echo $this->headScript()
+                  ->addConfiguredScripts()
+                  ->addLanguageScripts($locale, $fallbackLocale)
+                  ->addCustomScripts()
+                  ->appendScript($initTranslator);
+        ?>
+    </head>
+
+    <?php
+    // compose classes for the body tag.
+    //  - we include the name of the route that was matched to render this page.
+    //    this is useful when targeting specific pages with JS or CSS
+    //  - we tag the body as 'authenticated' or 'anonymous' based on whether or
+    //    not the user is logged in. this allows us to show/hide elements easily
+    $user        = $this->user();
+    $permissions = $this->permissions();
+    $services    = $this->getHelperPluginManager()->getServiceLocator();
+    $route       = $services->get('application')->getMvcEvent()->getRouteMatch();
+    $childModel  = current($this->viewModel()->getCurrent()->getChildren());
+
+    $this->bodyClass()->append('route-' . $route->getMatchedRouteName());
+    $this->bodyClass()->append('template-' . basename($childModel->getTemplate()));
+    $this->bodyClass()->append($user->getId() ? 'authenticated' : 'anonymous');
+    $this->bodyClass()->append($permissions->is('admin') ? 'admin' : 'non-admin');
+    $this->bodyClass()->append($permissions->is('projectAddAllowed') ? 'can-add-project' : 'cannot-add-project');
+    $this->bodyClass()->append('locale-' . $locale);
+
+    // embed user info in data attr on body tag
+    $userData  = $user->getId() ? array(
+        'id'     => $user->getId(),
+        'name'   => $user->getFullName(),
+        'email'  => $user->getEmail(),
+        'avatar' => $this->avatar($user, 64),
+    ) : null;
+    ?>
+
+    <body class="<?php echo $this->bodyClass() ?>"
+          data-user="<?php echo $this->escapeHtmlAttr(json_encode($userData)) ?>"
+          data-csrf="<?php echo $this->csrf() ?>"
+          data-locale="<?php echo $this->escapeHtmlAttr($locale) ?>"
+          data-fallback-locale="<?php echo $this->escapeHtmlAttr($fallbackLocale) ?>"
+          data-base-url="<?php echo $this->escapeHtmlAttr($services->get('application')->getRequest()->getBaseUrl()) ?>">
+<?php include __DIR__ . '/toolbar.phtml' ?>
+        <div class="container-fluid">
+
+<?php echo $content ?>
+
+        </div>
+    </body>
+</html>

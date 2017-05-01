@@ -1,0 +1,127 @@
+<?php
+$this->headTitle()->set($path)->setTranslatorEnabled(false);
+if ($partial) {
+    echo $this->headTitle();
+}
+
+$isDeleted   = preg_match('/delete|purge/', $file->getStatus('headAction'));
+$isWebSafe   = $file->isText() || preg_match('#/bmp|/gif|/jpe?g|/png|/pdf|/x\-icon#i', $type);
+$canOpen     = $isWebSafe && !$isDeleted;
+$canPreview  = !$isDeleted && $formats->canPreview($file, $this->request());
+
+// assemble urls to open/download/archive file - we use project-specific urls if a project is set.
+$query       = $version ? '?v=' . $this->escapeUrl($version) : '';
+$openUrl     = $project
+    ? $this->url('project-browse', array('path' => $path, 'project' => $project->getId(), 'mode' => 'view')) . $query
+    : $this->url('view',           array('path' => $path)) . $query;
+$downloadUrl = $project
+    ? $this->url('project-browse', array('path' => $path, 'project' => $project->getId(), 'mode' => 'download')) . $query
+    : $this->url('download',       array('path' => $path)) . $query;
+$archiveUrl  = $project
+    ? $this->url('project-archive', array('path' => $path, 'project' => $project->getId())) . $query
+    : $this->url('archive', array('path' => $path)) . $query;
+
+echo $project ? $this->projectToolbar($project) : '';
+?>
+
+<h1 class="browse-title">
+    <?php echo $this->decodeFilespec($file->getBasename()) ?>
+    <span class="muted rev<?php echo $isDeleted ? ' deleted' : '' ?>">
+        <?php echo $this->escapeHtml($version ?: '#' . $file->getStatus('headRev')) ?>
+    </span>
+</h1>
+
+<?php echo $this->breadcrumbs(
+    $path,
+    $project ? 'project-browse' : 'file',
+    $project ? array('project' => $project->getId(), 'mode' => 'files') : null
+) ?>
+
+<div class="browse-files-carousel carousel-inner">
+    <div class="item active">
+        <div class="browse-content">
+            <ul class="nav nav-tabs file-tabs">
+                <?php if ($canPreview): ?>
+                    <li <?php echo !$history ? 'class="active"' : '' ?>>
+                        <a href="#view" data-toggle="tab">
+                            <i class="icon-file"></i> <?php echo $this->te('View')?>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <li <?php echo $history || !$canPreview  ? 'class="active"' : '' ?>>
+                    <a href="#commits" data-toggle="tab">
+                        <i class="icon-time"></i> <?php echo $this->te('Commits')?>
+                    </a>
+                </li>
+                <li class="pull-right">
+                    <div class="btn-group pad1 padw0">
+                        <button type="button" class="btn btn-small btn-short-link"
+                                title="<?php echo $this->te('Shorten URL')?>"
+                                onclick="swarm.browse.getShortLink(this);">
+                            <i class="icon-bookmark"></i>
+                        </button>
+                    </div>
+                    <?php
+                    // show blame button for text files - disable for '@=' revisions and empty files
+                    // (annotate doesn't work on shelved files; we only use '@=' for shelved files at the moment)
+                    if ($file->isText()): ?>
+                        <div class="btn-group pad1 padw0">
+                            <?php if (strpos($version, '@=') !== 0
+                                && $file->hasStatusField('fileSize')
+                                && $file->getFileSize()
+                            ): ?>
+                            <button type="button" class="btn btn-blame btn-small"
+                                    title="<?php echo $this->te('Show Annotations')?>"
+                                    onclick="swarm.browse.toggleAnnotations(this);">
+                                <i class="icon-fire"></i> <?php echo $this->te('Blame')?>
+                            </button>
+                        <?php else: ?>
+                            <button type="button" class="btn btn-blame btn-small disabled">
+                                <i class="icon-fire"></i> <?php echo $this->te('Blame')?>
+                            </button>
+                        <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                    <div class="btn-group pad1 padw0">
+                        <?php
+                        if ($canOpen): ?>
+                            <a href="<?php echo $openUrl ?>" class="btn btn-small">
+                                <i class="icon-share"></i> <?php echo $this->te('Open')?>
+                            </a>
+                        <?php endif; ?>
+                        <?php if (!$isDeleted): ?>
+                            <?php if ($canArchive): ?>
+                            <a href="<?php echo $archiveUrl ?>"
+                                    class="btn btn-small"
+                                    onclick="swarm.browse.getArchive(this); return false;">
+                                <i class="icon-briefcase"></i> <?php echo $this->te('Download .zip')?>
+                            </a>
+                            <?php endif; ?>
+                            <a href="<?php echo $downloadUrl ?>" class="btn btn-small">
+                                <i class="icon-download-alt"></i> <?php echo $this->te('Download')?>
+                                <span class="muted">(<?php echo $this->fileSize($file->getStatus('fileSize')) ?>)</span>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <?php if ($canPreview): ?>
+                    <div class="tab-pane fade <?php echo !$history ? 'in active' : '' ?>" id="view">
+                        <?php echo $formats->renderPreview($file, $this->request()) ?>
+                    </div>
+                <?php endif; ?>
+                <div class="tab-pane fade <?php echo $history || !$canPreview ? 'in active' : '' ?>" id="commits">
+                    <?php include __DIR__ . '/filelog.phtml'; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php if(!$partial): ?>
+<script type="text/javascript">
+    $(function(){
+        swarm.browse.init();
+    });
+</script>
+<?php endif; ?>

@@ -1,0 +1,73 @@
+<?php
+$this->headTitle()->set('System Information');
+?>
+
+<h1 class="info-title">
+    <?php echo $this->te('System Information') ?>
+</h1>
+
+<div class="info-content">
+    <ul class="nav nav-tabs info-tabs">
+        <li class="active">
+            <a href="#perforce" data-toggle="tab">
+                <i class="icon-folder-open"></i> <?php echo $this->te('Perforce') ?>
+            </a>
+        </li>
+        <li>
+            <a href="#log" data-toggle="tab">
+                <i class="icon-folder-open"></i> <?php echo $this->te('Log') ?>
+            </a>
+        </li>
+        <li>
+            <a href="#phpinfo" data-toggle="tab">
+                <i class="icon-folder-open"></i> <?php echo $this->te('PHP Info') ?>
+            </a>
+        </li>
+        <li class="pull-right">
+            <div class="btn-group pad1 padw0 hidden">
+                <a href="#" title="<?php echo $this->te('Refresh Log')?>" class="btn btn-small btn-refresh">
+                    <i class="icon-refresh"></i> <?php echo $this->te('Refresh Log') ?>
+                </a>
+                <a href="<?php echo $this->url('log') ?>" title="<?php echo $this->te('Download Log')?>" class="btn btn-small">
+                    <i class="icon-download-alt"></i> <?php echo $this->te('Download Log') ?>
+                </a>
+            </div>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="perforce">
+            <table class="table table-compact p4info">
+                <tbody>
+                  <?php foreach($p4info as $name => $value): ?>
+                    <tr>
+                    <td class="muted p4info-name"><?php echo $this->escapeHtml($this->wordify($name)) ?></td>
+                    <td><?php echo $this->escapeHtml($value) ?></td>
+                    </tr>
+                  <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="log">
+            <div class="swarmlog-latest">
+                <table class="table table-compact latest-log-entries">
+                    <thead>
+                    <tr>
+                        <th class="entry-time"><?php echo $this->te('Time') ?></th>
+                        <th class="entry-severity"><?php echo $this->te('Severity') ?></th>
+                        <th class="entry-message"><?php echo $this->te('Message') ?></th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="phpinfo">
+            <iframe src="<?php echo $this->url('phpinfo') ?>" width="100%" frameborder="0" scrolling="no"></iframe>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        swarm.info.init();
+    });
+</script>

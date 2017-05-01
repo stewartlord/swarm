@@ -1,0 +1,197 @@
+/* Swarm Custom Documentation Styles */
+/* vim: set ts=2 sw=2 tw=80 ai si: */
+
+/* customize Tip admonition styles */
+p.tip, div.admonition.tip {
+  border-left: 4px solid #999;
+  border-right: 4px solid #999;
+  padding: 8px 12px 8px 8px;
+  margin: 15px -12px;
+  background-color: #f4f4f4;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  font-size: 12px;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+div.admonition.tip h3 {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  div.admonition.tip {
+    border-top: 0 none;
+    border-bottom: 0 none;
+    margin: 10px 0 0 0;
+    width: auto;
+    padding-right: 8px;
+    box-shadow: 0 0 0 0;
+  }
+}
+
+pre, .prettyprint, pre.prettyprint {
+  padding: 7px 12px;
+  margin: 10px -12px 0 -12px;
+}
+
+dl pre, blockquote pre, li pre {
+    margin-left: -12px;
+    padding-left: 12px;
+}
+
+dl dl pre {
+    margin-left: -90px;
+    padding-left: 90px;
+}
+
+code {
+  font-size: 13px;
+}
+
+p.videos {
+  display: block;
+  margin: 18px 0;
+}
+
+p.videos:after {
+  content: "."; 
+  visibility: hidden; 
+  display: block; 
+  height: 0; 
+  clear: both;
+}
+
+p.videos .markup {
+  position: relative;
+  float: left;
+  width: 354px;
+  height: 325px;
+  border: 2px solid #1d86c1;
+  color: #000;
+  margin: 0 4px 4px 0;
+  background-color: #a5dffd;
+  line-height: 1.4;
+}
+
+p.videos .markup:last-child {
+  margin-bottom: 18px;
+}
+
+p.videos .markup img {
+  margin-bottom: 8px;
+  border-bottom: 2px solid #1d86c1;
+  position: relative;
+}
+
+p.videos .markup .button {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  text-align: center;
+  font-size: 96px;
+  line-height: 270px;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+p.videos .markup a:hover .button {
+  color: #fff;
+  text-shadow: #000 1px 1px 3px;
+}
+
+p.videos .markup .order {
+  float: left;
+  display: block;
+  width: 32px;
+  height: 40px;
+  font-size: 42px;
+  line-height: 0.85;
+  color: #1d86c1;
+  margin: 0 3px 0 1px;
+  text-align: center;
+}
+
+p.videos .markup .title {
+  font-weight: bold;
+  display: block;
+  width: 354px;
+}
+
+p.videos .markup .description {
+  display: block;
+  width: 354px;
+}
+
+p.videos a[href ^= "http"]:after {
+  content: "";
+}
+
+#header h1 {
+  margin: 6px 64px;
+}
+
+#header .brand {
+  padding: 0;
+  margin: 0 15px 4px 10px;
+  height: 28px;
+  width: 24px;
+  background-image: url("data:image/png;charset=utf-8;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAbCAYAAABm409WAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjM1NzlCNDc5NUZDNjExRTU4NTQzRjBCREI0MTU5M0MwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjM1NzlCNDdBNUZDNjExRTU4NTQzRjBCREI0MTU5M0MwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzU3OUI0Nzc1RkM2MTFFNTg1NDNGMEJEQjQxNTkzQzAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzU3OUI0Nzg1RkM2MTFFNTg1NDNGMEJEQjQxNTkzQzAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz54uldDAAAFMElEQVR42pxWbWxTVRh+bnvpuq3b6Lau2WAwkBkGYUwkyEcIosQfJvwY34kEBFxI8If/DERBJUJMNFHBGBIzDRjAD3CLqAHUaFRGphmzsDHGGMLmGGP92IDRdW3v8TnntrfFEDY9ydtz7+k5z/u8n+fq7tfqMcaxjvKRJoQOIbZqhnFIMwQ0YUDOSMxct9bks20MwFUUH4GP8oALhnDy+SDXWilzRjv8MAX5lGNk20w2lVBsEwyViBmk3cQ9X5F/wX9V8AaBAwRZaROm+SPRKAaHIhgYGkY4EgWk+coNolqD8ENg91gUrKWEyHSXjbikjFBoCMHuIMLhKAqzHSjOdRLbgP9GCLd6Q4jEYtDVVrGTpIJ8XJ0OqCfmxygHuWkWpBv4YsQNhG4OYPoUD15aNw+LOBfnZcGuaQjQij+p9PAfV1H/WzvujLOjuDAH8ZjhJsYXtMZHiA2U8xqzaC9Bd2iSsQI3FUiGm5dWoHb9wocGseFKHzZ9/DO6AnfgznKYGEksIfbY+FNjpVsivfz9t7G0snRUcDkWTvPi6NanoZPV8HDUTE+VDDJ2YpvOjGBeKx9Ktcq/iMWxZeG0+4A+abiMH9tuICdjHBZMLcKquVOQ5VBHse/0eURHYnBlZZg4Jns567pKP6QWR7jR6cpAZYnbAv+ysRObXz4KyDWbhgPRGN6aXoJPa57Cu9814/BJHyaUeUxQwySqJWZdS2mz/pCpadNS7OeXe1H+ZAU6aAHi3JfpQNvVPszbfgQZfJ5YVqhqQ1jsYVa2gNCl3y0XUTLsGvyhe7h4YwAzE1aU5rvQ8voqnGrpwq/tvfBd70fTtX4EuvwwyMSW41Tg2r/YSzxpgWaZJRckItl/8EMLVtPPyeHQbVheVaZEjuDdYXzT/Bf2HG/E5Wu3MKkkX7FGuhXEtCEt6kkflhS48Mv561j8Zh26g3cf3EdcTmxYXIH2957H8ifK0dUTYI0glUVmRgq7a8GK7Vx3pkdfSg4D3Uo/7z99AW0suGG2h3F2GwroDk3T7lO2rHIy6ho74B+8h0wWnZaKZ8R0UaLAYPkOqmLzx2cjPBLF5z+14rNTPjjzMvGIJxeLHi3Gqyvno5TVK4eHFf7snKnYV9eI/ExHeppCT3+xFsm0t38QeU4HHGwZMVZRcZEbkZE4rrD/tJ65hAYG/ML+LZYVZUW5ANNXZpMZTySCLFuvxR7KDdd7gvCOz4Lv7fXo7BtA9Tsn0NXZZ7ZGmb8JEukjGo2nBVgk246wXJSMfHdgAMtmT8LJHdWwE8xL8zve34T63ztwjn3nbjiCMrrphWeq7lPg67wJGzPNJGz1ImVBTNVBIm9h9ngFnhy59OuGJTOVPGicae3GibOXUOzOTmMvW7IRs/HlQ1Vs5i2FMqbo981XUVpzAI0dvaM2uxbWwHN7jyFO/2ezN6VSVFayqNUmvFgrXyr5cojKZks36Uzov+n7EabmmiUzsHZRBaqmelW2yAwN3A6jrasfX59tR+23TaqTTvaOZxxiSQvkfb2R0pRUkCgQYw03HOAGt0zTCA/0sAYQj8NTmIuinEwV5+Cde+i5xfWYgYnePLjYYWPswDw7yL+3UY4kLUwpSL/QhdjNWOw0S112AKHu4QhrQvrXabez39lVrQizqcn1vfx9ZUyXPvfv4lEPrapH3LyIslih+ez3UrIzdB4UybjVEdzzIPBRPls0P3+qqW4uQS5aVlqWihYCP849K+QN+3++i5JDfvvMJPBGMg4TfIjA67k2i3JutMP/CDAAquYGfx5tGmUAAAAASUVORK5CYII=");
+  background-position: center;
+  background-repeat: no-repeat;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.prettyprint a span.str {
+  text-decoration: underline;
+}
+
+#basics-notifications-events_table tr:first-child th {
+  padding-bottom: 0;
+}
+
+#basics-notifications-events_table tr:nth-child(2) th {
+  padding-top: 0;
+  vertical-align: bottom;
+  line-height: 1.2;
+}
+
+#basics-notifications-events_table th:nth-child(2) {
+  width: 5em;
+}
+
+#basics-notifications-events_table th,
+#basics-notifications-events_table td {
+  padding: 0.5em 0.5em;
+}
+
+#basics-notifications-events_table th:first-child,
+#basics-notifications-events_table td:first-child {
+  padding: 0.5em 1em;
+}
+
+#basics-notifications-events_table td a {
+  padding: 0 0.2em;
+}
+
+.glyphicon.glyphicon-ok {
+  color: #090;
+}
+
+.glyphicon.glyphicon-remove {
+  color: #900;
+}
+
+.glyphicon.glyphicon-ban-circle {
+  color: #000;
+}

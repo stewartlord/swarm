@@ -1,0 +1,90 @@
+<?php
+$this->headTitle()->set('Login');
+?>
+<?php if (!$partial): ?>
+  <div class="login-panel">
+    <h1 class="center"><?php echo $this->te('Log in to Swarm') ?></h1>
+<?php endif ?>
+<div class="<?php echo $partial ? 'modal hide fade' : '' ?> login-dialog">
+  <form method="post" class="modal-form">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h3><?php echo $this->te('Log in') ?></h3>
+    </div>
+    <div class="modal-body">
+        <div class="control-group">
+            <label for="user"><?php echo $this->te('Username or Email') ?></label>
+            <input type="text" id="user" name="user" class="span4" value="<?php echo $this->escapeHtmlAttr($user) ?>">
+        </div>
+        <div class="control-group">
+            <label for="password"><?php echo $this->te('Password') ?></label>
+            <input type="password" id="password" name="password" class="span4" autocomplete="off">
+        </div>
+      <label class="checkbox" for="remember">
+          <input type="checkbox" id="remember" name="remember" <?php echo $remember ? 'checked' : ''?>><?php echo $this->te('Remember Me') ?>
+      </label>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-mlarge btn-primary"><?php echo $this->te('Log in') ?></button>
+    </div>
+  </form>
+</div>
+<?php if (!$partial): ?>
+  <div class="links muted center">
+    <a href="<?php echo $this->escapeFullUrl($this->basePath()) . '/docs/' ?>"><?php echo $this->te('Help') ?></a>
+  </div>
+</div>
+<?php endif ?>
+
+<script type="text/javascript">
+    $(function() {
+        <?php if ($partial): ?>
+            // focus first, empty, input on show
+            $('.login-dialog').on('shown', function() {
+                var user = $('input[name=user]', this);
+                if (!user.val()) {
+
+                    user.focus();
+                } else {
+                    $('input[name=password]', this).focus();
+                }
+            });
+
+            swarm.modal.show('.login-dialog');
+        <?php else: ?>
+            // focus first, empty, input on show
+            var user = $('.login-dialog input[name=user]');
+            if (!user.val()) {
+                user.focus();
+            } else {
+                $('.login-dialog input[name=password]').focus();
+            }
+        <?php endif ?>
+
+        $('.login-dialog form').submit(function(e) {
+            e.preventDefault();
+            swarm.form.post('/login', '.login-dialog form', function(response){
+                if (response.isValid) {
+                    <?php if ($partial): ?>
+                        if ($('body').is('.login-reload')) {
+                            return window.location.reload();
+                        }
+                        $(document).trigger($.extend($.Event('swarm-login'), {
+                            user:    response.user,
+                            toolbar: response.toolbar,
+                            csrf:    response.csrf
+                        }));
+                        $('.login-dialog').modal('hide');
+                    <?php elseif ($statusCode === 401): ?>
+                        // try reloading the active page after login if the
+                        // initial page load had an 'unauthorized' statusCode
+                        window.location.reload();
+                    <?php else: ?>
+                        // redirect the user to the homepage
+                        window.location = "<?php echo $this->url('home') ?>";
+                    <?php endif ?>
+                }
+            }, '.login-dialog .modal-body');
+        });
+    });
+</script>

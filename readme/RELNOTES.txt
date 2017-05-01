@@ -1,0 +1,2713 @@
+                             Release Notes for
+                              Perforce Swarm
+
+                              Version 2016.1
+
+Introduction
+
+    Perforce Swarm (hereafter referred to as "Swarm") enables collaboration
+    and code review for teams using Perforce that will help your teams ship
+    quality software faster.
+
+    This document lists all user-visible changes to Perforce Swarm for
+    Release 2016.1
+
+    Perforce numbers releases YYYY.R/CCCCC, e.g. 2016.1/123456. YYYY is the
+    year; R is the release of that year; CCCCC is the bug fix change level.
+    Each bug fix in these release notes is marked by its change number.
+    Any release includes (1) all bug fixes of all previous releases and (2)
+    all bug fixes of the current release up to the bug fix change level.
+
+    The most up to date version of these release notes can be found here:
+
+    * http://www.perforce.com/perforce/doc.current/user/swarm_relnotes.txt
+
+    Please send all feedback to support@perforce.com.
+
+---------------------------------------------------------------------------
+
+Documentation
+
+    Swarm Release 2016.1 documentation is included in the distribution
+    under the "public/docs" folder and can be accessed from within the
+    Swarm from the "Help" menu on the toolbar once logged in.
+
+    Additionally, the documentation is available online:
+
+    * http://www.perforce.com/perforce/doc.current/manuals/swarm
+
+Supported Client Browsers
+
+    Swarm supports the following client web browsers and versions:
+
+    * Apple Safari 5.1+
+    * Google Chrome 33+ (stable channel)
+    * Microsoft Internet Explorer 9+
+    * Mozilla Firefox 28+
+
+    We recommend the use of the latest stable version of the browsers
+    listed above for the best experience when using Swarm.
+
+    Other web browsers might also work, including prior, development or
+    beta builds of the above web browsers, but are not officially
+    supported.
+
+    Swarm requires that JavaScript and cookies are enabled in the web
+    browser.
+
+Installation and Supported Platforms
+
+    Please see the separate "install" file, a peer to this file.
+
+Upgrading from Prior Versions
+
+    Please see the separate "upgrade" file, a peer to this file.
+
+License
+
+    Please see the separate "license" file, a peer to this file.
+
+Known Limitations
+
+    Access Control
+
+        Older versions of the Perforce Server (before 2013.1/659207) lack
+        the 'dm.keys.hide' configuration setting. Swarm stores much of its
+        metadata in keys in Perforce (e.g. comments, activity, projects).
+        By default these keys can be read from and written to by any user
+        with review access.
+
+        If using a new enough server, run 'p4 configure set dm.keys.hide=2'
+        to require admin access to read and write keys.
+
+    Task Stream Reviews
+
+        Pre-commit reviews in a task stream are not yet supported.
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2016.1
+
+    #1349976, #1354369, #1359795, #1363946, #1365396, #1369116, #1371461,
+    #1372479, #1372656, #1372707, #1373228, #1374179, #1374273, #1375065,
+    #1375073, #1375075, #1375228, #1375498, #1375504, #1375648, #1375649,
+    #1375718, #1376051, #1376062, #1377591, #1378119, #1378785, #1378791,
+    #1379330, #1383350, #1385018, #1385382 (Bugs #84966, #84967, #84968,
+    #84969, #84971, #84974, #84975, #84976, #84977, #84978, #84979,
+    #84981, #84982, #84983, #84984, #85311, #85602, #85914, #86004,
+    #86059, #86121, #86131, #86232, #86263, #86274, #86372, #86449)
+        Added support for managing user groups in Swarm.
+
+        You can now view, list, search, add, edit and delete groups.
+        Each group can have notifications enabled so that members
+        of the group get emails anytime another member of the group
+        creates a review or commits a change.
+
+        When viewing a group you may see activity performed by any member
+        of the group and reviews created by any member of the group.
+
+        When listing groups, groups that you own or are a member of
+        appear first, groups with notifications enabled appear second
+        and lastly, groups are ordered by name.
+
+    #1334616, #1334641, #1334707, #1334746, #1336388, #1336866, #1363026,
+    #1365608, #1368601, #1380898 (Bugs #84462, #85188, #85402, #85411)
+        Users can like comments. At the bottom of each comment Swarm now
+        displays the number of likes and a heart icon. The icon can be
+        clicked to 'like' the comment.
+
+        When a comment is liked, Swarm records the activity and sends an
+        email notification to the author of the comment.
+
+    #1325760, #1330654, #1338383, #1349339, #1353543, #1353982, #1354643,
+    #1356548, #1356781, #1359595, #1363405, #1374135, #1374751, #1374758,
+    #1375435, #1375931, #1377876, #1378137, #1379283, #1383321, #1383679,
+    #1385021, #1385190 (Bugs #76774, #84359, #84458, #84852, #85003,
+    #85010, #85129, #85307, #85391, #85492, #85537, #85570, #85620,
+    #86060, #86119, #86225, #86350)
+        Added version 2 of the RESTful API (ie. /api/v2/).
+
+        Version 2 adds the following functionality: list activity, list
+        groups, fetch a group, create a group, update a group, delete a
+        group, fetch a project, create a project, update a project,
+        delete a project, transition a review and commit a review.
+
+Minor new functionality in 2016.1
+
+    #1382157 (Bug #84535)
+        Improved performance for the Swarm blame button. Using a 20,000
+        line test file, this change reduces the rendering time from
+        ~60s to ~2s in Firefox and Chrome. Internet Explorer 10 improves
+        from ~730s to ~8s.
+
+    #1380885 (Bug #86341)
+        Swarm now requires users to be logged in by default.
+        To restore the previous behavior edit config.php and set
+        array('security' => array('require_login' => false))
+
+    #1379290 (Bug #84420)
+        Added a "My Reviews" dropdown button to the Reviews page. This
+        allows reviews to be filtered by those that you authored or those
+        that you are participating in.
+
+    #1374066 (Bug #86011)
+        Added an option to disable Swarm's auto-registration of the
+        P4.Swarm.URL property. The new option can be set in config.php:
+        array('p4' => array('auto_register_url' => false))
+
+    #1372999 (Bug #81339)
+        The X-Frame-Options header is now configurable. This header
+        controls when Swarm can be embedded in frames. To disable the
+        header edit config.php and set:
+        array('security' => array('x_frame_options' => false))
+
+    #1368888, #1372690 (Bugs #85380, #85542, #86050)
+        Improved performance with large numbers of users or groups.
+        Testing with 10000 users and a comment thread with 100 comments,
+        page load times were reduced from 7s to 250ms.
+
+    #1361367 (Bug #86519)
+        Updated language files for JA, KO and ZH.
+
+    #1356521 (Bug #85314)
+        Renamed config options for adding projects to be more consistent
+        with other options. Existing settings are still honored.
+        The 'security -> add_project_admin_only' option becomes
+        'projects -> add_admin_only'. The 'security -> add_project_groups'
+        becomes 'projects -> add_groups_only'.
+
+    #1351847, #1352325, #1352326, #1356409 (Bug #81285)
+        Updated the precompiled P4PHP binaries that come with Swarm to
+        use P4API 2015.2/1340214.
+
+    #1323467 (Bug #77725)
+        To assist with troubleshooting email configuration problems Swarm
+        now logs successful emails at the DEBUG log level.
+
+    #1321796 (Bug #84384)
+        Updated the project toolbar to look more modern.
+
+Bugs fixed in 2016.1 Patch 1 (since 2016.1/1386839)
+
+    #1399779 (Bug #87077)
+        Fixed an XSS vulnerability where labels in search results were
+        not being escaped correctly.
+
+    #1398683, #1398909, #1399266, #1399692, #1400199 (Bugs #86663,
+    #86950, #87024)
+        Fixed multiple vulnerabilities involving symlinks. The system now
+        refuses to preview, archive or delete the target of symlinks.
+        Previously, symlinks could be abused to disclose data or remove
+        files on the Swarm server that the user does not have permission
+        to access.
+
+        Note: The archive feature now requires the 'zip' command.
+        Support for PHP's 'zip' extension has been removed. If the 'zip'
+        command cannot be found, the archive button will not appear.
+
+    #1394659 (Bug #86805)
+        Fixed an XSS vulnerability where HTML in project descriptions was
+        not being escaped correctly on the home page.
+
+Bugs fixed in 2016.1
+
+    #1380942, #1381570, #1384005 (Bug #85965)
+        Fixed a bug that could produce two reviews for a single change
+        under certain conditions. If a review was created using both the
+        '#review' keyword and via the P4V integration, there was a race
+        condition that could result in two reviews being created.
+
+        Now Swarm temporarily locks each change before starting a new
+        review. These locks are Swarm specific and only limit the creation
+        of reviews.
+
+    #1372509 (Bug #85872)
+        Fixed a minor issue where double-clicking on project settings
+        checkboxes could cause the checkbox to become out of sync with
+        the form.
+
+    #1365277 (Bug #84965)
+        Fixed a bug where links to users in search results did not work
+        for usernames that contained backslashes.
+
+    #1359574 (Bugs #80107, #85454)
+        Fixed a bug where ZIP downloads did not work on pending files.
+
+    #1359011 (Bug #85423)
+        Fixed a problem where URLs with no TLD were not linkified.
+        Swarm no longer requires a TLD in the hostname to linkify a URL.
+
+    #1355979 (Bug #81600)
+        Reduced the severity of Basic Authentication failures to 'debug'.
+        This should reduce noise in the log file.
+
+    #1352055 (Bug #76075)
+        Fixed an issue where the buttons on an archived comment could
+        become hard to click if the window was too narrow.
+
+    #1350832, #1351299 (Bug #85191)
+        Fixed a bug where the user dropdown menu could be partially
+        hidden behind the header on some pages.
+
+    #1350733 (Bug #85176)
+        Fixed a bug where the branch moderators tooltip on the project
+        settings page did not correctly list moderators.
+
+    #1349386 (Bug #84995)
+        Fixed a 500 error that could occur when viewing a user's shelved
+        changes if 'dm.keys.hide' was set and the current user was not an
+        administrator.
+
+    #1338808 (Bug #84906)
+        Fixed a bug that caused the jobs search to throw an exception for
+        queries that start with '^' (not).
+
+    #1327917 (Bug #84622)
+        Fixed a problem where the test status of a review was not updated
+        if the tests were re-run without making any changes to the review.
+
+    #1327209, #1327378 (Bug #84629)
+        Fixed a problem that could occur with existing cache files when
+        upgrading Swarm. We now verify that the schema in the cached
+        objects matches the current schema.
+
+    #1318968, #1330724 (Bug #84650)
+        Fixed a bug where the common path was not being displayed for
+        shelved changes.
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2015.4
+
+    #1308891, #1308998, #1309707, #1310199 (Bug #63187)
+        Users can now add groups as project members. All members of these
+        groups (or any of their subgroups) become members of the project.
+        Any changes to these groups are automatically reflected in the
+        project. This is designed to ease user management.
+
+    #1308890 (Bug #71597)
+        You can now diff arbitrary versions of a review. Previously you
+        were limited to comparing consecutive versions of a review. The
+        version slider can be pulled apart to span a range of versions.
+        If you grab the connector then both version markers will move in
+        lockstep.
+
+    #1307207, #1308095 (Bug #78222)
+        Added packages for RHEL/CentOS 7 and Ubuntu 14.04.
+
+    #1265420, #1308568, #1309189 (Bug #66264)
+        The user's profile page now has a tab for shelved changes.
+        This makes it easier to request reviews of shelved changes
+        or to see the review status of changes that are in progress.
+
+Minor new functionality in 2015.4
+
+    #1309162, #1309659, #1309729 (Bug #77809)
+        Introduced a button to show whitespace characters (space and tab)
+        in diff output. When enabled these characters appear as muted dots
+        and arrows respectively.
+
+    #1255119 (Bug #84195)
+        Added support for previewing the Keynote, Pages and Numbers
+        document formats via the LibreOffice module.
+
+Bugs fixed in 2015.4 Patch 1 (since 2015.4/1317923)
+
+    #1326721 (Bug #84612)
+        Fixed a regression where projects could not be added on Perforce
+        Servers older than 2012.1.
+
+    #1326575 (Bug #70714)
+        Fixed a problem affecting edge/commit server deployments. If Swarm
+        was configured to talk directly to an edge server, reviews created
+        by that instance of Swarm could not be updated. This is because
+        the change was being bound to the edge server. Now, edge server
+        instances forward review creation to the commit server instance.
+
+    #1322454 (Bug #84108)
+        Fixed a bug where the user picker could list groups for fields
+        that do not allow groups to be selected (e.g. Project Owners).
+
+Bugs fixed in 2015.4
+
+    #1316264 (Bug #84197)
+        Fixed a bug in the Perl trigger where posting to Swarm could
+        fail on Windows Perforce Servers. This would only occur when
+        wget was installed but curl was not.
+
+    #1307838 (Bug #83660)
+        Fixed a bug where links in RSS feeds did not work in some feed
+        readers. RSS feeds now use the fully qualified Swarm URL.
+
+    #1306055 (Bug #83608)
+        Fixed a bug introduced by the 'edit_branches_admin_only'
+        option. When enabled, this feature unintentionally restricted
+        editing of projects to administrators.
+
+    #1265682 (Bug #83602)
+        Fixed a bug in the Perl trigger script where the strict check
+        erroneously prevented committing a review in some cases.
+        Specifically: reviews with a single file marked for delete and
+        reviews with moved files.
+
+    #1265015 (Bug #83589)
+        Fixed an issue where Swarm did not recognize the new utf8 file
+        type as text and therefore failed to render diffs and previews.
+
+    #1262908 (Bug #77369)
+        Fixed a bug where +l files were silently dropped from reviews.
+        Note this fix requires Perforce Server version 2014.2 or newer
+        with the filetype.bypasslock server configurable enabled.
+
+    #1261960 (Bug #83277)
+        Fixed a performance problem that could occur if the .git-fusion
+        depot contained changes with more than 10k files.
+
+    #1255309 (Bug #84196)
+        Adjusted the styling of text file previews so that the page
+        does not shift around when syntax highlighting large files.
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2015.3
+
+    #1241320 (Bug #66921)
+        Enhanced the Perl trigger to run under Windows. There is now a
+        single trigger script for all supported server platforms.
+
+    #1239352 (Bug #70542)
+        Introduced a search box that looks for projects, users and files.
+
+        A search input now appears in the top-right of the toolbar and
+        searches as you type. Results are grouped by type. It looks for
+        projects, users and files that match your keywords. Project and
+        user searches use Swarm's cache. File searches use 'p4 fstat'
+        and P4 Search (if it is installed).
+
+    #1230860, #1240881 (Bug #64899)
+    	Email notifications for review comments can now be delayed and sent
+        in a single batch email later. The add comment form now has a
+        'Delay Notification' checkbox. When a new comment is posted with
+        this box checked, the email notification is delayed until a comment
+        is posted with the box unchecked.
+
+Minor new functionality in 2015.3
+
+    #1241441 (Bug #79003)
+        Added a PHP 5.6 build of P4PHP. All P4PHP builds have now been
+        updated to use P4API 2015.1/1240625
+
+    #1241268 (Bug #81066)
+        Updated to the new hex-shaped Swarm logo.
+
+    #1237763, #1239247 (Bug #77648)
+        The 'My Reviews' button now filters reviews to show only those
+        authored by the current user.
+
+        Added a new author filter to the list reviews API endpoint
+        (GET /api/v1.2/reviews). This bumps the version for all endpoints
+        to v1.2.
+
+    #1231387, #1231395 (Bug #78004)
+        The project sidebar now displays owners and moderators.
+
+    #1229476, #1230017, #1230262, #1230490 (Bug #80185)
+        The test status tooltip now shows when the results were reported.
+        Internally, Swarm now tracks the start time and average running
+        duration for automated tests.
+
+    #1219887 (Bug #80322)
+        Improved handling of multiple or out-of-order test results.
+        Previously the last result would win. Now results for old versions
+        are rejected and we preserve the results of the first failure
+        if we receive multiple results for a given version of a review.
+
+    #1215329 (Bug #81449)
+        We now show a hard-disk icon for depots when browsing the root of
+        a server (previously depots were represented with a folder icon).
+
+    #1214788 (Bug #81450)
+        Moved the logout link to the bottom of the user dropdown menu.
+
+Bugs fixed in 2015.3
+
+    #1241158, #1247062 (Bug #81061)
+        Fixed a bug where sub-groups that reference parent groups caused
+        infinite recursion and exhausted all memory.
+
+    #1240050 (Bug #81042)
+        Fixed a bug where the Perl trigger script could emit a 'Use of
+        uninitialized value' error when the config file was not specified.
+
+    #1235955, #1236887 (Bug #80784)
+        Fix a bug where file downloads were not always streamed resulting
+        in excessive memory consumption. This was due to output being
+        double buffered in some cases. We now clear all output buffers
+        when streaming output.
+
+    #1231393 (Bug #81458)
+        Fixed a bug where the number of moderators was not being displayed
+        next to each branch on the project edit form.
+
+    #1230829 (Bug #80351)
+        Fixed a 404 that could occur when marking a file as read when
+        diffing two versions of a review if the file was previously shelved
+        and had since been removed from the review.
+
+    #1230827 (Bug #80538)
+        Fixed an illegal offset warning that could occur when diffing two
+        versions of a review. This would happen if a file that existed in
+        the earlier shelved version of the review was removed in the later
+        version.
+
+    #1228298 (Bug #80404)
+        Fixed a regression bug where the follow project link did not work.
+
+    #1225869 (Bug #80501)
+        Fixed a layout issue that occurred if the text input for inline
+        comments was resized horizontally. Now the text input can only
+        be resized vertically.
+
+    #1220502, #1220960, #1222664 (Bug #77401)
+        Fixed problems that affected the extensibility of the Linkify
+        filter. The last word variable is now updated and passed
+        correctly to Linkify callbacks.
+
+    #1216034, #1235980, #1241414 (Bug #80348)
+        Pending comments are now preserved when comments are refreshed
+        while editing a comment or adding a comment from the comments tab.
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2015.2
+
+    #1071421, #1203684, #1204593, #1206600, #1207516, #1207537 (Bug #64896)
+        Comments are now editable. If you are logged in as the user that
+        authored a comment, you will now see an 'Edit' link in the comment
+        footer. Clicking this link presents an in-place edit form that
+        allows modification of the comment body and attachments.
+
+    #1206282, #1207388 (Bugs #79595, #79596)
+        Added localizations for Simplified Chinese and Korean.
+
+        Incoming JA, KO, and ZH-CN localizations from AlphaCRC, along with
+        changes to the assembleLocaleData.php script to process the new
+        languages.
+
+    #1100113, #1205196, #1206305, #1206658, #1331177 (Bugs #70714, #79174)
+        Added support for multi-site deployments. Swarm is now compatible
+        with edge and commit servers. Use of the new Perl-based trigger
+        is required.
+
+    #1099584, #1101368 (Bugs #75355, #75653, #76342, #77572)
+        Added a new version of the Swarm trigger implemented in Perl.
+        The usage of this trigger is compatible with the existing bash
+        trigger. The new version of the trigger adds support for edge
+        servers and fixes a bug with the strict enforcement mode and ktext
+        files.
+
+Minor new functionality in 2015.2
+
+    #1212292 (Bug #80033)
+        Updated the Swarm trigger package to use the new Perl trigger.
+
+    #1207511 (Bug #79934)
+        Changed the subject for change submit email notifications from
+        'Change @54321' to 'Commit @54321'.
+
+    #1206503, #1207071 (Bug #78167)
+        IP protections emulation now includes proxy rules. Previously,
+        proxy rules were not taken into account. Now, we treat Swarm
+        as an intermediary and apply proxy rules according to the end
+        user's IP address.
+
+    #1206494 (Bug #78996)
+        Added an option to limit configuration of project branches to
+        admin users. With the projects > edit_branches_admin_only option
+        set to true, only admins are able to configure branches.
+
+    #1205521, #1205762 (Bug #72454)
+        We now list jobs and changed files in review email notifications.
+
+    #1204727, #1207016 (Bugs #78995, #78996)
+        Added an option to limit editing project names to admin users.
+        With the projects > edit_name_admin_only option set to true, only
+        admins are able to rename projects.
+
+    #1202977 (Bug #79396)
+        Added an option to the Swarm trigger to skip the enforce and strict
+        checks if the change only contains files of the specified type(s).
+        File types to skip can be specified via the EXEMPT_EXTENSIONS
+        config option.
+
+    #1202975 (Bug #79609)
+        Moderators now receive email notification for commits and reviews
+        against branches they moderate even if they are not members of the
+        affected projects.
+
+    #1198459, #1198806, #1206279 (Bug #79295)
+        Refreshed the login page. Added a nice background image of some
+        fine folks having coffee and doing important creative work.
+
+    #1197879, #1197890, #1198475 (Bug #66465)
+        Moved the project edit button to the project toolbar and renamed it
+        to 'Settings'. Tweaked the project form to render with the project
+        toolbar and sidebar when editing.
+
+    #1171636 (Bug #70542)
+        Swarm now generates host-unlocked tickets on login. This is needed
+        to integrate with other Perforce services like p4-search.
+
+    #1171629 (Bug #79944)
+        Tweaked line hash handling (ie. #l123) to position the targeted
+        line 1/4 of the way down the page. Previously it was positioned
+        100px down the page which often felt too high.
+
+    #1149485 (Bug #78994)
+        Added an option to the Swarm trigger to skip the enforce and strict
+        checks if the change contains more than a given number of files.
+        The number of files can be specified via the new EXEMPT_FILE_COUNT
+        config option.
+
+    #1126994, #1144472, #1206760 (Bug #79386)
+        Fixed a performance problem that could occur with large numbers
+        of users, groups and projects. With 5000 users, 5000 groups and
+        500 projects load times for the project listing have been reduced
+        by >20x.
+
+    #1099546, #1100888, #1101371, #1101414 (Bug #79315)
+        Simplified the email notification template. The revised template
+        eliminates the grey border and reduces margins.
+
+    #1072284, #1197886 (Bug #79214)
+        Renamed the 'History' tab and 'History' links to 'Commits'.
+
+    #1071674, #1073354 (Bug #79203)
+        Comment counts now reflect the number of open (non-archived)
+        comments. Hovering over the number of comments shows the number
+        of archived comments. Previously we only showed the total number
+        of comments for a given topic.
+
+    #1069597 (Bug #79182)
+        Improved the visibility of 'more context' rows. We now render a
+        horizontal grey line help delineate diff chunks.
+
+    #1068547, #1209330 (Bug #73003)
+        Updated rules for review transitions to optionally deny authors
+        approving their own reviews. If the reviews > disable_self_approve
+        option is true, then authors are not able to approve their own
+        reviews (even if they are also moderators).
+
+    #1067114 (Bug #76362)
+        Imagick module now converts ".tif" files. Previously, only the
+        ".tiff" extension was recognized.
+
+Bugs fixed in 2015.2
+
+    #1214397 (Bug #80087)
+        Fixed a problem where Swarm could continuously reload a review if
+        it had unexpected commit-status data (due to a race condition).
+
+    #1208398 (Bug #76535)
+        Fixed a bug where OVA setup script did not work with SSL enabled
+        Perforce servers.
+
+    #1207465 (Bug #79269)
+        Fixed a bug where our handling of Emojis was not compatible with
+        newer versions of Gemoji.
+
+    #1207464 (Bug #79856)
+        Fixed a bug where some of our 'infinitely scrolling' lists were not
+        loading more items. At some zoom levels Chrome reported a lower
+        than expected scroll position. This caused our code to conclude the
+        user had not reached the bottom of the page. Now we consider the
+        user to have scrolled to the bottom if they are within a couple of
+        pixels.
+
+    #1206727 (Bug #79800)
+        Fixed a bug where attempting to archive a specific version of a
+        file resulted in a 500 error.
+
+    #1205188 (Bug #79945)
+        Fixed an issue where the project save button could be erroneously
+        enabled if a project name is entered and user data has not yet
+        loaded (despite having no project members).
+
+    #1152722, #1205188 (Bug #79945)
+        Fixed a bug where the project save button could be enabled when
+        it should be disabled. Specifically, this could occur when the
+        list of users had not yet loaded, or while waiting to redirect
+        to a newly created or updated project page.
+
+    #1066846 (Bugs #74987, #76629)
+        Fixed a bug where file and directory names could be missing
+        characters if they contained non-ascii bytes and the web-server
+        was using to a non-UTF-8 locale.
+
+        We now detect the available system locales and explicitly select
+        one that supports UTF-8.
+
+    #1065005 (Bug #78165)
+        Fixed a bug where notification emails were not threading properly
+        in Microsoft Outlook. Outlook uses a non-standard 'Thread-Index'
+        header to group 'conversations' and Swarm was not sending this
+        header.
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2015.1
+
+    #1024336, #1027042, #1035289, #1035631, #1039648 (Bug #66715)
+        Added support for localization. User-facing strings now run
+        through a translation component that supports string replacement,
+        escapement and pluralization. The default and fallback locales can
+        be set in the configuration file. The user's locale is detected
+        from the browser's HTTP_ACCEPT_LANGUAGE header automatically
+        (this behavior can be disabled).
+
+        Both the web browser and the web server support translation.
+        The same methods are available in each environment and behave
+        in the same way. The same messages are available in both
+        contexts and whichever locale is configured or detected on
+        the server will be selected in the browser.
+
+    #993239, #1003694, #1029826, #1034069, #1038235 (Bug #71596)
+        Files and folders can now be downloaded as ZIP archives.
+        Any depot path can be archived, however, it must not be larger
+        than the archives => 'max_input_size' setting. The default value
+        for this setting is 512 MB.
+
+        Archives are built in the background and a progress bar is
+        presented to the user as files are synced and compressed.
+        Each archive is cached for 12 hours (by default) before being
+        erased. This ensures that subsequent requests to download the
+        same archive go quickly.
+
+        The archives => 'archive_timeout' setting controls how long
+        a process can spend building a ZIP archive (default is 30m).
+
+    #1034946, #1035427, #1039713 (Bugs #66965, #77519)
+        We now limit the number of files displayed in a changelist.
+        Previously if you viewed a particularly large change (many
+        thousands of files) Swarm might run out of memory. Now limit
+        the number of files displayed to 1000 (by default). This can be
+        adjusted via the p4 => 'max_changelist_files' setting.
+
+        If the P4D server is 2014.1+ the number of files will be limited
+        in Perforce. Otherwise they will be limited in Swarm. In the
+        latter case, Swarm can still run out of memory on large changes.
+        However, the threshold has been raised because the list of files
+        is trimmed fairly early.
+
+Minor new functionality in 2015.1
+
+    #1038843 (Bug #77610)
+        Enhanced JIRA integration to better find references to issues
+        when they are surrounded by punctuation. Specifically, Swarm
+        now detects JIRA issues that are wrapped in round brackets '()'
+        and curly braces '{}'.
+
+    #1033167 (Bug #78159)
+        Improved the XHProf module to automatically clean-up old report
+        files. Previously if XHProf was enabled, the number of log files
+        would continue to grow over time. Due to their large size these
+        files could end up consuming a significant amount of disk space.
+
+        Note: XHProf is a profiler developed by Facebook.
+
+    #1011531 (Bug #77468)
+        Added a reviews => 'commit_timeout' setting to provide control
+        over how long processes can spend submitting files to Perforce.
+        By default this is set to 30 minutes.
+
+    #1006502 (Bug #67720)
+        We now detect errors connecting to Perforce and report them as 503
+        (service unavailable). This should assist in debugging p4 port,
+        user and password problems.
+
+    #1003872, #1005554 (Bug #78347)
+        Minor visual refresh. User avatars now appear rounded. Rows in
+        tables no longer appear with alternating background colors.
+        These changes are purely aesthetic.
+
+    #1001768, #1006500 (Bug #77277)
+        Added a notice to the top of the home page if there are no
+        workers running. This should assist in debugging a common server
+        configuration problem.
+
+    #991098 (Bug #76671)
+        Improved the rules governing review state transitions. Authors
+        are now permitted to approve or reject their own reviews if they
+        are branch moderators.
+
+Bugs fixed in 2015.1
+
+    #1039199 (Bug #74656)
+        Fixed an issue where version 1.1 of the web-services API added
+        a new required reviewers field and erroneously made it available
+        to version 1.0 of the API. We no longer accept required reviewers
+        on v1.0.
+
+    #1035544, #1035560 (Bug #66917)
+        Fixed an issue that can cause a commit to be partially processed.
+        In some cases if a user unshelved files in a review and one or
+        more of those files had pending resolves, Swarm would be unable to
+        remove files from the review and would abort processing the commit.
+
+        If the server version is 2014.2+, we now use the -f flag to ensure
+        that we are able to remove shelved files. Additionally, we ignore
+        the error that will occur if this situation arises on an older
+        version of P4D.
+
+    #1033935 (Bug #78332)
+        The blame button is now disabled for files that have no content.
+        Previously an error would occur if blame was used on an empty file.
+
+    #1022486 (Bug #76571)
+        Fixed javascript error occurring when switching to History tab
+        while viewing a file in Swarm.
+
+    #1022324 (Bug #77803)
+        Removed legacy rewrite rules for adding tasks to the queue.
+
+        These rules were left there temporarily for backwards
+        compatibility. Currently, the tasks are added to the queue via
+        posting to http://<swarm-host>/queue/add/<swarm-token> that has a
+        separate rewrite rule.
+
+    #1019647 (Bug #77678)
+        Fixed a bug where the swarm-trigger's optional 'strict' and
+        'enforce' modes did not work against a unicode enabled server.
+
+    #1016421 (Bug #71596)
+        Fixed an issue where progress bar status text was not legible until
+        the bar was at least as wide as the text. Now the text appears in
+        black over the background and white over the finished portion of
+        the progress bar.
+
+    #1011943 (Bug #78436)
+        Fixed a performance regression where the projects sidebar could
+        take a long time to load. This was most prominent when there was
+        a bad link between Swarm and the Perforce server. In some cases,
+        the projects sidebar now loads 8x faster.
+
+    #1006678 (Bug #77394)
+        Improved validation of branches in project configuration.
+        Previously the server would accept branches that had no paths
+        defined. Now the server-side validation matches the client-side
+        validation and such branches produce an error.
+
+    #1003822 (Bug #78437)
+        Attempting to access the '/view' or '/download' URIs for a folder
+        (not a file) now produces a 404 response.
+
+    #997596, 1015136 (Bug #77206)
+        Minor aesthetic fixes. Adjusted the position of popover and tooltip
+        arrows when the browser's view is magnified. Improved the contrast
+        of keyboard shortcut hints.
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2014.4
+
+    #982485 (Bug #76736)
+        Swarm is now distributed under a BSD-style two-clause license.
+
+    #965185 (Bug #76239)
+        Performance has been significantly improved for sites with a
+        large number of protections entries. This should be particularly
+        noticeable when browsing files.
+
+    #905488, #962547 (Bug #73830)
+        Added options to disable sending emails to all project members for
+        commits and new review requests. The project edit page now has two
+        checkboxes that can control project notification emails.
+
+Minor new functionality in 2014.4
+
+    #986364 (Bug #76961)
+        Added 'apiVersions' to the output of the 'version' endpoint. This
+        field includes a list of all of the api versions supported by the
+        instance of Swarm (e.g. 1, 1.1).
+
+    #970399 (Bug #70284)
+        It is now possible to limit the range of changes shown on the
+        history tab to a specific range using change numbers, dates,
+        labels, etc.
+
+    #968015 (Bug #66742)
+        Project creation can be limited to only users under specific
+        group(s) by setting 'add_project_groups' under the 'security'
+        config. This feature is disabled by default.
+
+    #967909 (Bug #76291)
+        Swarm can now be configured to leave reviews in an approved state
+        even if they are updated with modified files. By default, reviews
+        will still revert to 'needs review' when they are updated with
+        modified files. To have reviews stay approved even when modified
+        files are added set 'unapprove_modified' to false under the
+        'reviews' configuration.
+
+    #965024 (Bug #74656)
+        It is now possible to specify required reviewers when creating
+        reviews via the API.
+
+Bugs fixed in 2014.4 Patch 1 (since 2014.4/988814)
+
+    #1000792 (Bug #77218)
+        Fixed an issue where the workers could stop running if upgrading
+        from 2014.2 via RPM packages.
+
+    #991899, #992629 (Bug #77048)
+        Fixed an issue where the RPM packages could erroneously disable
+        the Perforce PHP extension on upgrade.
+
+    #990382 (Bug #76971)
+        Fixed an issue where the RPM packages did not require the DOM
+        or mbstring extensions needed for RSS feeds and multi-byte strings.
+
+Bugs fixed in 2014.4
+
+    #986536 (Bug #76569)
+        Fixed a problem where buttons did not always disable properly when
+        submitted. This only affected some browsers and appeared to be
+        caused by a race condition between the click and blur events.
+
+    #985713 (Bug #76963)
+        Fixed an issue with our icon sprites. Previously when scaling up
+        your browser view, some icons would erroneously show pixels from
+        adjacent icons. Now the sprites have generous spacing to avoid this
+        issue.
+
+    #972442 (Bug #76382)
+        Fixed an issue where the submit button on the "Add a Commit" and
+        "Already Committed" dialogs could erroneously stay disabled
+        after a change had been selected.
+
+    #968046, #969029 (Bug #74760)
+        When emulating IP protections, enabled by default, Swarm will
+        now correctly treat protection entries as as case-insensitive
+        when dealing with a case-insensitive Perforce server.
+
+    #968037 (Bug #75488)
+        Fixed an issue where @mentioned and @*mentioned users were not
+        added as reviewers when creating a review using the API.
+
+    #967896, #967998 (Bug #73701)
+        Fixed an issue where committing to a streams depot via the Swarm
+        web interface could erroneously report 'No files to submit'.
+
+    #950565 (Bug #72392)
+        Fixed an issue where LibreOffice could become unresponsive.
+        Generating doc previews should now be significantly more reliable.
+
+    #939315 (Bug #74463)
+        When a 'strict' or 'enforce' Swarm trigger fails due to bad
+        credentials, include the active P4PORT setting in the error message
+        to help diagnose problems more easily.
+
+    #933049, #933477 (Bug #74860)
+        Updating an approved review with unchanged ktext files will no
+        longer cause it to erroneously revert to the needs review state.
+        Note, this fix only works when operating against a 2012.2 or
+        newer Perforce server.
+
+    #898943 (Bug #72908)
+        Fixed an issue where the horizontal scrollbar could disappear if
+        a collapsed file toggled between side-by-side and inline diff.
+
+    #897986 (Bug #66554)
+        Fixed an issue where logging in to comment on the left hand side
+        of a side-by-side diff would collapse the comment row.
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2014.3 Patch 2 (since 2014.3/958056)
+
+    #967594 (Bug #75006)
+        Swarm is now free of charge for all Perforce users.
+        A Swarm license file is no longer required for operation.
+
+Major new functionality in 2014.3
+
+    #890602 (Bug #66725)
+        Added the option to show 10 more lines of context on diffs by
+        clicking on the blank row that separates the diffs.
+
+    #889932 (Bug #73703)
+        When a review is updated with modified files, existing votes will
+        now be marked as 'stale'. Stale votes will be shown with a faded
+        icon and will not count towards up-votes or down-votes.
+
+    #889492 (Bug #63260)
+        It is now possible to mark files in reviews as 'read'. To mark a
+        file as read, click the 'eye' button on the far right of the
+        file header. The read flag is remembered independently for each
+        user along with the version and file digest information. If the
+        contents of the file change, the 'read' flag automatically clears.
+        This feature can be helpful when reviewing lots of files.
+
+    #884641, #887942, #889744, #890743 (Bug #63263)
+        Swarm now supports treating comments as light-weight tasks. Tasks
+        can be marked as 'addressed' and may optionally be 'verified'.
+
+    #877136 (Bug #73157)
+        If a change has been associated to a review, Swarm will always
+        update the review when files are shelved or the change is
+        committed.
+
+        Previously, if the #review-123 or [review-123] style keyword
+        wasn't present, the review would not have been updated.
+
+    #854977, #863042, #873042, #875837, #876579, #889563 (Bug #70664)
+        Swarm now has an API that exposes and documents various tasks
+        that were previously difficult to accomplish.
+
+        The API supports listing reviews, retrieving information about an
+        individual review, creating a review from an existing pending or
+        submitted change, adding a change to a review (making it the new
+        Head revision of that review), listing projects, and creating new
+        entries in the Activity list.
+
+        Authentication is handled using standard HTTP Basic Auth, with
+        either a password or a ticket. Note that passwords will not work
+        in higher-security configurations, so a ticket may be required.
+
+Minor new functionality in 2014.3 Patch 1 (since 2014.3/896879)
+
+    #957494 (Bug #74292)
+        Added support for optional POST params when configuring automated
+        tests on a project. Data can be specified in either get=param
+        style or as {"json" : "values"}
+
+Minor new functionality in 2014.3
+
+    #886023 (Bug #73067)
+        Comment attachments will now be cached by the browser for 12 hours.
+        This will decrease jumpiness when rendering attached images.
+
+    #882741 (Bug #73058)
+        The Swarm cron script now supports starting workers on SSL-enabled
+        Swarm hosts that utilize a self-signed certificate.
+
+    #879274 (Bugs #62048, #69646, #71743, #72202)
+        The Reviews page now updates the URL to reflect search terms. This
+        allows users to bookmark or share searches and ensures the search
+        results are shown correctly when navigating browsers history.
+
+    #878436 (Bug #73357)
+        Swarm will now linkify occurrences of "changelist <#>" in comments
+        and changelist descriptions.
+
+    #878206, #878814, #879346, #879579 (Bug #72736)
+        The Swarm OVA is now built using Swarm packages. This allows the
+        user to more easily upgrade Swarm.
+
+    #875126 (Bug #66253)
+        The jobs page now updates the URL to reflect search terms. This
+        allows users to bookmark or share searches and ensures the search
+        results are shown correctly when navigating browsers history.
+
+    #871859 (Bug #66355)
+        Dropdown menus in Swarm can now be operated via the keyboard.
+
+    #870337, #870357 (Bugs #70905, #71325, #72767)
+        Several enhancements have been made to the Swarm JIRA module. JIRA
+        Swarm links now include a snippet of the change/review description.
+        Additionally, editing a submitted change description or
+        adding/removing jobs on a change or review will update JIRA Swarm
+        links.  Note, old links are not automatically updated to include
+        descriptions.
+
+    #862937, #870621 (Bug #69205)
+        Swarm now has a default tab-size of 4 in Chrome, Firefox and
+        Safari.  Internet Explorer does not support tab-size and will
+        still display a tab width of 8.
+
+    #860398 (Bug #66357)
+        Added a 'system' avatar for activity not associated with a
+        particular user (for example when tests pass or fail).
+
+    #860346 (Bug #73032)
+        Swarm now allows changes by specific users to be ignored from the
+        perspective of starting and updating reviews. This is enabled by
+        specifying 'ignored_users' under the 'reviews' config.
+
+    #860321 (Bug #73057)
+        Mainlines are now listed first under the Review queue's branch
+        filter.
+
+    #855740 (Bug #67654)
+        Added support for rendering SVG images in file preview, file diffs
+        and comment attachments.
+
+    #853423 (Bug #72412)
+        The #review keyword is now more forgiving of nearby punctuation.
+
+    #848771 (Bug #72359)
+        Swarm now automatically reverts review state back to 'Needs Review'
+        when approved reviews are updated with modified files.
+
+    #846902 (Bug #72448)
+        Added a swarm of bees that fly around your cursor on the error
+        page.  As you move your mouse more bees surround your cursor. Over
+        time, if you hold your mouse still, the bees go away.
+
+    #842916, #851529 (Bug #72559)
+        We now do a case insensitive lookup for @mentioned jobs.
+
+    #842660 (Bug #73720)
+        Basic Auth is now a supported means of authentication. This means
+        that actions which previously required 2 steps (performing a login,
+        writing the resulting cookie to a cookie jar, and then performing
+        the actual action) can now be streamlined into a single request.
+
+        The username must match a valid perforce user with permissions to
+        perform the action, and the password can be a valid ticket or the
+        user's password.
+
+        Note: Some p4d security levels only allow the use of tickets in
+        this context.
+
+    #840855 (Bug #72696)
+        Upgraded jQuery to 1.11.1 and added the jQuery sourcemap.
+
+    #839881 (Bug #72704)
+        Adjusted the sorting of files and directories when browsing to put
+        hidden (e.g. '.foo') files and directories last.
+
+    #836802 (Bug #72385)
+        For inline comments, the row will now collapse when the last open
+        comment is archived.
+
+Bugs fixed in 2014.3 Patch 2 (since 2014.3/958056)
+
+    #967444 (Bug #73582)
+        Fixed an issue where the Debian packages could fail to properly
+        install the Perforce PHP extension. The Debian packages now work
+        correctly on Ubuntu 13.10, 14.04, 14.10.
+
+Bugs fixed in 2014.3
+
+    #893456 (Bug #73882)
+        Fixed an issue where URL-encoded characters could erroneously show
+        up in filenames under the activity feed or comments tab.
+
+    #892728 (Bug #73833)
+        Logging in with the incorrect cAsE user id on a case insensitive
+        p4d will no longer prevent transitioning and approving reviews.
+
+    #892681 (Bug #73832)
+        Fixed an issue where using characters like % and # in your filename
+        would cause errors when trying to show full context.
+
+    #892564 (Bug #73824)
+        Fixed an issue where placeholder text in IE erroneously acted as
+        default values for new inline comments under sideways diff mode.
+
+    #892532 (Bug #73826)
+        Fixed an issue where the comments could overlay code lines if the
+        comment was wide enough to wrap and diff scrollbars were showing.
+
+    #891999 (Bug #73759)
+        Swarm will display a warning if thread-safe PHP is detected. This
+        is because P4PHP is does not support threaded operation.
+
+    #891941 (Bug #71531)
+        Ensure all emails are set to use UTF-8 encoding so extended
+        characters display properly.
+
+    #890428 (Bug #71549)
+        Attempting to commit a review with out of date files no longer logs
+        an exception. An error is still shown to the user in the Swarm UI.
+
+    #890422 (Bug #72918)
+        If Swarm encounters a task file it cannot delete; it will no
+        longer process it and will abort the worker. This will prevent
+        endlessly reprocessing the task.
+
+    #890342, #892319 (Bug #73718)
+        The windows trigger script now wraps the path to curl in quotes
+        allowing curl.exe to be under a path with spaces.
+
+    #888871 (Bug #73599)
+        Fixed an issue where using the context menu to paste content
+        into the comment form would fail to enable the post button.
+
+    #887895 (Bug #71805)
+        Adding a new comment will no longer show files that were attached
+        to a previously posted comment.
+
+    #886698 (Bug #73581)
+        Performance improvements for rendering larger files in IE.
+        Performance was increased by about 30% for the rendering of the
+        side-by-side Diff mode. For files with more than 1000 lines this
+        can still be very slow, we plan to continue making improvements.
+
+    #880741 (Bug #65586)
+        Introduced tab history tracking for IE9. Previously IE9 would load
+        the correct tabs for urls with tab ids but would not insert tab
+        ids when navigating tabs in Swarm.
+
+    #879459 (Bug #67480)
+        ARIA labels have been added to the filter buttons on the Reviews
+        Queue in order to expose their meaning to screen readers.
+
+    #877109 (Bug #73296)
+        Swarm will no longer enter an endless loop when the 'swarm' group
+        references recursive sub-groups.
+
+    #873881 (Bug #73084)
+        Fixed an issue where users would sometimes be required to login to
+        comment despite having recently logged in.
+
+    #863379 (Bug #66712)
+        Swarm will no longer fail to update reviews when the Swarm admin
+        user has changed.
+
+    #861147 (Bug #73037)
+        The json output for projects no longer leaks automated test and
+        deploy settings. These values can include sensitive data such as
+        auth tokens.
+
+    #860313, #861755 (Bug #73056)
+        Improved handling of empty descriptions in commit and review email
+        notifications. We no longer append a trailing '-' to the subject
+        and we no longer output an empty description block in the body.
+
+    #855747 (Bug #72716)
+        Fixed a bug where selecting the already active project/branch
+        filter would erroneously clear the filter.
+
+    #860349 (Bug #61897)
+        We now prevent service and operator type users from logging in.
+
+    #851970 (Bug #72825)
+        Fixed an issue where Swarm was generating 'Unknown command' errors
+        on Perforce Server's using structured logs. Instead of running a
+        null command, we now run 'help' to avoid the error. Further, we
+        only test the connection if it appears necessary which should
+        provide a minor performance boost.
+
+    #849546 (Bug #72860)
+        Following an inline comment link to a file open for 'add' no longer
+        produces a JavaScript error.
+
+    #848957 (Bug #72845)
+        The trigger script will now fallback to curl if wget returns an
+        exit code of 126 or higher. Previously we only fellback for 127.
+
+    #842648 (Bug #72680)
+        We now correctly detect files of type 'import' as being adds.
+
+    #842413 (Bug #72707)
+        Reviews now only reference projects/branches impacted by the
+        current version.
+
+    #841620 (Bug #70219)
+        Invalid/non-existent jobs added to a change no longer result in a
+        HTTP-500 error.
+
+    #841606 (Bug #71843)
+        Uploading a directory now results in an error message, not an
+        unreadable white bar.
+
+    #836796 (Bug #72523)
+        IE11 is no longer erroneously detected as being Firefox by Swarm's
+        generic error handling code.
+
+    #836814 (Bug #72435)
+        Modal dialogs now display on top of tooltips, previously they could
+        erroneously overlap the dialog.
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2014.2
+
+    #825537, #825687 (Bug #72144)
+        Reviews can now optionally have required reviewers. A review cannot
+        be approved until all required reviewers have up-voted the review.
+
+        To aid in managing reviewers and defining who is required, a new
+        'Edit Reviewers' dialog has been added. The review author, perforce
+        admins and perforce super users are always able to edit reviewers.
+
+        Additionally, the following individuals may edit reviewers:
+        - If the review is moderated, the moderators
+        - If the review is part of a project, but not moderated, all
+          project members
+        - If the review is not part of a project, any authenticated user
+
+        Lastly, individuals may now leave a review, make their vote
+        required or make their vote optional by clicking their own avatar
+        under the reviewers listing. This is in addition to the existing
+        options to join, vote-up and vote-down.
+
+    #823254, #825263 (Bugs #67052, #67054)
+        Branches can now optionally have moderators. If moderators are
+        defined, only those users are allowed to 'approve' or 'reject'
+        reviews under the branch.
+
+        When a review is associated with a moderated branch:
+        - Only moderators can approve or reject the review; they can also
+          perform all other transitions.
+        - Authors can move between needs-review/needs-revision/archived and
+          can attach commits; they cannot approve or reject review (even if
+          they are a moderator)
+        - Members can move between needs-review/needs-revision and can
+          attach commits; they cannot approve/reject or archive.
+        - Users that are not project members, moderators or the author
+          cannot perform any transitions.
+
+        Note, for the author and project members, if the review is not
+        presently in one of their permitted states (e.g.: it is rejected)
+        they cannot transition it.
+
+    #805100, #805438 (Bug #66173)
+        By default, reviews that are committed via the Swarm web UI will
+        now be credited to the review author. Activity and email
+        notifications will include both the committer and review author's
+        details. This is a configuration option which defaults to true.
+
+    #804532, #820256 (Bug #67053)
+        A project can now optionally specify one or more owners. When a
+        project has owners, only the owners (as well as admin or super
+        level users) can edit the project.
+
+    #796111, #796324, #804292, #803304 (Bug #69605)
+        Comment boxes now support file attachments via drag-and-drop
+        upload. To enable this feature create a "//.swarm" depot or set the
+        depot storage base path to a location Swarm can write to.
+
+Minor new functionality in 2014.2
+
+    #834780 (Bug #72549)
+        Updated the P4PHP binaries to be built with a patched P4API that
+        does not reference the Heartbleed-vulnerable OpenSSL version.
+
+    #825849 (Bug #66469)
+        The Swarm favicon is now larger.
+
+    #824751 (Bug #72388)
+        Fixed a bug where trigger tokens were not protected from non-super
+        users that requested JSON formatted '/about' output.
+
+    #820025 (Bug #71330)
+        Multiple Swarm instances can now safely operate on the same machine
+        where the address only varies by port, even if SERVER_PORT is
+        misreporting.
+
+    #811552, #814057, #814086 (Bug #67051)
+        Project creation can be limited to admin users by setting
+        'add_project_admin_only' under the 'security' config. This feature
+        is disabled by default.
+
+    #810137, #812142 (Bug #66408)
+        Ensured the horizontal scroll bar is always visible when viewing a
+        change or review diff.
+
+    #805410, #805415, #805458 (Bug #72039)
+        Upgraded Zend Framework from 2.1.4 to 2.2.6 for a number of fixes
+        and enhancements.
+
+    #805070 (Bug #72042)
+        Enhanced the queue status to report future-tasks separately.
+
+    #801759 (Bug #71598)
+        Added support for GitHub style line links (e.g.: '#L123') and
+        highlighting of linked line; additionally, if you specify a range
+        of lines (e.g.: '#10-20'), Swarm will highlight all of the lines in
+        the range.
+
+    #800253 (Bug #71712)
+        Improved the configuration error message to alert the user if the
+        data directory is unwriteable, or no php.ini is found.
+
+    #797479, #799428, #800567, #801819 (Bugs #71679, #71718)
+        Added a new URL shortening feature. This adds a small 'bookmark'
+        button to the file browser page. Clicking the button generates a
+        short URL and displays it in a small popover dialog that the user
+        can easily copy from. A short link like this will redirect the user
+        to a (presumably) much longer address. Also added support for a
+        dedicated short-link hostname; this is a domain to use for short
+        links to make them even shorter. Short links are handy for email,
+        chat, etc.
+
+    #796834, #803372 (Bugs #71521, #71738)
+        Enhanced the trigger script to operate with in-place edits, or
+        externalized configuration (implicit and explicit via -c config).
+        This is helpful so that configuration can be more easily separated
+        from the script itself.
+
+    #791347 (Bug #71159)
+        Expose a configuration setting to allow suppressing the Reply-To:
+        email header field. This is helpful when you don't want to expose
+        Perforce user email addresses in email notifications.
+
+    #790928 (Bug #71396)
+        When copying lines of text from a review or changes page, line
+        numbers in diff no longer end up in your clipboard. All supported
+        browsers still display the line numbers. IE still copies the line
+        numbers if you multi-select lines.
+
+    #790472 (Bug #71366)
+        Remove the border styles from the diff table to provide a cleaner
+        look, and also reduce visual glitches to table borders.
+
+    #789318 (Bug #71717)
+        Swarm now compresses JSON sent to the browser for better
+        performance.
+
+    #789217, #789221 (Bug #66706)
+        Upgraded jQuery from 1.9.1 to 1.11.1 for performance improvements.
+
+    #787961 (Bug #70991)
+        Workers will effectively restart if Swarm detects the config.php
+        file has been changed. This helps prevent the long running workers
+        from using stale config.php settings.
+
+    #782170, 794566 (Bugs #71160, #71327)
+        Improved the performance of the home page, particularly when there
+        are large numbers of projects or activity events.
+
+    #781997 (Bug #70687)
+        Display a tip at the bottom of review and change pages indicating
+        the user can use the N and P keys to move between the changes.
+
+    #781805 (Bug #71393)
+        Upgraded JSRender from 1.0pre to 1.0.0beta.
+
+Bugs fixed in 2014.2 Patch 2 (since 2014.2/841040)
+
+    #853220 (Bug #72903)
+        Administrators can now disable system info along with the related log
+        and php info pages by setting 'disable_system_info' to true under the
+        'security' config. By default, system info is still accessible to
+        authenticated admin or super level users.
+
+    #853054, #853496, #853533 (Bug #72881)
+        The CSRF token is now passed as a POST param not a GET param. This
+        should reduce the risk of exposure in logs, referrers, etc.
+
+    #846204, #853041 (Bug #72805)
+        Fixed a local XSS vulnerability in error messages when posting
+        forms in Swarm.
+
+Bugs fixed in 2014.2 Patch 1 (since 2014.2/835154)
+
+    #840956 (Bug #72712)
+        Made the details about changes to reviewers (e.g. 'Added user as a
+        required reviewer') easier to distinguish from the description of
+        the review in email notifications.
+
+    #840731 (Bug #72698)
+        Adjusted edit reviewers activity to clearly report when users are
+        added. Previously we just stated 'Made user a required reviewer';
+        it was unclear if they were being added or edited.
+
+    #839300 (Bug #72658)
+        When upgrading Swarm, browsers would sometimes hold onto outdated
+        CSS and JavaScript potentially resulting in errors. Links to the
+        minified CSS/JS now include the Swarm patch number to avoid this.
+
+    #838036, #838043, #838150 (Bug #61429)
+        Added CSRF protection to all mutative actions. For authenticated
+        users, requests that are not a GET (e.g. POST, DELETE, PATCH, etc.)
+        must now include a valid _csrf token. Actions which are
+        'login_exempt' or 'csrf_exempt' do not require the token to be
+        passed.
+
+    #835869 (Bug #72611)
+        Fixed an issue where Swarm was not setting the 'Remember me' cookie
+        with the secure flag when appropriate.
+
+    #835868 (Bugs #72548, #72568)
+        Swarm can now be used in deployments where a proxy/balancer handles
+        encryption and forwards plain HTTP traffic on to the Swarm server.
+        When 'https_strict' is enabled, we now always send the HSTS header
+        and we always flag cookies as secure only. Additionally, we now
+        allow the administrator to disable the HTTPS redirect for HTTP
+        clients by setting 'https_strict_redirect' to false under the
+        'security' config.
+
+    #835821 (Bug #72565)
+        We now only start a session when needed (e.g. anonymous users don't
+        get a session until they try to login). We also attempt to clear
+        the session cookie on logout or session expiration.
+
+    #835815, #835866 (Bug #72678)
+        The diff endpoint will now produce a 404 error when attempting to
+        diff a non-existent file. Previously a 500 error was produced.
+
+    #835789 (Bug #72566)
+        Swarm now supports specifying a session lifetime. If the session is
+        not accessed for the specified duration, the user will be logged
+        out.  By default the duration is 30 days but can be adjusted by
+        setting the 'gc_maxlifetime' under the 'session' config. This
+        feature will apply when using the default file based session
+        storage. Other storage backends are presently unverified.
+
+    #835577 (Bug #72564)
+        Swarm no longer sends two Set-Cookie headers for the SWARM session
+        ID on login. There is no functional change, this is just an
+        aesthetic improvement to the response.
+
+    #835554 (Bug #72571)
+        Fixed an issue where toggling the 'Remember me' checkbox on login
+        did not correctly adjust the session lifetime.
+
+Bugs fixed in 2014.2
+
+    #833850 (Bug #72510)
+        Fixed an issue on Safari 5.1 where comment user avatars were not
+        being sized correctly.
+
+    #833609 (Bug #72505)
+        Fixed an issue to ensure commits via Swarm keep the restricted or
+        public type of the authoritative shelf.
+
+    #827517 (Bug #72362)
+        Fixed an issue where it was not possible to @mention a user that
+        contained a backslash (such as an AD domain user).
+
+    #826264 (Bug #72378)
+        Fixed an issue with the job dialog automatically refreshing when
+        attempting to select a row.
+
+    #821123 (Bug #72390)
+        Fixed a race-condition where automated tests for a review could
+        fail if the pending review was committed before the tests ran.
+
+    #821027 (Bug #72248)
+        Fixed an issue where you could not change the review status of a
+        review that was somehow stuck. Now, such a review can be
+        transitioned to Needs Review, Needs Revision or Archive to clear
+        the status.
+
+    #820630 (Bug #72225)
+        Fixed an issue in Firefox where the archive comment tooltips would
+        get orphaned.
+
+    #820120 (Bug #72391)
+        Fixed an issue where the reviews queue would reload when the search
+        input loses focus, even if the search value had not changed.
+
+    #820005 (Bug #71764)
+        Fixed an issue where Safari 5.1.x would throw a JavaScript error
+        when navigating files using the back or forward buttons.
+
+    #819959 (Bug #71459)
+        Fixed a bug where protection table entries with spaces caused
+        errors.
+
+    #819822 (Bug #72224)
+        Fixed an issue where no error message was displayed for
+        browser-to-Swarm network errors.
+
+    #814092, #824517 (Bug #64793)
+        Fixed an issue where timezones were incorrect when Swarm was
+        connected to a Windows p4d server.
+
+    #813797 (Bug #72064)
+        Fixed an issue where modal cancel buttons were being marked as
+        ARIA-hidden.
+
+    #809521 (Bug #71986)
+        Fixed an issue with the 3D model viewer where it was looking at
+        0,0,0 instead of the center of the model.
+
+    #804290 (Bug #71851)
+        Fixed a bug where the reviews page would issue excessive XHR
+        requests, impairing browsing performance.
+
+    #800358, #801075 (Bug #72003)
+        Adjusted avatar styles to only show the default avatars when the
+        user's Gravatar has finished loading. This prevents a momentary
+        flash of the default avatar that could sometimes occur if Gravatar
+        was slow.
+
+    #799622 (Bug #71367)
+        Swarm now normalizes the hostname specified in the config file to
+        properly handle schemes and non-standards ports.
+
+    #799558 (Bug #71680)
+        Swarm no longer prevents the browser from handling control/command
+        clicks in the Swarm File Browser.
+
+    #794840 (Bugs #70317, #70295)
+        Fixed several small issues with the file browser. Previously the
+        handling of what controls were shown on different tabs was spread
+        out and inconsistent. We also previously missed detecting all the
+        cases where the tab had changed.
+
+    #792725 (Bug #65644)
+        Fixed an issue on IE9 where the archived comments area would toggle
+        twice the first time it was clicked, so you would need to click
+        again.
+
+    #792034 (Bug #71138)
+        Fixed an issue where certain special characters, like '@', '#', and
+        '%' were escaped in email depot paths.
+
+    #790454 (Bug #70231)
+        Fixed an issue where linking to an archived comment did not expand
+        the collapsed archive area to scroll to the comment.
+
+    #790437 (Bug #71372)
+        Enhance the N/P keydown listener to only handle one keydown per
+        keypress. This should prevent issues with the focus moving further
+        than expected.
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2014.1
+
+    #774422, #775409 (Bug #70659)
+        Swarm now renders 3D model files (.STL, .OBJ or .DAE) in the file
+        browser and diff. The viewer will attempt to pull in referenced
+        resources, including MTL files, in the model objects, but will only
+        be able to display textures if they are web-safe images (e.g.: .PSD
+        textures will not render). If using a modern browser, and hardware
+        acceleration is available, the viewer should run smoothly. If using
+        a modern browser, and there is no hardware acceleration available,
+        the viewer will run without WebGL, and may be slow; we don't
+        auto-rotate in this case to reduce CPU utilization. If you are not
+        using a modern browser, you will just receive a 'viewer not
+        supported' message.
+
+    #772465 (Bug #68885)
+        Git users may now perform pre-commit reviews using Swarm, via
+        Perforce Git Fusion. To start a pre-commit review, simply push to
+        /reviews/master/new, where 'master' is the target branch. More
+        details on usage are available in the Swarm documentation.
+
+    #767962, #775774, #776148 (Bug #66723)
+        Restricted changes are filtered from the UI if the user does not
+        have permission to view them.
+
+Minor new functionality in 2014.1
+
+    #775670 (Bug #65494)
+        Swarm checks for the existence of the config.php file and if not
+        present, displays a suitable error to the user.
+
+    #775412 (Bug #68201)
+        RTF files, although text, will now be rendered through the
+        LibreOffice module if present.
+
+    #772469 (Bug #70803)
+        The strict and enforce trigger types can now be scoped to just
+        changes in a review using the -r flag. This allows unreviewed
+        changes to proceed, but changes in a review must be approved.
+
+    #771462 (Bug #70758)
+        When calling automated tests for a review, Swarm now lists only
+        branches impacted by the current change in the {branch} and
+        {branchName} keywords.
+
+    #770126 (Bug #70798)
+        The amount of time and memory that worker processes use is now
+        constrained. Previously, a worker could use an unlimited amount of
+        memory and run for ever (no limits). Now, the limits for a worker
+        can be set in the config file and default to 1GB and 30min
+        respectively. The 30min timeout is reset for each task. No task
+        can spend more than 30min of CPU time.
+
+    #765295 (Bug #70583)
+        For a project's branches listed on the project page, the mainline
+        branches are displayed first, and the remaining are now sorted
+        alphabetically.
+
+    #762726, #763003, #770626, #773997 (Bugs #70611, #70612, #70613)
+        Further reduced memory consumption in the processing of users and
+        groups. For example, with 10,000 users and over 1,000 groups, Swarm
+        previously used ~140MB of memory when populating the caches and
+        ~120MB when reading from the caches; with these changes, memory
+        usage drops to ~35MB and ~12MB respectively.
+
+Bugs fixed in 2014.1
+
+    #777472 (Bug #70940)
+        Fixed an issue where improper permissions on the token directory
+        would result in an infinite loop.
+
+    #774788 (Bug #70842)
+        Fixed an issue in Chrome when viewing a large image retrieved from
+        cache would cause the page to continually refresh.
+
+    #773886 (Bug #70813)
+        Fixed display issues in IE with the filename bar on a review page.
+
+    #772345 (Bug #70774)
+        Improved the scrolling performance in Chrome on Review pages by
+        manually instructing the browser which areas to repaint when
+        scrolling a file.
+
+    #769901 (Bug #70797)
+        Fixed an issue where filenames with special characters were
+        improperly displayed in a comment tagline.
+
+    #769859 (Bug #69623)
+        Fixed an IE11 performance issue when viewing the Reviews page.
+
+    #766082 (Bug #70599)
+        Fixed an issue when browsing project files would cause a HTTP 500
+        error if one of the project's branch definitions contained a path
+        ending with a slash (as opposed to '/...').
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2013.3
+
+    #749961, #750778, #751112 (Bug #69119)
+        Swarm now allows participants to vote up or down on a review. The
+        reviews page replaces the participants columns with an up/down
+        votes column.
+
+    #730156, #747698, #748957 (Bug #69279)
+        Swarm can now emulate IP-based Perforce protections. Swarm will
+        check the user's IP address and use it to apply any necessary
+        restrictions, such as when browsing files, viewing file content,
+        viewing & adding comments on files.
+
+    #724625 (Bug #60905)
+        Added ability to comment at the file-level on reviews and changes.
+        Files in changes and reviews will now have a footer to display and
+        add comments similar to the existing inline comment interface.
+
+Minor new functionality in 2013.3
+
+    #751165 (Bugs #68207, #69624)
+        Eliminated redundant commit activity and email notification. This
+        would occur when a change linked to a review was committed. Now,
+        the commit is reported only once.
+
+    #751085 (Bug #69749)
+        Old invalidated cache files are now cleared out periodically.
+
+    #750074 (Bug #70114)
+        Swarm will log warnings when Perforce commands take longer than a
+        prescribed time. By default, the print, submit, sync, shelve, and
+        unshelve commands' threshold is 10 seconds; for all others, it is 3
+        seconds.
+
+    #749100 (Bug #70023)
+        Swarm will perform XHProf profiling if the 'xhprof' PHP extension
+        is present and requests take longer than a prescribed time (by
+        default, 3 seconds). Data collected will be placed in the
+        data/xhprof directory.
+
+    #748526 (Bug #70110)
+        When browsing a project's branches, mainlines now appear first and
+        are bolded as they are the most frequently accessed codelines.
+
+    #747404 (Bug #70017)
+        The Swarm distribution now includes P4PHP binaries for PHP 5.5.
+
+    #745637 (Bug #69980)
+        Commit email notifications now include a link to their associated
+        review.
+
+    #734207, #751251 (Bug #69487)
+        Swarm can now display deleted files and folders when browsing
+        files.
+
+    #732930 (Bug #69636)
+        Added support for hashtag (more formally known as "octothorpe"!)
+        style review keywords; e.g. #review or #review-1234. Note the
+        keyword is only honoured if it is preceeded and followed by either
+        whitespace or EOL/SOL. Unlike the square-bracket convention
+        [review], the hashtag style review keyword can appear anywhere in
+        the description, not just at the beginning or end.
+
+    #728989 (Bug #60909)
+        Users can now comment on jobs in Swarm under the new 'Comments' tab
+        on the job page. When there is a new comment, Swarm will send an
+        email notification to users listed in 'user' fields in the job,
+        @mentioned in the job description and users of associated changes.
+
+    #728163 (Bug #69542)
+        Avoid session locking to improve performance when making multiple
+        simulatenous requests. This should improve the ability to browse in
+        other tabs while file previews are being converted/transferred.
+
+    #723845 (Bug #64834)
+        Added a system information page (/info), accessible to users with
+        admin privileges. The page displays Perforce Server information,
+        PHP info, and the Swarm log, which can be downloaded.
+
+    #722080 (Bug #69406)
+        Enhanced the 'jobs' route to automatically prepend 'job0...' if the
+        given ID is numeric and doesn't exactly match an existing job. For
+        example, /jobs/12345 will resolve to /jobs/job012345.
+
+    #721850 (Bug #69380)
+        Added a new 'disable_commit' option under the 'reviews' section in
+        the configuration. Enabling this option will remove the "Approve
+        and Commit" and "Commit" options from the Swarm web interface.
+        External commits via traditional Perforce clients will still be
+        possible. This setting is false by default.
+
+    #720456 (Bug #69290)
+        If a user adds themselves as a review participant, Swarm will no
+        longer email the new participant, though all other participants
+        will still be notified.
+
+    #719792, #719938 (Bug #69245)
+        Added icons next to changes listed on the jobs page to indicate
+        their type (review, commit, pending).
+
+    #718564 (Bug #69206)
+        Added new 'http_client_options' configuration. This allows
+        administrators to specify HTTP communication options (particularly
+        useful for HTTPS related options) either globally, or host-
+        specific.
+
+    #716765 (Bug #65289)
+        Improved HTTPS support via a 'strict_https' option. When enabled,
+        viewing an HTTP link will include a meta-refresh to the HTTPS
+        version, a strict transport security header will be included for
+        all HTTPS requests (pinning the browser to HTTPS for 30 days), all
+        qualified URLs will use HTTPS for the scheme, and cookies on HTTPS
+        connections will be flagged HTTPS-only
+
+    #716542 (Bug #66938)
+        Updated the Jobs page to allow selecting and re-ordering columns
+        representing job fields.
+
+        Columns can now be selected via the 'Select Columns' drop-down
+        button located beside the search box.  Users can select columns to
+        show in the table below by checking them in the drop-down (showing
+        all available fields, where the selected ones are always located at
+        the top of the list).
+
+        Selected columns can also be re-ordered, either by dragging them
+        into desired spot in the drop-down or in the table header.
+
+    #714786, #715519, #715658, #719803, #720491 (Bugs #69093, #69647)
+        Swarm has a new design that is cleaner and brighter with fewer
+        borders. The projects sidebar has been moved to the left-hand side
+        of the home page. This fixes an issue loading activity on mobile
+        devices. Events in the activity table are now color-coded (with a
+        thin vertical line on the far-right edge) to indicate the type of
+        activity.
+
+    #714421 (Bug #69090)
+        Enhanced our emojify filter to make use of Gemoji images if they
+        are installed under public/vendor/gemoji. Gemoji provides support
+        for more emojis and works on more browsers and platforms than the
+        unicode codepoints we normally use. For more information about
+        Gemoji, see https://github.com/github/gemoji.
+
+    #713201 (Bug #68815)
+        Introduced 'use_bcc' configuration item under 'mail' to address
+        recipients of changelist notifications via the BCC field instead of
+        the TO field. See the Email configuration section under
+        Administration of the documentation.
+
+Bugs fixed in 2013.3 patch 1 (since 2013.3/759531)
+
+    #762450 (Bug #70489)
+        Fixed an issue with the automated test and deployment integrations
+        where the branch ID was passed but documented as the branch name.
+        We now provide both the ID and name for branches and projects, and
+        the documentation has been corrected.
+
+    #762417 (Bug #70490)
+        Addressed a browser performance problem involving collapsed files
+        on review and changes pages.
+
+    #761990, #762232 (Bug #70467)
+        Improved the efficiency of processing Perforce groups to reduce
+        memory consumption. For example, with thousands of users and
+        groups, memory consumption is reduced by approximately 80%.
+
+    #761155 (Bug #70461)
+        Fixed the queue location when using the SWARM_DATA_PATH override.
+
+Bugs fixed in 2013.3
+
+    #757302 (Bug #69995)
+        Fixed a bug where multibyte UTF-8 sequences in user ID's could lead
+        to HTTP 500 errors.
+
+    #755964 (Bug #70225)
+        Fixed the activity display for a user whose ID contains a period.
+
+    #751230 (Bug #69672)
+        Fixed erroneous 'approved' email when committing a review from
+        Swarm where the review was already approved.
+
+    #751219 (Bug #69696)
+        Fixed an issue where including an invalid change number when adding
+        a commit to a review would throw an exception instead of returning
+        a nicely formatted error.
+
+    #751195 (Bug #65646)
+        Fixed an issue where the 'Commit' button in the Commit Review
+        dialog became prematurely enabled.
+
+    #751100 (Bug #69666)
+        Fixed an issue where some errors were not being displayed when
+        failing to commit a review from Swarm.
+
+    #751043 (Bug #67471)
+        Fixed an issue where a long description of a history entry would
+        not be collapsed.
+
+    #751013 (Bug #68809)
+        Fixed an issue where a change description that contained a line
+        with only a period as its content would cause email notifications
+        to be truncated at that point.
+
+    #747494 (Bug #69651)
+        When showing historic context lines on comments, the old context
+        will now only be shown once when it applies to multiple sequential
+        comments.
+
+    #747607 (Bug #70022)
+        Swarm now properly disconnects from the mail server after sending
+        an email. Previously, a timeout error could occur if a worker
+        processed multiple email related tasks.
+
+    #746579 (Bug #65666)
+        Swarm no longer throws an HTTP 500 error when an invalid depot is
+        entered within the change select dialog.
+
+    #745635 (Bug #69981)
+        When editing a review description, mentioning a user (via @user)
+        will now actually add that user as a review participant.
+
+    #745911 (Bug #69204)
+        On the history tab, searching for a user with invalid characters
+        will no longer generate an error.
+
+    #743323 (Bug #69928)
+        Previews of office type documents no longer silently fail on CentOS
+        and Red Hat Enterprise Linux.
+
+    #736065 (Bug #69737)
+        Work around a Chrome bug where clearing out the password field on a
+        long page would freeze the browser. See http://crbug.com/180868 for
+        details.
+
+    #736112 (Bug #69743)
+        Fixed a race condition that could cause the commit status to become
+        erroneously stuck at 'unshelving...'.
+
+    #732093 (Bug #66240)
+        Fixed a bug where login would fail against a case-insensistive
+        Perforce server if the username did not match case exactly.
+
+    #719604 (Bug #69248)
+        Fixed a bug where Unicode or UTF-16 text files were not displaying
+        properly in Swarm; Perforce converts them to UTF-8 and Swarm now
+        flags them as such.
+
+    #716735 (Bug #69129)
+        Fixed a bug where the wrong timestamp would be shown in the
+        activity feed for certain timezones (e.g. AEST).
+
+    #712670 (Bug #68949)
+        Fixed a minor bug where the user could erroneously select a header
+        row in the 'Select Job' dialog.
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2013.2
+
+    #680316, #681228, #691940 (Bugs #66717, #65503)
+        Code reviews are now versioned. A historic copy of proposed work is
+        maintained when the review is updated. This allows users to see
+        each incremental change made to a review, as well as diff between
+        adjacent versions to the review using the new Review Timeline.
+
+    #679062 (Bug #66799)
+        Several notable enhancements to the JIRA module. When a change is
+        submitted or a review is created/updated, we find any associated
+        JIRA issues, via associated jobs or callouts in the description,
+        and ensure the JIRA issues link back to the review or change in
+        Swarm. Further, the JIRA project list is now fetched automatically
+        so you no longer need to hard-code it in the config.php.
+
+    #676580 (Bugs #60923, #67538)
+        Added support for committing streams-based reviews in Swarm. With
+        this change, it is now possible use Streams-based projects.
+
+    #668325, #680003 (Bugs #67216, 67653)
+        Added support for viewing office type documents, such as Word,
+        PowerPoint, Excel, Visio and rich text file formats. LibreOffice
+        must be installed on the Swarm web server to take advantage of this
+        feature. The Swarm OVA comes with the necessary LibreOffice
+        components installed to enable this feature.
+
+    #667587 (Bug #66586)
+        Added support for previewing BMP, EPS, PSD, TGA, and TIFF formats.
+        The ImageMagick PHP extension must be installed and enabled on the
+        Swarm web server to take advantage of this feature. The Swarm OVA
+        comes with this extension to enable this feature.
+
+    #667207, #677868, #688353 (Bugs #64759, #65017, #67979)
+        Swarm reviews and changes now provide a richer jobs integration.
+        Users can add or remove job associations for changes and reviews.
+        Swarm now allows job selection in the 'Commit Review' dialog,
+        similar to P4V. Also, if jobs are present when updating a reviews
+        files the jobs will be added to the review.
+
+Minor new functionality in 2013.2
+
+    #695725 (Bug #60941)
+        Users with permissions to edit projects can now also delete them
+        via a new 'Delete' button in the 'Edit Project' page (confirmation
+        is required via the tooltip).
+
+    #695350 (Bug #68256)
+        The default diff mode is now side-by-side; your last used diff mode
+        will be remembered so this change primarily affects new users.
+
+    #692127 (Bug #68153)
+        Swarm now includes Linux variants of P4PHP that are built with
+        glibc 2.3.3 to support older distributions, such as Red Hat
+        Enterprise Linux 5.9. See the INSTALL.txt for more information.
+
+    #689920 (Bug #68028)
+        Swarm's session name now defaults to 'SWARM' for web servers
+        running on port 80 or 443. For Swarm instances running on any other
+        port, the session name defaults to SWARM-1234 where 1234 is the
+        port number in use. This allow running several Swarm instances on a
+        single server differentiating them by port and session name.
+
+    #689744 (Bug #66724)
+        Revised icons for added, deleted and edited files. These icons are
+        colorful with larger +, - and pencil symbols. They should make it
+        easier to distinguish between the various actions.
+
+    #689613 (Bug #67755)
+        Swarm can now be configured to use a custom avatar URL pattern
+        allowing administrators to provide their own avatar server or
+        disable custom avatars altogether. By default, custom avatars
+        continue to come from Gravatar.
+
+    #688945 (Bug #68046)
+        Added a goto route for full or partial Git Fusion SHA1 commits that
+        will redirect to the corresponding changelist. e.g.:
+        http://myswarmhost/42697a7a79
+
+    #680508 (Bug #62181)
+        Swarm now anchors the file toolbar to the top of the window on
+        changes/review pages so it stays in view while you are scrolling
+        through a file.
+
+    #675826 (Bug #67413)
+        Added support for emoji shorthand (e.g. :smile:); see
+        http://www.emoji-cheat-sheet.com for the full list.
+
+    #672699 (Bug #66610)
+        Users can now filter the history tab by user when browsing.
+
+    #672363 (Bug #63199)
+        Added a apple-touch-icon for iOS (and apparently Android) devices.
+        Just one size (144x144) for simplicity.
+
+    #671993 (Bug #67389)
+        Restyled the error pages to incorporate our new mascot Bizzy
+        Heisenbug and be more scalable/responsive.
+
+    #669938, #693013 (Bugs #66534, #68206)
+        Swarm no longer emails the user who commented or performed a review
+        state change. Other interested parties are still emailed.
+        Additionally, editing a review's description no longer generates an
+        email.
+
+    #666778 (Bug #67154)
+        Added a new 'prevent_login' configurable to specify a list of
+        Perforce users that are not allowed to log in to Swarm.
+
+    #665482 (Bug #67108)
+        We now collapse multiple occurrences of certain characters (e.g.:
+        ASCII lines) in the subject lines of change notification emails.
+
+    #664426 (Bug #67065)
+        Added hooks for previewing non-web-safe file fomats. A custom
+        module is required to add support for other formats. In the
+        module's bootstrap method you can grab the format manager and add a
+        new handler. See the Imagick or LibreOffice modules for example
+        usage.
+
+    #664389 (Bug #65015)
+        Added a 'My Reviews' filter to the review queue to show only
+        reviews the current user is participating in.
+
+    #661459 (Bug #66679)
+        Improve configuration error page displayed if PHP-specific
+        misconfigurations are detected (such as an unsupported PHP version,
+        or missing PHP extensions). All detected misconfigurations are now
+        shown in a list. Also, the path to all php ini files is shown to
+        ease administration.
+
+    #660436, #669261 (Bug #66573)
+        Email notifications from Swarm now include additional email
+        headers, 'X-Swarm-Host' and 'X-Swarm-Version'.
+
+    #657062 (Bugs #66598, #66599)
+        We now show the text of comments and the description of file
+        updates on the review history tab.
+
+    #656605 (Bug #66931)
+        Added the ability to set the DATA_PATH via environment variable,
+        SWARM_DATA_PATH. This can facilitate hosting multiple Swarm
+        instances using a single Swarm installation.
+
+Bugs fixed in 2013.2
+
+    #704590 (Bug #68710)
+        Queueing tasks will no longer log a PHP warning in the Apache error
+        log when multiple tasks are added in the same millisecond.
+
+    #703451 (Bug #68531)
+        Fixed an issue where Swarm would display a 404 error if attempting
+        to access the Apache info or status modules' handler paths. Swarm
+        now detects if those modules are enabled, and if so, allows access
+        to their paths.
+
+    #696121 (Bug #67233)
+        Fixed an issue when using Safari where PDF documents would be cut
+        off strangely at the bottom of the window.
+
+    #696076 (Bug #68041)
+        Fixed an issue when using Internet Explorer where hitting enter in
+        a text field would erroneously trigger nearby buttons.
+
+    #691483, #692576 (Bug #68129)
+        Swarm no longer "linkifies" deleted user IDs when showing the author
+        of a change, comment, activity, etc.
+
+    #689915 (Bug #68056)
+        Fixed a bug where URLs using IP addresses were not being linkified.
+
+    #689661 (Bug #68044)
+        Fixed issue where Swarm would fail if the 'json' or 'session' PHP
+        extensions were not installed; Swarm now checks for the presence of
+        these extensions.
+
+    #688137 (Bug #68043)
+        Fixed .htaccess rules to allow viewing of documentation when PHP is
+        not installed.
+
+    #686394 (Bug #67908)
+        Fixed an issue where older systems (e.g.: RHEL/CentOS) would not
+        recognize a form of regular expression named capture groups; Swarm
+        now uses a more backwards-compatible form.
+
+    #686358 (Bug #67905)
+        Fixed an issue where older systems (e.g.: RHEL/CentOS) would fail
+        to fetch activity or reviews due to unexpectedly treating the ID as
+        a float instead of an integer.
+
+    #685439 (Bug #66446)
+        Fixed an issue where the initial activity import could result in
+        out of order activity records.
+
+    #684802 (Bug #67816)
+        Fixed an issue where token-based auth (alone) wouldn't work for
+        deploy and automated test integration if require_login was enabled.
+
+    #681666 (Bug #67720)
+        Fixed an issue where it was possible to get an unexpected connect
+        exception when accessing Swarm with a partially expired session.
+
+    #681586 (Bug #67507)
+        When logging warnings and errors, we no longer include context.
+        Large values and excessive escapement made context useless.
+
+    #680229 (Bug #67669)
+        Fixed a race-condition where committing through Swarm could fail if
+        the change was renumbered upon submit.
+
+    #680188 (Bug #67652)
+        Fixed display issues exposed in Firefox when navigating files.
+
+    #679223 (Bug #67616)
+        Fixed validation of group names. The rules we were enforcing in
+        Swarm did not match the rules enforced by the server.
+
+    #678458 (Bug #67592)
+        Fixed a bug that prevented the minified consolidated web assets
+        from being included in the distribution.
+
+    #676317 (Bug #67445)
+        Fixed an issue where the Comments 'Archive' and 'Restore' buttons
+        weren't labelled for screen readers.
+
+    #673297 (Bug #67431)
+        Fixed a bug where Swarm only matched the first keyword and stopped.
+        If someone used the [review] keyword at the start and end of their
+        description this would have left one behind.
+
+    #671254 (Bug #67342)
+        Fixed a bug where commenting above a padding line caused a comment
+        indicator to appear on the padding line.
+
+    #671092 (Bug #67126)
+        Added roles and ARIA labels to fix an issue where the All Projects/
+        My Projects dropdown was undiscoverable by NVDA, and where the Add
+        Project Link wasn't being described at all by NVDA.
+
+    #669528 (Bug #67262)
+        Fixed a bug where the display of ignored whitespace on context
+        lines in Swarm was inconsistent with p4 diff/P4Merge if you used
+        the 'Show Full Context' feature.
+
+    #668045 (Bug #67214)
+        Improved handling of purged files in diff. We no longer attempt to
+        show or diff purged files.
+
+    #668043 (Bug #67162)
+        Fixed a bug where searching within Help was not working.
+
+    #667916 (Bug #67195)
+        Improved Approve & Commit error handling to ensure the attempted
+        change is deleted on failure.
+
+    #667915 (Bug #67106)
+        Fixed an issue where the pdf preview area was very small on Firefox
+        and Internet Explorer.
+
+    #667770 (Bug #67185)
+        Fixed an endless loop that could occur when Swarm attempted to
+        obtain a client to use from its client pool if file permissions
+        were invalid.
+
+    #667226 (Bug #67166)
+        Fixed an issue in Swarm Jobs Search where it would still reload
+        your query on search blur even after you had just loaded the query
+        using the enter key.
+
+    #666601 (Bugs #65684, #67055)
+        Fixed an issue where using the back button on a Job page would take
+        you back to search page with the previous search filled into the
+        field, but not properly filtered in the results.
+
+    #665678 (Bug #67210)
+        Fixed a bug where a changelist description that had a numbered list
+        item could be linkified if the previous line ended with "change".
+
+    #657378 (Bug #66826)
+        Fixed a bug where avatar selection was not consistent when using
+        the Suhosin version of PHP. This is because srand() is disabled for
+        security reasons.
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2013.1
+
+    #647347 (Bug #66023)
+        Replaced the grab/release review feature with multiple reviewers.
+        It is no longer possible to grab or release a review. Instead,
+        anyone other than the auther who participates in a review (e.g.
+        comments on, changes the status of, pushes code to, etc.) becomes a
+        'reviewer'. Swarm now displays a row of reviewer avatars beneath
+        the description of a review. The avatars are preceeded by the text
+        'Reviewers' and are aligned right. Users can click to add
+        themselves to a review.
+
+        On the reviews queue, the 'Reviewer' column has been removed and a
+        new 'Reviewers' column has been added. The reviewers column shows a
+        count of reviewers and, when hovered, lists the names of all
+        reviewers in a tooltip. Similarly, the assigned/unassigned filter
+        has been replaced with a has-reviewers/no-reviewers filter.
+
+    #647277, #647325 (Bug #65934)
+        Swarm now requires a license to run against a licensed Perforce
+        server. Without a Swarm license, Swarm's functionality is not
+        restricted in any way, however a license violation notification
+        appears for every page.
+
+        Swarm does not require a license to run against an unlicensed
+        Perforce server.
+
+        If Swarm is licensed for fewer users than the Perforce server, only
+        members of the 'swarm' group, or a sub-group, are allowed to login
+        to Swarm. If a non-member attempts to login and the swarm group is
+        not already at capacity, an attempt will be made to automatically
+        add them to the group so long as: security => disable_autojoin
+        hasn't been set to true (by default it is false).
+
+        Auto-join is not available on Perforce Server versions prior to
+        2012.1. In that case it is akin to auto-join being disabled and
+        Swarm will handle the login failure gracefully.
+
+        Contact sales@perforce.com to purchase a license or start a free
+        trial.
+
+    #645705, #646629, #647327 (Bugs #63686, 65936)
+        Swarm now has additional trigger types for review enforcement and
+        strict content checking. The '-t enforce' type enforces that
+        submits are associated to an approved review. The '-t strict' type
+        goes further and ensures that the content being submitted matches
+        the content of its approved review. Using '-g <group>' with either
+        allows an exempt user group that isn't subject to the check. See
+        the documentation on triggers for further information.
+
+    #645011, #645217 (Bugs #60966, #63100)
+        Swarm can optionally act as a review daemon, emailing notifications
+        about changes to paths that users have expressed interest in via
+        reviews entries in their user form; see the documentation on email
+        notifications.
+
+Minor new functionality in 2013.1
+
+    #652213 (Bug #66450)
+        Swarm pages now include meta information that inform Internet
+        Explorer to always use the latest document standards when
+        rendering. This prevents users from accidentally running Swarm in
+        Compatibility Mode, which is not supported.
+
+    #650691 (Bug #65055)
+        Swarm now supports additional browser versions: Apple Safari 5.1+
+        and Microsoft Internet Explorer 9.
+
+    #648677 (Bug #66005)
+        Added logic to automatically upgrade review records anytime they
+        are saved. This is necessary to accommodate changes made to review
+        records since 2013.1.BETA/629891.
+
+    #648653
+        Added .ico files to the list of 'viewable' (browser-safe) image
+        file types.
+
+    #648129, #648274 (Bug #66473)
+        The Swarm virtual appliance (OVA) is now based on Ubuntu 12.04.2
+        LTS. Connections to SSL-enabled Perforce Servers is now possible.
+        The supplied config.php file contains more default entries to make
+        customization easier (logging level, notifications to honor P4
+        reviews). PHP upgraded to 5.4.15 and is now available in the path.
+
+    #648004 (Bug #66467)
+        Swarm now supports a facility for automated deployment for code
+        reviews. When configured, a 'Try it out' button will appear on code
+        reviews so that reviewers can run the code with minimal effort.
+        This facility works very much like the automated tests integration.
+        You can optionally specify a 'deploy' url and can pass it
+        paramaters such as {change}, {status}, {review}, {project},
+        {branch}, {success} and {fail}.
+
+        Everytime a code review is started or its files updated, the deploy
+        url will be called. If the build works, your deploy script simply
+        requests the {success} address and includes a 'url' get or post
+        parameter. If the build fails, your deploy script can optionally
+        request the {fail} address. Including a failure url parameter is
+        optional but supported.
+
+    #647030 (Bug #66255)
+        Changed the title for the personal activity stream from 'Activity'
+        to 'Followed Activity'.
+
+    #646877
+        Removed the 'Re:' prefix from comment email subjects. They were
+        interferring with threading in Gmail.
+
+    #646335 (Bug #66376)
+        For Perforce activity initiated from Swarm, the Perforce Server log
+        now correctly shows the client as Swarm instead of P4PHP.
+
+    #645421 (Bug #66365)
+        Users can now associate additional submitted changes to an existing
+        review.
+
+    #645245 (Bug #65597)
+        Update the included P4PHP binaries from 2013.1/617119 to the latest
+        patched version (2013.1/644389), which includes a crash fix.
+
+    #642465
+        Added two links to the committed change on the review page. One
+        link is in the byline: '... committed 2 days ago in 54321' (the
+        change number is a link). The second link is left of the
+        add/edit/delete file count. Previously Swarm showed the change
+        number in this location, but it was not a link.
+
+    #640209 (Bug #65894)
+        From the Reviews page, Users can click the review state icon to go
+        to the review detail page.
+
+    #640072 (Bug #65935)
+        Swarm can now properly operate behind a forwarding Perforce
+        replica.
+
+    #639765
+        The Swarm trigger now tries to use 'wget' first, then 'curl', as
+        'wget' is more common. Also modified added the -o flag for
+        displaying its trigger table entries.
+
+    #639202, #639414, #639415, #639426, #647014, #647348 (Bug #65937)
+        JavaScript performance improvments were made to fix issues around
+        logging in and commenting when having many files expanded.
+
+        On a change with 20,000 lines of code, Chrome was taking 140
+        seconds to log in; now it takes under a second to log in or
+        comment. The expand all on that change was taking around 20 seconds
+        in Chrome, but now takes about 3 seconds.
+
+    #637198
+        Renamed comment 'close/reopen' to 'archive/restore'.
+
+    #636834 (Bug #64168)
+        A notice is displayed if there is no activity to display.
+
+    #636826 (Bug #66031)
+        Swarm now allows ticket based login for end-users.
+
+    #636565
+        Users @mentioned in change descriptions or comments were not
+        previously notified.
+
+    #634561
+        Don't send email notification for passing tests unless they were
+        previously failing.
+
+    #634313 (Bug #65893)
+        Searching on the review page is now case-insensitive.
+
+    #633930
+        Swarm now shows the 'committed' icon for reviews that are both
+        approved and committed. This is just one more visual clue that the
+        review you are looking at is committed.
+
+    #630853 (Bug #65040)
+        Swarm now has a new logo; ooh, ahh.
+
+    #620870 (Bug #65042)
+        Improve the layout for editing a Swarm project.
+
+Bugs fixed since 2013.1/667767
+
+    #674403 (Bug #67464)
+        Fixed a bug where invalid email addresses could prevent valid
+        email addresses from receiving messages.
+
+    #673093 (Bug #67415)
+        If the change spec was missing the 'Type' field, viewing changes
+        was not possible. Swarm is now tolerant of Type not being present.
+
+    #673030 (Bug #67381)
+        Fixed a race condition when grabbing tasks out of the queue; in
+        some cases, two workers could grab the same task. This manifested
+        as unlink warnings in the Swarm log file.
+
+    #672407, #674413 (Bug #67397)
+        If custom triggers send output to stdout or stderr, it could cause
+        Swarm to malfunction when processing Perforce forms. Swarm is now
+        more tolerant of noisy triggers.
+
+    #672230 (Bug #67274)
+        If the Perforce Server was restarted during the lifetime of a Swarm
+        worker (e.g. a p4d restart), the worker's connection would become
+        unusable causing it to throw away tasks. The workers now attempt to
+        auto-reconnect to Peforce and they will only process tasks if they
+        have a valid connection.
+
+    #671840 (Bug #67299)
+        Updated the license validator to handle any command exception; this
+        fixes an error that could occur at login on 2010.2 Servers.
+
+    #671322 (Bug #67354)
+        Fixed a bug where Swarm's defense against ClickJacking attacks was
+        not properly enabled.
+
+    #671321 (Bug #67350)
+        Fixed an XSS vulnerability in branch name rendering.
+
+    #670131 (Bug #67309)
+        Fixed a bug where users were not being emailed notifications for
+        submitted changes against projects they followed (but were not
+        members of).
+
+Bugs fixed since 2013.1/652715
+
+    #667718 (Bug #67180)
+        Noisy change triggers could prevent Swarm from capturing the number
+        of newly created changelists. Swarm now skips over trigger output.
+
+    #667713, #667741 (Bug #67179)
+        Certain empty fields in jobs (such as 'user') could cause a 500
+        internal server error. Swarm now checks for empty values before
+        performing additional processing on special job fields.
+
+    #665389 (Bug #67021)
+        Swarm did not show or diff the contents of Unicode or UTF16 files.
+        These file types are now treated as text and safe to show or diff.
+
+    #664119 (Bug #67045)
+        Swarm's enforce trigger (designed to prevent un-approved submits)
+        would occassionally reject an approved submit because of a subtle
+        inconsistency in how Swarm was writing review records.
+
+    #662273 (Bug #66963)
+        Login and other operations that checked a user's group membership
+        could fail with a 500 internal server error if the Perforce Server
+        contained any groups with a null id (ultimately due to Perforce
+        Server Bug #37630).
+
+    #661073 (Bug #66703)
+        The reviews page could issue an excessive number of XHR requests
+        against the Swarm server when loading more reviews. Fixed the logic
+        that throttles these requests.
+
+    #660074 (Bug #66886)
+        Fixed an issue where Swarm could produce a 500 internal server
+        error when connecting to a SSL enabled Perforce Server for the
+        first time.
+
+Bugs fixed in 2013.1
+
+    #652570 (Bugs #64063, #65566, #65711)
+        Dates and times of committed changes and created/updated jobs shown
+        on various Swarm pages (Change, Changes, Job, Jobs, Review) were
+        incorrect if the user's client machine was in a different timezone
+        than Swarm and/or the Perforce server.
+
+    #652515 (Bug #65637)
+        IE10 failed to load a single file change if your page first loaded
+        with a tab other than Files, such as Comments or History.
+
+    #651899 (Bug #66551)
+        The undocumented activity delete action would not function when
+        using the -m <max> argument.
+
+    #651855 (Bug #66540)
+        If require_login was enabled, console actions would not function.
+
+    #651312 (Bug #66593)
+        Web-safe images were not being properly displayed if their filename
+        extension was in upper case.
+
+    #647388 (Bug #65304)
+        Branches with multiple paths did not map correctly into the
+        project's file's branch folder.
+
+    #647380 (Bugs #65525, #65555)
+        Filtering the activity or the review queue too quickly would result
+        in the toggled filter buttons being out of sync with the actual
+        filtered content.
+
+    #647349 (Bug #65831)
+        Searching for jobs using an invalid field would cause an HTTP-500
+        error.
+
+    #646245 (Bug #65581)
+        Logging in would always redirect you to the homepage instead of
+        refreshing the current page if the config.php setting
+        require_login=true was set.
+
+    #645363 (Bug #65053)
+        The changes pages would show up blank when navigating to them using
+        your back/forward buttons in your browser.
+
+    #645356
+        Made the 'already committed' change selector dialog work even if
+        the current change has no base path defined. Previously, if there
+        was no base path Swarm would report a 500 error.
+
+    #645338
+        Fixed an issue where the review state menu was inoperable if a
+        commit was underway. This was happening because Swarm polls for
+        commit-status every second and rebuilds the menu. Now, Swarm only
+        rebuilds the menu if there is new data.
+
+    #645255 (Bug #65051)
+        Avatars' height could be slow to render; Swarm now makes avatars
+        take up their proper space before they are loaded.
+
+    #642636 (Bug #65052)
+        Browsing history against a remote depot incorrectly would report
+        'no matching changes'; Swarm now correctly reports that change
+        details are not available.
+
+    #640153 (Bug #64605)
+        Email notifications would show occasional signs of corruption.
+
+    #638212 (Bug #66076)
+        Invalid UTF-8 characters in a Perforce user name could prevent the
+        add/edit project functionality from working correctly; Swarm now
+        filters out invalid UTF-8 characters.
+
+    #637913 (Bug #66053)
+        Swarm would not warn if the P4PHP extension was missing or not
+        loaded; it now displays a message with a link to the documentation
+        on how to configure it.
+
+    #637871 (Bug #66073)
+        Authentication triggers that outputted additional text could
+        prevent Swarm from processing the login correctly; Swarm is now
+        more tolerant of "noisy" authentication triggers.
+
+    #637643 (Bugs #65236, #65474, #65491)
+        Empty paths, embedded wildcards or non-existent depots in a
+        project's branch definition would cause an error at the project's
+        files page; these scenarios are now guarded against during entry.
+
+    #636855 (Bug #66021)
+        Swarm would duplicate activity if activity occurred after its
+        triggers were provisioned, but before any workers were provisioned.
+
+    #636427 (Bug #65632)
+         If the user's ticket expired, an error to be shown the first time
+         a page was shown after session expiration.
+
+    #635184 (Bug #65978)
+        Browsing files for a project produced 404 errors due to malformed
+        URLs in certain environments.
+
+    #634443 (Bug #64376)
+        Collapsing comments in inline mode wouldn't work correctly in
+        certain scenarios.
+
+    #633171 (Bug #65558)
+        Under certain circumstances with user auto-creation, new users
+        could not log in, due to the user form-commit trigger not firing;
+        Swarm now handles this situation properly.
+
+    #632803 (Bug #65567)
+        Swarm would incorrectly display a caret on the review state button
+        if you weren't logged in.
+
+    #632794 (Bug #65833)
+        The blame button would dissapear when using the view or download
+        button in the file browser.
+
+    #631059 (Bug #65790)
+        Plain text files were inappropriately syntax-highlighted.
+
+    #630180 (Bug #65549)
+        Line numbers could be duplicated in browse files view after
+        revisiting the page.
+
+--------------------------------------------------------------------------
+
+Major new functionality in 2013.1 Beta
+
+    #623534 (Bug #63691)
+        If 'require_login' is enabled, anonymous users can only access the
+        login screen.
+
+    #621958, #622013 (Bug #60937)
+        Files and history of a project can be browsed directly from the
+        project overview page.
+
+    #619149, #622680 (Bug #65003)
+        Perforce commands are issued as the authenticated user wherever
+        possible.
+
+Minor new functionality in 2013.1 Beta
+
+    #625175 (Bug #65033)
+        User can click the tests result icon on a review to open the
+        results URL passed back from the automated tests.
+
+    #624174 (Bug #65032)
+        If a valid user id is @mentioned it will now be included on emails
+        and, if in a review, added as a review participant.
+
+    #624156 (Bug #65002)
+        Authentication tokens are now required for the trigger script to
+        queue events to Swarm.
+
+    #624051 (Bug #65013)
+        Users can edit the review description.
+
+    #623812, #624003 (Bug #60925)
+        Only project members, admins or supers can edit a project.
+
+    #622008 (Bug #65034)
+        An icon representing the automated tests status is now displayed on
+        the review page.
+
+    #621443 (Bug #65041)
+        Jobs affecting a project can be accessed directly from the project
+        overview page.
+
+    #619330 (Bugs #65012, #64455)
+        Improve the review byline and avatar to reflect the author and
+        affected projects.
+
+    #619083, #624718 (Bug #64995)
+        Users can see all the committed changes associated with a review.
+
+    #618709, #619502 (Bug #63914)
+        Users can close/dismiss comments.
+
+Bugs fixed since Beta 2013.1/627815
+
+    #629873 (Bug #65689)
+        If running a 2012.1 or newer Perforce Server, add project could
+        fail with a HTTP 500 response.
+
+Bugs fixed in 2013.1 Beta
+
+    #625383 (Bug #65228)
+        When a user enters a malformed or unsupported P4 username, it can
+        generate an HTTP-500 error.
+
+    #623461 (Bug #63734)
+        Swarm attempted to display non-web-safe images, such as psd files;
+        restrict display of images to gif, jpg, png, & bmp.
+
+    #620292 (Bug #65069)
+        Reviews that were created upon submit by including the [review]
+        keyword did not show in either the opened or closed tabs after
+        being approved.
+
+    #618290 (Bug #64976)
+        Swarm OVA has PHP timezone hard-coded to America/Los Angeles. This
+        causes Swarm to show the incorrect time for events if the OVA runs
+        in a different time zone.
+
+    #618219, #624007 (Bug #64760)
+        The Blame button would sometimes result in an HTTP-404 or an
+        HTTP-500 error.
+
+--------------------------------------------------------------------------
+
+Minor new functionality since Beta Preview 2013.1/614107
+
+    #617359, #617382, #617383 (Bug #64837)
+        Improving the already committed dialog. It will now load more
+        changes when scrolled, allows filtering by user and allows changing
+        the 'path' being filtered.
+
+    #616871 (Bug #64919)
+        If you follow a user, their activity now appears in your
+        personalized activity stream.
+
+    #616687 (Bug #64913)
+        A monospaced font is now used for input for the description when
+        selecting 'approve and commit' or 'commit' on a review.
+
+Bugs fixed since Beta Preview 2013.1/614107
+
+    #617444 (Bug #64888)
+        Selecting Approve and Commit on a review failed to clear the Swarm
+        managed shelved change.
+
+    #616978 (Bug #64940)
+        The 'open file' button on changes and reviews lacked a tooltip.
+
+    #616305 (Bug #64895)
+        The example config.php file contained a syntax error.
+
+    #616258 (Bug #64941)
+        The unassigned filter on the reviews page did not work.
+
+    #614938 (Bug #62155)
+        Unassociated jobs could be shown on a change/review if they had a
+        matching component e.g. 'foo-bar' when only 'foo' is present.
+
+--------------------------------------------------------------------------
+
+Credits
+
+    Perforce Swarm, from the fleet fingers of Petr Havlik, Nellie LeMonier,
+    Stewart Lord, DJ Mountney, Geoff Nicol, Jessica Weber, Marc Wensauer,
+    and Allan Yu.
+
+END

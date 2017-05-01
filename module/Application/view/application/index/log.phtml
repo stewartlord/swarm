@@ -1,0 +1,46 @@
+<?php if (isset($entries) && count($entries) > 0): ?>
+    <?php foreach ($entries as $entry): ?>
+    <?php
+        $detailsClass  = $entry['details']  != '' ? 'has-details' : '';
+        $severityClass = $entry['severity'] != '' ? 'severity-' . strtolower($entry['severity']) : '';
+    ?>
+        <tr class="entry-brief <?php echo $detailsClass ?>">
+            <td>
+                <?php if ($detailsClass): ?>
+                <i class="icon-chevron-right"></i>
+                <?php endif ?>
+                <span class="timeago" title="<?php echo $this->escapeHtmlAttr($entry['time']) ?>"></span>
+            </td>
+            <td>
+                <span class="entry-severity <?php echo $this->escapeHtmlAttr($severityClass) ?>">
+                    <?php echo $this->escapeHtml(trim($entry['severity'])) ?>
+                </span>
+            </td>
+            <td>
+                <div class="entry-message monospace force-wrap">
+                    <?php echo $this->escapeHtml($entry['message']) ?>
+                </div>
+            </td>
+        </tr>
+        <?php if ($detailsClass): ?>
+        <tr class="entry-details hide">
+            <td colspan="3">
+                    <?php
+                    $details = $entry['details'];
+                    if (strpos($details, 'Stack trace:') === 0) {
+                        $details = $this->shortenStackTrace($details);
+                    }
+                    $details = $this->escapeHtml($details);
+                    ?>
+                <div class="details monospace"><?php echo $details ?></div>
+            </td>
+        </tr>
+        <?php endif ?>
+    <?php endforeach ?>
+<?php else: ?>
+    <tr>
+        <td colspan="3">
+            <p><?php echo $this->escapeHtml($error) ?></p>
+        </td>
+    </tr>
+<?php endif ?>

@@ -1,0 +1,223 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Reviews // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.administration.html" title="Administration" />
+      <link rel="prev" href="admin.review_keyword.html" title="Review keyword" />
+      <link rel="next" href="admin.search.html" title="Search" />
+      <meta name="Section-title" content="Reviews" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="admin.reviews">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Reviews</h2>
+                     </div>
+                  </div>
+               </div>
+               <div class="section" id="admin.reviews.enforcement">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Review enforcement</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                     Swarm can optionally enforce that a change to be submitted is tied to an
+                     approved code review. Additionally, Swarm can require that the content of
+                           a change to be submitted matches the content of its associated approved
+                           code review.
+                         
+                  </p>
+                  <div class="important admonition">
+                     <h3 class="title">Important</h3>
+                     <p>
+                                These capabilities are currently not available for a Helix Versioning
+                                Engine running on a Windows host.
+                              
+                     </p>
+                  </div>
+                  <p>
+                           These capabilities are provided via the trigger script included with
+                           Swarm, but are not enabled by default nor covered in the
+                           <a class="link" href="setup.perforce.html" title="Perforce configuration for Swarm">standard installation steps</a>.
+                         
+                  </p>
+                  <p>
+                           To enable these capabilities, edit the Perforce trigger table by running
+                           the <span class="command"><strong>p4 triggers</strong></span> command as a user with
+                           <span class="emphasis"><em>super</em></span>-level privileges and add the following lines:
+                         
+                  </p><pre class="programlisting">
+swarm.enforce.1 change-submit  //DEPOT_PATH1/... "%//.swarm/triggers/swarm-trigger.pl% -c %//.swarm/triggers/swarm-trigger.conf% -t enforce -v %change% -p %serverport%"
+swarm.enforce.2 change-submit  //DEPOT_PATH2/... "%//.swarm/triggers/swarm-trigger.pl% -c %//.swarm/triggers/swarm-trigger.conf% -t enforce -v %change% -p %serverport%"
+swarm.strict.1  change-content //DEPOT_PATH1/... "%//.swarm/triggers/swarm-trigger.pl% -c %//.swarm/triggers/swarm-trigger.conf% -t strict -v %change% -p %serverport%"
+swarm.strict.2  change-content //DEPOT_PATH2/... "%//.swarm/triggers/swarm-trigger.pl% -c %//.swarm/triggers/swarm-trigger.conf% -t strict -v %change% -p %serverport%"
+</pre><div class="note admonition">
+                     <h3 class="title">Note</h3>
+                     <p>
+                                These trigger table entries assume that the trigger script,
+                                <code class="filename">swarm-trigger.pl</code>, has been committed to the
+                                Helix Versioning Engine within the <code class="filename">//.swarm</code> depot.
+                                If you have instead copied the trigger script to your Perforce server's
+                                filesystem (and to the same path on all edge servers in a commit-edge
+                                deployment), replace
+                                <code class="literal">//.swarm/triggers/swarm-trigger.pl</code> with the path to
+                                the trigger script.
+                              
+                     </p>
+                  </div>
+                  <p>
+                           Customize each line by replacing <code class="literal">DEPOT_PATH1</code> or
+                           <code class="literal">DEPOT_PATH2</code> with the appropriate depot path where you
+                           wish to <span class="emphasis"><em>enforce</em></span> review approvals or to apply a
+                           <span class="emphasis"><em>strict</em></span> comparison of review contents.
+                         
+                  </p>
+                  <p>
+                           The above lines include two examples of each of the two new trigger
+                           behaviors. Remove unnecessary lines, or add additional lines for specific
+                           depot paths as required.
+                         
+                  </p>
+                  <p>
+                           It is also possible to configure exemptions to the
+                           <code class="literal">enforce</code> and <code class="literal">strict</code> verifications,
+                           for the number of files in a review or the filetypes in a review. For
+                           more information on the trigger's options, see
+                           <a class="xref" href="admin.trigger.html" title="Trigger options">Trigger options</a>.
+                         
+                  </p>
+                  <div class="section" id="admin.reviews.group_exclusion">
+                     <div class="titlepage">
+                        <div>
+                           <div>
+                              <h4 class="title">Group exclusion</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <p>
+                                You may want to exclude specific users from the enforcement provided by
+                                these new trigger lines:
+                              
+                     </p>
+                     <div class="orderedlist">
+                        <ol class="orderedlist" type="1">
+                           <li class="listitem">
+                              <p>
+                                             Create a group in the Helix Versioning Engine whose members should
+                                             be excluded from <span class="emphasis"><em>enforce</em></span> or
+                                             <span class="emphasis"><em>strict</em></span> review restrictions.
+                                           
+                              </p>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             Add users who should be excluded to the group.
+                                           
+                              </p>
+                              <div class="note admonition">
+                                 <h3 class="title">Note</h3>
+                                 <p>
+                                                  The owner of a group is not counted as a member of the group,
+                                                  unless the owner's userid is listed as a user in the group.
+                                                
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="listitem">
+                              <p>
+                                             Edit the trigger table and add <code class="literal">-g
+                                                <em class="replaceable"><code>group_name</code></em></code> to each
+                                             <span class="emphasis"><em>enforce</em></span> or <span class="emphasis"><em>strict</em></span> trigger
+                                             line as desired.
+                                           
+                              </p>
+                              <p>
+                                             If the group name is <code class="literal">review_exclusions</code>, the
+                                             trigger lines would be similar to:
+                                           
+                              </p><pre class="programlisting">
+swarm.enforce.1 change-submit  //DEPOT_PATH1/... "%//.swarm/triggers/swarm-trigger.pl% -c %//.swarm/triggers/swarm-trigger.conf% -t enforce -v %change% -p %serverport% -g review_exclusions"
+swarm.enforce.2 change-submit  //DEPOT_PATH2/... "%//.swarm/triggers/swarm-trigger.pl% -c %//.swarm/triggers/swarm-trigger.conf% -t enforce -v %change% -p %serverport% -g review_exclusions"
+swarm.strict.1  change-content //DEPOT_PATH1/... "%//.swarm/triggers/swarm-trigger.pl% -c %//.swarm/triggers/swarm-trigger.conf% -t strict -v %change% -p %serverport% -g review_exclusions"
+swarm.strict.2  change-content //DEPOT_PATH2/... "%//.swarm/triggers/swarm-trigger.pl% -c %//.swarm/triggers/swarm-trigger.conf% -t strict -v %change% -p %serverport% -g review_exclusions"
+</pre></li>
+                        </ol>
+                     </div>
+                  </div>
+               </div>
+               <div class="section" id="admin.reviews.disable_self_approve">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Disable self-approval of reviews by authors</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                           The Swarm 2015.2 release provides the ability to disable review approval
+                           by authors, even if they are moderators or administrators. This is useful
+                           for development workflows where review by others is of paramount
+                           importance.
+                         
+                  </p>
+                  <p>
+                           To disable review approval by authors, update the
+                           <code class="filename">data/config.php</code> file to include the following
+                           configuration item within the <code class="literal">reviews</code> block:
+                         
+                  </p><pre lang="php" class="programlisting">
+        'reviews' =&gt; array(
+            'disable_self_approve' =&gt; true,
+        ),
+</pre><p>
+                           The default value is <code class="literal">false</code>.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="admin.review_keyword.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Review keyword</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="admin.search.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Search</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Add a project // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.projects.html" title="Projects" />
+      <link rel="prev" href="chapter.projects.html" title="Projects" />
+      <link rel="next" href="projects.edit.html" title="Edit a project" />
+      <meta name="Section-title" content="Add a project" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="projects.add">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Add a project</h2>
+                     </div>
+                  </div>
+               </div>
+               <div class="orderedlist">
+                  <ol class="orderedlist" type="1">
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-add_project.png" alt="The Add Project button" /></span></span>
+                           
+                                   On the Swarm home page, click the <span class="guibutton">+</span> icon at the
+                                   top-right of the projects sidebar.
+                                 
+                        </p>
+                        <div class="note admonition">
+                           <h3 class="title">Note</h3>
+                           <p>
+                                        The ability to add projects can be
+                                        <a class="link" href="admin.projects.html#admin.projects.limit_project_add_admin" title="Limit adding projects to administrators">limited to
+                                           administrators only</a>, or
+                                        <a class="link" href="admin.projects.html#admin.projects.limit_project_add_group" title="Limit adding projects to members of specific groups">limited to
+                                           members of specific groups</a>. When limited, users who are not
+                                        administrators, or a member of the specified group, will not see the
+                                        <span class="guibutton">+</span> icon at the top-right of the projects
+                                        sidebar.
+                                      
+                           </p>
+                        </div>
+                        <p>
+                                   The <span class="guilabel">Add Project</span> page appears:
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/page-add_project.png" alt="The Add Project page" /></span>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Provide a name for the project.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Optionally provide a description.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Optionally click the <span class="guibutton">Only Owners and Administrators can edit
+                                      the project</span> checkbox. When checked, a field is displayed
+                                   allowing you to add a new owner. The field auto-suggests users within the
+                                   Helix Versioning Engine as you type.
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/thumb-add_owner.png" alt="The Add Owner field" /></span>
+                                 
+                        </p>
+                        <p>
+                                   Once specified, modifying the project's definition is restricted to
+                                   project owners and administrators (users with
+                                   <span class="emphasis"><em>admin</em></span>-level or <span class="emphasis"><em>super</em></span>-level
+                                   privileges in the Helix Versioning Engine).
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Specify at least one team member. This field auto-suggests projects,
+                                   groups, and users within the Helix Versioning Engine as you type (up to
+                                   a combined limit of 20 entries).
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/dropdown-project_member-complete.png" alt="Auto-suggesting members" /></span>
+                                 
+                        </p>
+                        <p>
+                                   See <a class="xref" href="projects.membership.html" title="Membership">Membership</a> for more details.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Optionally click the <span class="guibutton">Add Branch</span> link to display
+                                   the branch drop-down dialog:
+                           
+                                   <span class="inlinemediaobject"><img src="images/link-add_branch.png" alt="The Add Branch link" /></span>
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/dropdown-branch.png" alt="The branch drop-down dialog" /></span>
+                                 
+                        </p>
+                        <div class="orderedlist">
+                           <ol class="orderedlist" type="a">
+                              <li class="listitem">
+                                 <p>
+                                                Enter a short <span class="guilabel">Name</span> for the branch.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                Enter one or more branch paths, one per line.
+                                              
+                                 </p>
+                                 <div class="note admonition">
+                                    <h3 class="title">Note</h3>
+                                    <p>
+                                                     Each branch path should be expressed in depot syntax. Wildcards
+                                                     should not be used; the only exception is that the branch path can
+                                                     end with the Perforce wildcard <code class="literal">...</code>
+                                                   
+                                    </p>
+                                    <p>
+                                                     For more information, see
+                                                     <a class="link" href="https://www.perforce.com/perforce/doc.current/manuals/cmdref/o.fspecs.html" target="_top">Command
+                                                        Reference: File Specifications</a>.
+                                                   
+                                    </p>
+                                 </div>
+                              </li>
+                              <li class="listitem" id="projects.add.moderators">
+                                 <p>
+                                                Optionally check the <span class="guibutton">Only Moderators can approve or
+                                                   reject reviews</span> checkbox. When checked, a field is
+                                                displayed allowing you to add a new moderator. The field auto-suggests
+                                                users within the Helix Versioning Engine as you type.
+                                              
+                                 </p>
+                                 <p>
+                                                <span class="inlinemediaobject"><img src="images/thumb-add_moderator.png" alt="The Add Moderator field" /></span>
+                                              
+                                 </p>
+                                 <p>
+                                                Once the branch specification is complete and the project has been
+                                                saved, changing the state of any review associated with
+                                                this moderated branch is restricted as follows:
+                                              
+                                 </p>
+                                 <div class="itemizedlist">
+                                    <ul class="itemizedlist" style="list-style-type: disc; ">
+                                       <li class="listitem">
+                                          <p>
+                                                   Only moderators can approve or reject the review. Moderators can also
+                                                   transition a review to any other state.
+                                                 
+                                          </p>
+                                       </li>
+                                       <li class="listitem">
+                                          <p>
+                                                   The review's author, when she is not a moderator, can change the review's
+                                                   state to <span class="guilabel">Needs Review</span>, <span class="guilabel">Needs
+                                                      Revision</span>, <span class="guilabel">Archived</span>, and can attach
+                                                   committed changelists.
+                                                 
+                                          </p>
+                                          <p>
+                                                   Normally, the review's author cannot change the review's state to
+                                                   <span class="guilabel">Approved</span> or <span class="guilabel">Rejected</span> on
+                                                   moderated branches. However, authors that are also moderators have
+                                                   moderator privileges, and may approve or reject their own review.
+                                                 
+                                          </p>
+                                          <p>
+                                                   When <a class="link" href="admin.reviews.html#admin.reviews.disable_self_approve" title="Disable self-approval of reviews by authors"><code class="literal">disable_self_approve</code></a>
+                                                   is enabled, authors who are moderators (or even users with
+                                                   <span class="emphasis"><em>admin</em></span> privileges) cannot approve their own reviews.
+                                                 
+                                          </p>
+                                       </li>
+                                       <li class="listitem">
+                                          <p>
+                                                   Project members can change the review's state to <span class="guilabel">Needs
+                                                      Review</span> or <span class="guilabel">Needs Revision</span>, and can attach
+                                                   committed changelists. Project members cannot change the review's state to
+                                                   <span class="guilabel">Approved</span>, <span class="guilabel">Rejected</span>, or
+                                                   <span class="guilabel">Archived</span>.
+                                                 
+                                          </p>
+                                       </li>
+                                       <li class="listitem">
+                                          <p>
+                                                   Users that are not project members, moderators, or the review's author
+                                                   cannot transition the review's state.
+                                                 
+                                          </p>
+                                       </li>
+                                       <li class="listitem">
+                                          <p>
+                                                   For the review's author and project members, if a review is not in one of
+                                                   their permitted states, for example if the review's state is
+                                                   <span class="guilabel">Rejected</span>, they cannot transition the review to
+                                                   another state.
+                                                 
+                                          </p>
+                                          <p>
+                                                   These restrictions have no effect on who can start a review.
+                                                 
+                                          </p>
+                                       </li>
+                                    </ul>
+                                 </div>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                <span class="inlinemediaobject"><span class="thumb"><img src="images/button-done.png" alt="The Done button" /></span></span>
+                                    
+                                                Click the <span class="guibutton">Done</span> button to accept your branch
+                                                specification.
+                                              
+                                 </p>
+                              </li>
+                           </ol>
+                        </div>
+                        <p>
+                                   Once the branch definition has completed, if any moderators were
+                                   specified, the number of moderators for that branch is displayed in the
+                                   list of branches:
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/thumb-branch_moderators.png" alt="Branch moderators count." /></span>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Optionally specify a job filter. The job filter allows you to specify
+                                   criteria that are used to associate jobs with projects. For example,
+                                   entering <code class="literal">Subsystem=ProjectA</code> associates jobs whose
+                                   <span class="guilabel">subsystem</span> field is set to
+                                   <code class="literal">ProjectA</code> with the current project.
+                                 
+                        </p>
+                        <div class="note admonition">
+                           <h3 class="title">Note</h3>
+                           <p>
+                                        This job filter is simpler than the filters available in other
+                                        Perforce clients. The filter must be expressed as
+                                        <code class="literal"><em class="replaceable"><code>field</code></em>=<em class="replaceable"><code>value</code></em></code>
+                                        pairs; bare keywords are not permitted. The asterisk for wildcard
+                                        matching is permitted, but no other filter expression syntax is
+                                        permitted.
+                                      
+                           </p>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Optionally disable notification emails for new reviews, or committed
+                                   reviews. These notifications are enabled by default, but some teams
+                                   prefer fewer messages in their inboxes. Note that any <a class="link" href="basics.notable.html#basics.notable.mentions" title="@mentions">@mentioned</a> users, or users who
+                                   are explicitly added to a review or changelist, will receive
+                                   notifications even if new review/committed review notifications are
+                                   disabled.
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><img src="images/thumb-email_notifications.png" alt="Checkboxes to control email notifications." /></span>
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/checkbox-automated_tests.png" alt="The checkbox indicating automated test activation status" /></span></span>
+                           
+                                   Optionally click the <span class="guibutton">Enable</span> checkbox beside
+                                   <span class="guilabel">Automated Tests</span> to display the automated tests
+                                   configuration fields.
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><span class="popup"><img src="images/fields-automated_tests.png" alt="The Automated Tests drop-down dialog" /></span></span>
+                           
+                                   Specify a URL that triggers a test execution. Use the special arguments
+                                   described in the dialog to help compose a URL that informs your test
+                                   suite with important details. For more details, see
+                                   <a class="xref" href="quickstart.integrate_test_suite.html" title="How can I integrate my test suite to inform review acceptance or rejection?">How can I integrate my test suite to inform review acceptance or rejection?</a>.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/checkbox-automated_deployment.png" alt="The checkbox indicating automated deployment activation status" /></span></span>
+                           
+                                   Optionally click the <span class="guibutton">Enable</span> checkbox beside
+                                   <span class="guilabel">Automated Deployment</span> to display the automated
+                                   deployment configuration fields:
+                                 
+                        </p>
+                        <p>
+                                   <span class="inlinemediaobject"><span class="popup"><img src="images/fields-automated_deployment.png" alt="The Automated Deployment drop-down dialog" /></span></span>
+                           
+                                   Specify a URL that triggers a deployment of the project's code. Use the
+                                   special arguments described in the dialog to help compose a URL that
+                                   informs your deployment program with important details. For more
+                                   details, see <a class="xref" href="quickstart.review_deployment.html" title="How can I automatically deploy code within a review?">How can I automatically deploy code within a review?</a>.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   <span class="inlinemediaobject"><span class="thumb"><img src="images/button-save.png" alt="Save button for Project configuration" /></span></span>
+                           
+                                   Click <span class="guibutton">Save</span>.
+                                 
+                        </p>
+                        <div class="note admonition">
+                           <h3 class="title">Note</h3>
+                           <p>
+                                        The <span class="guibutton">Save</span> button is disabled if any required
+                                        fields are empty.
+                                      
+                           </p>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="chapter.projects.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Projects</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="projects.edit.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">Edit a project</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

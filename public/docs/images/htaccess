@@ -1,0 +1,7 @@
+# Relax restrictions slightly so documentation is easier to browse
+DirectoryIndex index.html
+<IfModule mod_rewrite.c>
+    # unconditional serving of assets in this tree
+    # with no invocation of Swarm.
+    RewriteRule ^.*$ - [NC,L]
+</IfModule>

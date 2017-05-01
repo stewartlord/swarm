@@ -1,0 +1,320 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Example email module // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.extending.html" title="Extending Swarm" />
+      <link rel="prev" href="extending.example_linkify.html" title="Example linkify module" />
+      <link rel="next" href="extending.clients.html" title="CSS &amp; JavaScript" />
+      <meta name="Section-title" content="Example email module" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="extending.example_email">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">Example email module</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The following example module demonstrates how to customize the email
+                      template Swarm uses when sending notifications for comments.
+                    
+               </p>
+               <div class="orderedlist">
+                  <ol class="orderedlist" type="1">
+                     <li class="listitem">
+                        <p>
+                                   Create a folder called Example in the module folder.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Create the file <code class="filename">Module.php</code> within
+                                   <code class="filename">module/Example</code> and edit it to contain:
+                                 
+                        </p><pre lang="php" class="programlisting">
+&lt;?php
+
+namespace Example;
+use Zend\Mvc\MvcEvent;
+
+/**
+ * Automatically uses any custom email templates found under this
+ * module's view/mail folder (e.g. Example/view/mail/commit-html.phtml).
+ *
+ * Valid templates include:
+ *
+ *   commit-html.phtml (HTML version of commit notification)
+ *   commit-text.phtml (text version of commit notification)
+ *  comment-html.phtml (HTML version of comment notification)
+ *  comment-text.phtml (text version of comment notification)
+ *   review-html.phtml (HTML version of review notification)
+ *   review-text.phtml (text version of review notification)
+ *
+ * Note: you need to provide custom templates for both HTML and text;
+ * if you do not provide both, it is possible that the search for
+ * customized templates only finds the non-customized versions, making
+ * it appear that this module is not working.
+ */
+class Module
+{
+    public function onBootstrap(MvcEvent $event)
+    {
+        $application = $event-&gt;getApplication();
+        $services    = $application-&gt;getServiceManager();
+        $events      = $services-&gt;get('queue')-&gt;getEventManager();
+
+        $events-&gt;attach(
+            '*',
+            function ($event) {
+                $mail = $event-&gt;getParam('mail');
+                if (!$mail || !isset($mail['htmlTemplate'], $mail['textTemplate'])) {
+                    return;
+                }
+
+                $html = __DIR__ . '/view/mail/' . basename($mail['htmlTemplate']);
+                $text = __DIR__ . '/view/mail/' . basename($mail['textTemplate']);
+
+                if (file_exists($html)) {
+                    $mail['htmlTemplate'] = $html;
+                }
+                if (file_exists($text)) {
+                    $mail['textTemplate'] = $text;
+                }
+
+                $event-&gt;setParam('mail', $mail);
+            },
+            -199
+        );
+    }
+}
+</pre><p>
+                                   This file achieves several things. It:
+                                 
+                        </p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" style="list-style-type: disc; ">
+                              <li class="listitem">
+                                 <p>
+                                                makes the <code class="filename">Example</code> folder a recognized module.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                declares the module's namespace, which matches the module's folder
+                                                name <code class="filename">Example</code>.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                provides an <code class="methodname">onBootstrap()</code> method that
+                                                allows the module's configuration to be established immediately
+                                                after the module is loaded
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                attaches to events, looking for <code class="literal">mail</code> events. When
+                                                such an event is encountered, it provides local paths for HTML and
+                                                text-only view scripts.
+                                              
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>
+                                                declares an event priority of <code class="literal">-199</code>.  Since, email
+                                                delivery events are processed with a priority of
+                                                <code class="literal">-200</code>, this module's templates should override any
+                                                that may have been set elsewhere, and this occurs just prior to
+                                                email delivery.
+                                              
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Create a folder called <code class="filename">view</code> in the
+                                   <code class="filename">module/Example</code> folder.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Create a folder called <code class="filename">mail</code> in the
+                                   <code class="filename">module/Example/view</code> folder.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Create the file <code class="filename">comment-html.phtml</code> within
+                                   <code class="filename">module/Example/view/mail</code> and edit it to contain:
+                                 
+                        </p><pre lang="php" class="programlisting">
+&lt;?php
+    $user       = $activity-&gt;get('user');
+    $userLink   = $user
+                ? $this-&gt;qualifiedUrl('user', array('user' =&gt; $user))
+                : null;
+    $targetLink = $activity-&gt;getUrl($this-&gt;plugin('qualifiedUrl'));
+?&gt;
+&lt;html&gt;
+  &lt;body style="font-family: sans-serif; background-color: #eee; padding: 1em;"&gt;
+    &lt;div style="background-color: #fff; border: 1px solid #ccc; padding: 1em;"&gt;
+      &lt;div style="font-size: 115%;"&gt;
+        &lt;?php if ($user): ?&gt;
+          &lt;a style="text-decoration: none;" href="&lt;?php echo $userLink ?&gt;"&gt;
+            &lt;?php echo $this-&gt;escapeHtml($user) ?&gt;
+          &lt;/a&gt;
+        &lt;?php endif; ?&gt;
+        &lt;?php echo $this-&gt;escapeHtml($activity-&gt;get('action')) ?&gt;
+        &lt;a style="text-decoration: none;" href="&lt;?php echo $targetLink ?&gt;"&gt;
+          &lt;?php echo $this-&gt;escapeHtml($activity-&gt;get('target'))?&gt;
+        &lt;/a&gt;
+      &lt;/div&gt;
+      &lt;br/&gt;
+      &lt;?php
+          // if the comment has file context, show it.
+          $comment = $event-&gt;getParam('comment');
+          $context = $comment
+                   ? $comment-&gt;getFileContext()
+                   : array('content' =&gt; null, 'line' =&gt; null);
+          if (is_array($context['content']) &amp;&amp; $context['line']) {
+              $line = $context['line'] - count($context['content']) + 1;
+              echo '&lt;div style="font-family: monospace; white-space: nowrap;'
+                  . ' padding: .5em 1em; overflow-x: auto; color: #444;'
+                  . ' border: 1px solid #ddd; background-color: #f7f7f7;"&gt;';
+              foreach ((array) $context['content'] as $i =&gt; $content) {
+                  echo '&lt;div&gt;&lt;span style="color: #999;"&gt;'
+                      . str_pad($line + $i,
+                                strlen($context['line']),
+                                "0",
+                                STR_PAD_LEFT
+                        )
+                      . '.&lt;/span&gt;&amp;nbsp;'
+                      . $this-&gt;preformat($content)
+                             -&gt;setLinkify(false)
+                             -&gt;setEmojify(false)
+                             -&gt;setWordWrap(900)
+                      . "&lt;/div&gt;\n";
+              }
+              echo '&lt;/div&gt;&lt;br/&gt;';
+          }
+      ?&gt;
+      &lt;div style="padding-bottom: .5em;"&gt;
+      &lt;?php
+          echo $this-&gt;preformat($activity-&gt;get('description'))
+                    -&gt;setBaseUrl($this-&gt;qualifiedUrl())
+                    -&gt;setEmojify(false)
+                    -&gt;setWordWrap(900)
+      ?&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><p>
+                                   This is a view script that provides the content for the HTML portion of
+                                   the comment notification email. Note that it is considered best practice
+                                   to use inline CSS for styling emails.
+                                 
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>
+                                   Create the file <code class="filename">comment-text.phtml</code> within
+                                   <code class="filename">module/Example/view/mail</code> and edit it to contain:
+                                 
+                        </p><pre lang="php" class="programlisting">
+&lt;?php
+    echo trim($activity-&gt;get('user')
+        . ' commented on '
+        . $activity-&gt;get('target'));
+
+    // if the comment has file context, show it.
+    $comment = $event-&gt;getParam('comment');
+    $context = $comment
+             ? $comment-&gt;getFileContext()
+             : array('content' =&gt; null);
+    if (is_array($context['content'])) {
+        echo "\n\n&gt; " . $this-&gt;wordWrap(
+            implode("\n&gt; ", $context['content']), 900
+        );
+    }
+
+    echo "\n\n" . trim($this-&gt;wordWrap($activity-&gt;get('description'), 900));
+    echo "\n\n" . $activity-&gt;getUrl($this-&gt;plugin('qualifiedUrl'));
+?&gt;
+</pre><p>
+                                   This is a view script that provides the content for the text-only
+                                   portion of the comment notification email.
+                                 
+                        </p>
+                     </li>
+                  </ol>
+               </div>
+               <p>
+                      If you need to customize any other types of Swarm notification email
+                      messages, locate the view scripts (both HTML and text) and copy them into
+                      <code class="filename">module/Example/view/mail</code>, maintaining the existing
+                      filenames, then modify the new files as desired.
+                    
+               </p>
+               <div class="note admonition">
+                  <h3 class="title">Note</h3>
+                  <p>
+                           If you do not copy both the HTML and text templates, it is possible for
+                           the search for customized templates to only find non-customized versions,
+                           making it appear that your module is not working.
+                         
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="extending.example_linkify.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">Example linkify module</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="extending.clients.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">CSS &amp; JavaScript</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>

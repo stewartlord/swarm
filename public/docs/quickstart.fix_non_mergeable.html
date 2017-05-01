@@ -1,0 +1,223 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>How can I fix 'not mergeable' errors in a review? // Swarm 2016.1 Guide</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.78.1 with Perforce customizations" />
+      <link rel="home" href="copyright.html" title="Swarm 2016.1 Guide" />
+      <link rel="up" href="chapter.quickstart.html" title="Quickstart" />
+      <link rel="prev" href="quickstart.local_copy.html" title="How do I get a local copy of the review's code for evaluation?" />
+      <link rel="next" href="quickstart.view_git_reviews.html" title="How do I see a list of Git-created reviews?" />
+      <meta name="Section-title" content="How can I fix 'not mergeable' errors in a review?" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="vendor/prettify/prettify.css" />
+      <link rel="stylesheet" href="css/perforce.css" />
+      <link rel="stylesheet" href="css/print.css" media="print" />
+      <link rel="shortcut icon" href="images/favicon.ico" />
+      <!--[if lt IE 9]>
+  <script type="text/javascript" src="vendor/respond/respond.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/ie.css"/>
+<![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/swarm.css" />
+   </head>
+   <body><a id="page-top"></a><div id="header">
+         <div class="container"><button name="toc" type="button" class="toc"><span class="glyphicon glyphicon-list"></span></button><span class="logo"><a href="http://www.perforce.com/documentation"></a></span><h1><a href="index.html" class="title"><span class="brand"></span><span class="guide-title">Swarm 2016.1 Guide</span><span class="guide-subtitle">
+                                   (May 2016)
+                                 </span></a></h1><button name="search" type="button" class="search" title="Search this guide"><span class="glyphicon glyphicon-search"></span></button></div>
+         <div id="progress"></div>
+      </div>
+      <div id="content" class="content" tabindex="-1">
+         <div class="container">
+            <!---->
+            <div class="section" id="quickstart.fix_non_mergeable">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h2 class="title" style="clear: both">How can I fix 'not mergeable' errors in a review?</h2>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                      The problem can occur when you attempt to
+                      <span class="guimenuitem">Commit</span> or <span class="guimenuitem">Approve and
+                         Commit</span> via the Swarm UI and the shelved files are out of
+                      date.
+                    
+               </p>
+               <p>
+                      Perforce Swarm cannot currently help with resolving conflicts; you need to
+                      use a Perforce client such as P4 or P4V to resolve conflicts.
+                    
+               </p>
+               <div class="section" id="quickstart.fix_non_mergeable.via_p4">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Resolve via P4</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Acquire a <a class="link" href="quickstart.local_copy.html" title="How do I get a local copy of the review's code for evaluation?">local copy</a> of the files.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Sync the files to the head version:
+                                      
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>p4 sync</strong></span>
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                        Begin resolving files with:
+                                      
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>p4 resolve</strong></span>
+</pre><p>
+                                        Choose an appropriate option to resolve each file. For
+                                        example:
+                                      
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>p4 resolve</strong></span>
+/home/bruno/bruno_ws/dev/main/jam/command.c - merging //depot/dev/main/jam/command.c#9
+Diff chunks: 4 yours + 2 theirs + 1 both + 1 conflicting
+Accept(a) Edit(e) Diff(d) Merge (m) Skip(s) Help(?) e:
+</pre></li>
+                        <li class="listitem">
+                           <p>
+                                        Re-shelve the resolved files with:
+                                      
+                           </p><pre class="programlisting">
+$ <span class="command"><strong>p4 shelve</strong></span>
+</pre><div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                             Ensure that the changelist description contains
+                                             <code class="literal">#review-12345</code> (separated from other text by
+                                             whitespace, or on a separate line), where <code class="literal">12345</code>
+                                             is the identifier of the review you are updating.
+                                           
+                              </p>
+                           </div>
+                           <div class="warning admonition">
+                              <h3 class="title">Warning</h3>
+                              <p>
+                                             If you use an invalid review identifier, it will appear that nothing
+                                             happens. Swarm is currently unable to notify you of this situation.
+                                           
+                              </p>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information, see:
+                                <a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/p4guide/05_resolve.html" target="_top">P4
+                                   User's Guide: Resolve</a>
+                              
+                     </p>
+                  </div>
+               </div>
+               <div class="section" id="quickstart.fix_non_mergeable.via_p4v">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h3 class="title">Resolve via P4V</h3>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="orderedlist">
+                     <ol class="orderedlist" type="1">
+                        <li class="listitem">
+                           <p>
+                                        Acquire a <a class="link" href="quickstart.local_copy.html" title="How do I get a local copy of the review's code for evaluation?">local copy</a> of the files.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Context-click your workspace folder in P4V's Workspace tab.
+                                        Select <span class="guimenuitem">Resolve Files...</span>.
+                                        The <span class="bold"><strong>Resolve</strong></span> dialog appears.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Choose the appropriate options to resolve each file.
+                                      
+                           </p>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Context-click your workspace folder in P4V's Workspace tab.  Select
+                                        <span class="guimenuitem">Shelve Files...</span>. The
+                                        <span class="bold"><strong>Shelve</strong></span> dialog appears.
+                                      
+                           </p>
+                           <div class="note admonition">
+                              <h3 class="title">Note</h3>
+                              <p>
+                                             Ensure that the changelist description contains
+                                             <code class="literal">#review-12345</code> (separated from other text with
+                                             whitespace, or on a separate line), where <code class="literal">12345</code>
+                                             is the identifier of the review you are updating.
+                                           
+                              </p>
+                           </div>
+                           <div class="warning admonition">
+                              <h3 class="title">Warning</h3>
+                              <p>
+                                             If you use an invalid review identifier, it will appear that nothing
+                                             happens. Swarm is currently unable to notify you of this situation.
+                                           
+                              </p>
+                           </div>
+                        </li>
+                        <li class="listitem">
+                           <p>
+                                        Click <span class="guibutton">Shelve</span>.
+                                      
+                           </p>
+                        </li>
+                     </ol>
+                  </div>
+                  <div class="tip admonition">
+                     <h3 class="title">Tip</h3>
+                     <p>
+                                For more information, see:
+                                <a class="link" href="http://www.perforce.com/perforce/doc.current/manuals/p4v/Resolving_files.html" target="_top">P4V
+                                   Online Help: Resolving Files</a>
+                              
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="nav" class="toc"></div>
+      <div id="search">
+         <div class="input"><input id="search-text" type="search" placeholder="Search this guide" /><button name="clear" type="button" class="clear"><span class="glyphicon glyphicon-remove-sign"></span></button></div>
+         <div class="controls">
+            <div class="substring"><label><input type="checkbox" class="substring" name="substring" value="hide" checked="1" /><span class="description">Hide partial matches</span></label></div>
+            <div class="highlighter"><label><input type="checkbox" class="highlight" name="highlight" value="show" checked="1" /><span class="description">Highlight matches</span></label></div>
+         </div>
+         <div class="count"><span class="number">0</span> matching pages
+                  
+         </div>
+         <ul class="results"></ul>
+      </div>
+      <div id="footer">
+         <div class="container"><a accesskey="p" class="nav-prev" title="Press 'p', or left-arrow, to view the previous page" href="quickstart.local_copy.html"><span class="glyphicon glyphicon-chevron-left"></span><div class="label">Previous</div>
+               <div class="title">How do I get a local copy of the review's code for evaluation?</div></a><a accesskey="n" class="nav-next" title="Press 'n', or right-arrow, to view the next page" href="quickstart.view_git_reviews.html"><span class="glyphicon glyphicon-chevron-right"></span><div class="label">Next</div>
+               <div class="title">How do I see a list of Git-created reviews?</div></a></div>
+      </div><script type="text/javascript" src="vendor/jquery/jquery-1.11.3.min.js"></script><script type="text/javascript" src="vendor/bootstrap/js/bootstrap.js"></script><script type="text/javascript" src="vendor/cookie/jquery.cookie.js"></script><script type="text/javascript" src="vendor/highlight/jquery.highlight.js"></script><script type="text/javascript" src="vendor/jsrender/jsrender.js"></script><script type="text/javascript" src="vendor/touchwipe/jquery.touchwipe.min.js"></script><script type="text/javascript" src="vendor/prettify/prettify.js"></script><script defer="1" type="text/javascript" src="js/index.js"></script><script defer="1" type="text/javascript" src="js/toc.js"></script><script defer="1" type="text/javascript" src="js/perforce.js"></script></body>
+</html>
